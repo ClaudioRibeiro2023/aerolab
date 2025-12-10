@@ -15,15 +15,20 @@ O Design System da Template Platform fornece uma biblioteca coesa de tokens, com
 ```
 packages/design-system/        # Componentes React reutilizáveis
 ├── src/components/
+│   ├── Alert/                 # Componente de alerta
 │   ├── Button/
-│   ├── Input/
 │   ├── Card/
-│   ├── Modal/
-│   ├── Toast/
-│   ├── Tabs/
-│   ├── Table/
 │   ├── Dropdown/
-│   └── Skeleton/
+│   ├── Input/
+│   ├── Modal/
+│   ├── Skeleton/
+│   ├── StatusBadge/           # Badge de status semântico
+│   ├── Table/
+│   ├── Tabs/
+│   └── Toast/
+├── src/layout/
+│   ├── EmptyState/            # Estado vazio para listas
+│   └── PageHeader/            # Cabeçalho de páginas
 
 apps/web/src/styles/           # Estilos globais e tokens
 ├── index.css                  # Tokens + utilitários
@@ -339,6 +344,121 @@ import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '@template
     <DropdownItem onClick={handleDelete} danger>Excluir</DropdownItem>
   </DropdownMenu>
 </Dropdown>
+```
+
+### 3.9 StatusBadge
+
+Componente para exibir status com cores semânticas.
+
+```tsx
+import { StatusBadge } from '@template/design-system'
+
+// Variantes
+<StatusBadge variant="success">Concluído</StatusBadge>
+<StatusBadge variant="warning">Pendente</StatusBadge>
+<StatusBadge variant="error">Erro</StatusBadge>
+<StatusBadge variant="info">Em processamento</StatusBadge>
+<StatusBadge variant="pending">Aguardando</StatusBadge>
+
+// Tamanhos
+<StatusBadge size="sm">Pequeno</StatusBadge>
+<StatusBadge size="md">Médio</StatusBadge>
+
+// Com ícone
+<StatusBadge variant="success" icon={<Check size={12} />}>
+  Aprovado
+</StatusBadge>
+```
+
+### 3.10 Alert
+
+Componente para exibir mensagens de alerta.
+
+```tsx
+import { Alert } from '@template/design-system'
+
+// Variantes
+<Alert variant="info" title="Informação" description="Mensagem informativa" />
+<Alert variant="success" title="Sucesso" description="Operação realizada" />
+<Alert variant="warning" title="Atenção" description="Verifique os dados" />
+<Alert variant="error" title="Erro" description="Algo deu errado" />
+
+// Com ícone customizado
+<Alert 
+  variant="info" 
+  icon={<InfoIcon />}
+  title="Título"
+  description="Descrição"
+/>
+```
+
+### 3.11 PageHeader
+
+Componente para cabeçalho de páginas.
+
+```tsx
+import { PageHeader } from '@template/design-system'
+
+// Básico
+<PageHeader 
+  title="Título da Página"
+  description="Descrição opcional"
+/>
+
+// Com ícone
+<PageHeader 
+  title="Dashboard"
+  description="Visão geral do sistema"
+  icon={<LayoutDashboard size={28} />}
+/>
+
+// Com ações
+<PageHeader 
+  title="Usuários"
+  description="Gerenciar usuários"
+  icon={<Users size={28} />}
+  actions={
+    <Button variant="primary" leftIcon={<Plus />}>
+      Novo Usuário
+    </Button>
+  }
+/>
+
+// Com conteúdo adicional
+<PageHeader title="Documentação">
+  <SearchInput placeholder="Buscar..." />
+</PageHeader>
+```
+
+### 3.12 EmptyState
+
+Componente para estados vazios.
+
+```tsx
+import { EmptyState } from '@template/design-system'
+
+// Básico
+<EmptyState 
+  title="Nenhum item encontrado"
+  description="Não há dados para exibir"
+/>
+
+// Com ícone
+<EmptyState 
+  title="Lista vazia"
+  description="Adicione seu primeiro item"
+  icon={<Inbox size={48} />}
+/>
+
+// Com ações
+<EmptyState 
+  title="Nenhum resultado"
+  description="Tente ajustar os filtros"
+  icon={<SearchX size={48} />}
+  actions={
+    <Button variant="primary">Limpar Filtros</Button>
+  }
+/>
 ```
 
 ---

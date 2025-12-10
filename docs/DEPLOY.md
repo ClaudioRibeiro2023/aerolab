@@ -47,7 +47,7 @@ docker-compose logs -f
 
 ### 3. Acessar a aplicação
 
-- **Frontend:** http://localhost:5173
+- **Frontend:** http://localhost:13000
 - **API:** http://localhost:8000
 - **Keycloak:** http://localhost:8080
 - **API Docs:** http://localhost:8000/docs

@@ -100,6 +100,17 @@ echo "VITE_DEMO_MODE=true" > apps/web/.env
 pnpm dev
 ```
 
+O servidor de desenvolvimento iniciará em **http://localhost:13000**.
+
+## 7. Portas Padrão
+
+| Serviço | Porta | URL |
+|---------|-------|-----|
+| Frontend | 13000 | http://localhost:13000 |
+| API | 8000 | http://localhost:8000 |
+| Keycloak | 8080 | http://localhost:8080 |
+| Storybook | 6006 | http://localhost:6006 |
+
 ## Próximos Passos
 
 - [ ] Configurar CI/CD
