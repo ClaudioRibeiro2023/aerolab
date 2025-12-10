@@ -82,7 +82,7 @@ pnpm dev
 docker compose -f infra/docker-compose.yml up -d
 
 # Acesse:
-# - Frontend: http://localhost:3000
+# - Frontend: http://localhost:13000
 # - Keycloak: http://localhost:8080 (admin/admin)
 # - API: http://localhost:8000
 ```

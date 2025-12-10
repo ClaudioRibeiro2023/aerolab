@@ -16,7 +16,7 @@ const env: ImportMetaEnvAuth =
 const KEYCLOAK_URL = env.VITE_KEYCLOAK_URL || 'http://localhost:8080'
 const KEYCLOAK_REALM = env.VITE_KEYCLOAK_REALM || 'template'
 const KEYCLOAK_CLIENT_ID = env.VITE_KEYCLOAK_CLIENT_ID || 'template-web'
-const APP_URL = env.VITE_APP_URL || (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000')
+const APP_URL = env.VITE_APP_URL || (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:13000')
 
 export const oidcConfig: UserManagerSettings = {
   authority: `${KEYCLOAK_URL}/realms/${KEYCLOAK_REALM}`,
