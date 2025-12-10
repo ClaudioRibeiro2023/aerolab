@@ -96,7 +96,7 @@ export function DropdownTrigger({ showArrow = true, className, children, ...prop
       type="button"
       className={clsx('ds-dropdown__trigger', isOpen && 'ds-dropdown__trigger--open', className)}
       onClick={() => setIsOpen(!isOpen)}
-      aria-expanded={isOpen}
+      aria-expanded={isOpen ? 'true' : 'false'}
       aria-haspopup="menu"
       {...props}
     >

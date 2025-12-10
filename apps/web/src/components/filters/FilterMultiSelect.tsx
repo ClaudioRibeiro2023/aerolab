@@ -82,8 +82,9 @@ export function FilterMultiSelect({
           onClick={() => !disabled && setIsOpen(!isOpen)}
           disabled={disabled}
           className="filter-multiselect__trigger"
-          aria-expanded={isOpen}
+          aria-expanded={isOpen ? 'true' : 'false'}
           aria-haspopup="listbox"
+          aria-label={`${label}: ${getDisplayText()}`}
         >
           <span className={clsx('filter-multiselect__text', !hasValue && 'placeholder')}>
             {getDisplayText()}
@@ -106,7 +107,11 @@ export function FilterMultiSelect({
         )}
         
         {isOpen && (
-          <div className="filter-multiselect__dropdown" role="listbox">
+          <div 
+            className="filter-multiselect__dropdown" 
+            role="group"
+            aria-label={`Opções de ${label}`}
+          >
             {options.map(opt => (
               <label
                 key={opt.value}
@@ -120,6 +125,7 @@ export function FilterMultiSelect({
                   checked={selectedValues.includes(opt.value)}
                   onChange={() => toggleOption(opt.value)}
                   className="sr-only"
+                  aria-label={opt.label}
                 />
                 <span className="filter-multiselect__checkbox">
                   {selectedValues.includes(opt.value) && <Check size={12} />}

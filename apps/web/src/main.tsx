@@ -7,6 +7,17 @@ import App from './App'
 import './styles/index.css'
 import './styles/module-functions-panel.css'
 
+// Design System Component Styles
+import '../../../packages/design-system/src/components/Button/Button.css'
+import '../../../packages/design-system/src/components/Input/Input.css'
+import '../../../packages/design-system/src/components/Card/Card.css'
+import '../../../packages/design-system/src/components/Modal/Modal.css'
+import '../../../packages/design-system/src/components/Toast/Toast.css'
+import '../../../packages/design-system/src/components/Tabs/Tabs.css'
+import '../../../packages/design-system/src/components/Table/Table.css'
+import '../../../packages/design-system/src/components/Dropdown/Dropdown.css'
+import '../../../packages/design-system/src/components/Skeleton/Skeleton.css'
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

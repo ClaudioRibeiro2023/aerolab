@@ -425,4 +425,68 @@ packages/design-system/
 
 ---
 
-*Documento gerado automaticamente. Última atualização: Dezembro 2025*
+## 16. PROGRESSO DE IMPLEMENTAÇÃO
+
+> **Última atualização:** 10 de Dezembro de 2025
+
+### ✅ Fase 1 - Fundação (CONCLUÍDO)
+
+#### Design Tokens
+- [x] **Tokens de cores completos** (`index.css`)
+  - Cores semânticas: `--color-success`, `--color-warning`, `--color-error`, `--color-info`
+  - Status backgrounds para light/dark mode
+  - Spacing, typography, radius, shadows, z-index
+- [x] **Dark mode consistente**
+  - Todas as variáveis com valores para `.dark`
+  - Cores semânticas ajustadas para contraste adequado
+
+#### Componentes Base (Design System)
+- [x] Button, Input, Card, Modal, Toast, Tabs, Table, Dropdown, Skeleton
+- [x] Storybook configurado (http://localhost:6007)
+
+#### Acessibilidade (A11y)
+- [x] **ARIA attributes corrigidos:**
+  - `FilterMultiSelect.tsx` - aria-expanded, role, aria-label
+  - `FilterToggle.tsx` - aria-checked para string
+  - `Input.tsx` - aria-invalid para string  
+  - `Dropdown.tsx` - aria-expanded para string
+  - `Tabs.tsx` - aria-selected para string
+
+#### Layout & Responsividade
+- [x] **Sidebar colapsível** com toggle e persistência
+- [x] **Mobile sidebar** (drawer) com overlay
+- [x] **Botão toggle do painel** reposicionado
+- [x] **Welcome banner** com gradiente correto
+
+#### Utilitários CSS
+- [x] Classes de progresso: `.progress-bar-track`, `.progress-bar-fill--*`
+- [x] Classes de status: `.status-badge--*`, `.status-card--*`
+- [x] Classes de texto: `.text-success`, `.text-warning`, etc.
+- [x] Page utilities: `.page-header`, `.page-title`, `.section`
+
+### 🔄 Fase 2 - Componentes (EM PROGRESSO)
+
+- [x] Sidebar responsiva implementada
+- [ ] Sistema de busca global (Ctrl+K)
+- [ ] Melhorar formulários
+- [x] Storybook configurado
+
+### ⏳ Fase 3 - Polish (PENDENTE)
+
+- [ ] Animações e micro-interações
+- [ ] Performance optimization
+- [ ] Testes de acessibilidade completos
+- [ ] Documentação completa
+
+### Métricas Atualizadas
+
+| Métrica | Anterior | Atual | Meta |
+|---------|----------|-------|------|
+| Componentes DS | ~5 | 9 | 20+ |
+| Cobertura dark mode | ~60% | ~90% | 100% |
+| A11y issues | 15+ | ~5 | 0 |
+| CSS Bundle | 64KB | 69KB | <80KB |
+
+---
+
+*Documento atualizado manualmente. Última atualização: 10 Dezembro 2025*

@@ -41,7 +41,8 @@ export function FilterToggle({
           type="button"
           id={id}
           role="switch"
-          aria-checked={isChecked}
+          aria-checked={isChecked ? 'true' : 'false'}
+          aria-label={`${label}: ${isChecked ? 'Ativado' : 'Desativado'}`}
           onClick={handleChange}
           disabled={disabled}
           className={clsx('filter-toggle__switch', isChecked && 'is-on')}

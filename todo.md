@@ -560,6 +560,115 @@ Este arquivo acompanha o plano de melhorias faseado descrito em `docs/PROPOSTA_A
 
 ---
 
+## Fase 8 – UI/UX & Design System (NOVA)
+
+**Objetivo:** Interface coesa, moderna e acessível.
+
+### Design Tokens & CSS
+
+- [x] [P0] Criar tokens de design completos em `apps/web/src/styles/index.css`:
+  - ✅ Cores semânticas: `--color-success`, `--color-warning`, `--color-error`, `--color-info`
+  - ✅ Status backgrounds para light/dark mode
+  - ✅ Spacing tokens: xs, sm, md, lg, xl, 2xl
+  - ✅ Typography tokens: font-size-xs até 3xl
+  - ✅ Radius, shadows, z-index, transitions
+
+- [x] [P0] Padronizar Dark Mode:
+  - ✅ Todas as variáveis CSS com valores para `.dark`
+  - ✅ Cores semânticas ajustadas para contraste adequado
+  - ✅ Persistência no localStorage com detecção de preferência do sistema
+
+### Acessibilidade (A11y)
+
+- [x] [P1] Corrigir ARIA attributes:
+  - ✅ `FilterMultiSelect.tsx` - aria-expanded, role, aria-label
+  - ✅ `FilterToggle.tsx` - aria-checked para string
+  - ✅ `Input.tsx` - aria-invalid para string
+  - ✅ `Dropdown.tsx` - aria-expanded para string
+  - ✅ `Tabs.tsx` - aria-selected para string
+
+### Layout & Responsividade
+
+- [x] [P0] Sidebar colapsível:
+  - ✅ Toggle button no topo da sidebar
+  - ✅ Transições suaves de 300ms
+  - ✅ Persistência no localStorage
+  - ✅ Mostra apenas ícones quando colapsada
+
+- [x] [P0] Mobile sidebar (drawer):
+  - ✅ Sidebar deslizante em telas < 768px
+  - ✅ Overlay escuro ao abrir
+  - ✅ Fecha automaticamente ao navegar
+  - ✅ Botão hamburger no header
+
+- [x] [P0] Corrigir Welcome Banner:
+  - ✅ Gradiente funcionando (removido conflito com Card)
+  - ✅ Classe CSS `.welcome-banner` dedicada
+
+- [x] [P0] Reposicionar toggle do painel de funções:
+  - ✅ Removido do Header
+  - ✅ Botão dedicado `.functions-panel-toggle` na borda da sidebar
+
+### Classes Utilitárias CSS
+
+- [x] [P1] Criar utilitários de progresso:
+  - ✅ `.progress-bar-track`, `.progress-bar-fill--*`
+
+- [x] [P1] Criar utilitários de status:
+  - ✅ `.status-badge--success/warning/error/info/pending`
+  - ✅ `.status-card--*` para cards de status
+
+- [x] [P1] Criar utilitários de página:
+  - ✅ `.page-header`, `.page-title`, `.page-description`
+  - ✅ `.section`, `.section-title`, `.section-description`
+
+### Busca Global
+
+- [x] [P2] Sistema de busca global (Ctrl+K):
+  - ✅ `apps/web/src/components/search/GlobalSearch.tsx`
+  - ✅ Command Palette estilo VS Code/Spotlight
+  - ✅ Busca em módulos, funções e ações rápidas
+  - ✅ Navegação por teclado (↑↓, Enter, Esc)
+  - ✅ Estilos CSS com animações
+  - ✅ Hook `useGlobalSearch` para controle de estado
+
+### Formulários
+
+- [x] [P2] Melhorar formulários com validação visual:
+  - ✅ Classes `.form-input`, `.form-input--error`, `.form-input--success`
+  - ✅ Animação shake para erros
+  - ✅ `.form-label`, `.form-label--required`
+  - ✅ `.form-helper--error`, `.form-helper--success`
+  - ✅ Checkbox e Radio customizados
+  - ✅ Select estilizado
+  - ✅ Form groups e rows
+
+### Animações & Micro-interações
+
+- [x] [P3] Adicionar animações e micro-interações:
+  - ✅ Fade: `.animate-fade-in`, `.animate-fade-out`
+  - ✅ Slide: `.animate-slide-up/down/left/right`
+  - ✅ Scale: `.animate-scale-in`, `.animate-scale-out`
+  - ✅ Bounce, Pulse, Spin
+  - ✅ Efeito ripple para botões
+  - ✅ `.hover-lift`, `.hover-glow`
+  - ✅ Skeleton loading com shimmer
+  - ✅ `.stagger-children` para animação em sequência
+  - ✅ Focus ring acessível
+  - ✅ Suporte a `prefers-reduced-motion`
+
+### Documentação
+
+- [x] [P3] Documentação completa do Design System:
+  - ✅ `docs/DESIGN_SYSTEM.md` criado
+  - ✅ Tokens de design documentados
+  - ✅ Componentes com exemplos de código
+  - ✅ Classes utilitárias explicadas
+  - ✅ Guia de acessibilidade
+  - ✅ Dark mode e responsividade
+
+---
+
 ## Observações Finais
 
 ### Como usar este arquivo

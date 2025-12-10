@@ -110,7 +110,7 @@ export function Tab({ value, icon, disabled = false, className, children, ...pro
     <button
       type="button"
       role="tab"
-      aria-selected={isActive}
+      aria-selected={isActive ? 'true' : 'false'}
       aria-controls={`tabpanel-${value}`}
       id={`tab-${value}`}
       tabIndex={isActive ? 0 : -1}

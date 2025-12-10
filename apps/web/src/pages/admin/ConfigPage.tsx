@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Settings, Sliders, Palette, Bell, Plug, Save, RotateCcw } from 'lucide-react'
+import { Button, Card } from '@template/design-system'
 
 type ConfigTab = 'geral' | 'aparencia' | 'notificacoes' | 'integracoes'
 
@@ -16,25 +17,25 @@ export function ConfigPage() {
   return (
     <div className="p-6 max-w-6xl mx-auto">
       <div className="flex items-center gap-3 mb-6">
-        <div className="p-2 bg-teal-100 dark:bg-teal-900 rounded-lg">
-          <Settings className="w-6 h-6 text-teal-600 dark:text-teal-400" />
+        <div className="p-2 bg-brand-primary/10 rounded-lg">
+          <Settings className="w-6 h-6 text-brand-primary" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Configurações</h1>
-          <p className="text-gray-500 dark:text-gray-400">Parâmetros e preferências do sistema</p>
+          <h1 className="text-2xl font-bold text-text-primary">Configurações</h1>
+          <p className="text-text-secondary">Parâmetros e preferências do sistema</p>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 p-1 bg-gray-100 dark:bg-gray-800 rounded-lg mb-6 w-fit">
+      <div className="flex gap-1 p-1 bg-surface-muted rounded-lg mb-6 w-fit">
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
               activeTab === tab.id
-                ? 'bg-white dark:bg-gray-700 text-teal-600 dark:text-teal-400 shadow-sm'
-                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                ? 'bg-surface-elevated text-brand-primary shadow-sm'
+                : 'text-text-secondary hover:text-text-primary'
             }`}
           >
             <tab.icon className="w-4 h-4" />
@@ -44,12 +45,12 @@ export function ConfigPage() {
       </div>
 
       {/* Content */}
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+      <Card variant="outlined">
         {activeTab === 'geral' && <ConfigGeral />}
         {activeTab === 'aparencia' && <ConfigAparencia />}
         {activeTab === 'notificacoes' && <ConfigNotificacoes />}
         {activeTab === 'integracoes' && <ConfigIntegracoes />}
-      </div>
+      </Card>
     </div>
   )
 }
@@ -105,15 +106,13 @@ function ConfigGeral() {
         </div>
       </div>
 
-      <div className="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
-        <button className="flex items-center gap-2 px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
-          <RotateCcw className="w-4 h-4" />
+      <div className="flex justify-end gap-3 pt-4 border-t border-border-default">
+        <Button variant="ghost" leftIcon={<RotateCcw size={16} />}>
           Restaurar Padrões
-        </button>
-        <button className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors">
-          <Save className="w-4 h-4" />
+        </Button>
+        <Button variant="primary" leftIcon={<Save size={16} />}>
           Salvar Alterações
-        </button>
+        </Button>
       </div>
     </div>
   )
@@ -168,11 +167,10 @@ function ConfigAparencia() {
         </div>
       </div>
 
-      <div className="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
-        <button className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors">
-          <Save className="w-4 h-4" />
+      <div className="flex justify-end gap-3 pt-4 border-t border-border-default">
+        <Button variant="primary" leftIcon={<Save size={16} />}>
           Salvar Alterações
-        </button>
+        </Button>
       </div>
     </div>
   )
@@ -203,11 +201,10 @@ function ConfigNotificacoes() {
         ))}
       </div>
 
-      <div className="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
-        <button className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors">
-          <Save className="w-4 h-4" />
+      <div className="flex justify-end gap-3 pt-4 border-t border-border-default">
+        <Button variant="primary" leftIcon={<Save size={16} />}>
           Salvar Alterações
-        </button>
+        </Button>
       </div>
     </div>
   )
