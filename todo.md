@@ -701,6 +701,10 @@ Este arquivo acompanha o plano de melhorias faseado descrito em `docs/PROPOSTA_A
   - ✅ `NotFoundPage.tsx` - Button component
   - ✅ `ProfilePage.tsx` - border-border-default
 
+- [x] [P1] Migrar páginas admin para Design System:
+  - ✅ `UsersPage.tsx` - Button, form-input, role colors semânticos
+  - ✅ `ConfigPage.tsx` - form-input, form-select, form-label
+
 ---
 
 ## Observações Finais
