@@ -62,10 +62,11 @@ function ConfigGeral() {
       
       <div className="grid gap-6">
         <div>
-          <label className="form-label">
+          <label htmlFor="app-name" className="form-label">
             Nome da Aplicação
           </label>
           <input
+            id="app-name"
             type="text"
             defaultValue="Template Platform"
             className="form-input"
@@ -73,10 +74,10 @@ function ConfigGeral() {
         </div>
 
         <div>
-          <label className="form-label">
+          <label htmlFor="default-language" className="form-label">
             Idioma Padrão
           </label>
-          <select className="form-select">
+          <select id="default-language" className="form-select">
             <option value="pt-BR">Português (Brasil)</option>
             <option value="en-US">English (US)</option>
             <option value="es">Español</option>
@@ -84,10 +85,10 @@ function ConfigGeral() {
         </div>
 
         <div>
-          <label className="form-label">
+          <label htmlFor="timezone" className="form-label">
             Fuso Horário
           </label>
-          <select className="form-select">
+          <select id="timezone" className="form-select">
             <option value="America/Sao_Paulo">America/Sao_Paulo (GMT-3)</option>
             <option value="America/Cuiaba">America/Cuiaba (GMT-4)</option>
             <option value="UTC">UTC</option>
@@ -100,7 +101,7 @@ function ConfigGeral() {
             <p className="text-sm text-text-secondary">Desabilita acesso para usuários não-admin</p>
           </div>
           <label className="relative inline-flex items-center cursor-pointer">
-            <input type="checkbox" className="sr-only peer" />
+            <input type="checkbox" className="sr-only peer" aria-label="Modo de manutenção" />
             <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-500 peer-checked:bg-teal-600"></div>
           </label>
         </div>
@@ -148,6 +149,8 @@ function ConfigAparencia() {
             {['teal', 'blue', 'purple', 'green', 'orange'].map(color => (
               <button
                 key={color}
+                aria-label={`Selecionar cor ${color}`}
+                title={`Cor ${color}`}
                 className={`w-10 h-10 rounded-full bg-${color}-500 hover:ring-2 hover:ring-offset-2 hover:ring-${color}-500 transition-all`}
                 style={{ backgroundColor: color === 'teal' ? '#14b8a6' : color === 'blue' ? '#3b82f6' : color === 'purple' ? '#8b5cf6' : color === 'green' ? '#22c55e' : '#f97316' }}
               />
@@ -156,10 +159,10 @@ function ConfigAparencia() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label htmlFor="ui-density" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Densidade da Interface
           </label>
-          <select className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+          <select id="ui-density" aria-label="Densidade da interface" className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
             <option value="comfortable">Confortável</option>
             <option value="compact">Compacto</option>
             <option value="spacious">Espaçoso</option>
@@ -194,7 +197,7 @@ function ConfigNotificacoes() {
               <p className="text-sm text-gray-500 dark:text-gray-400">{item.desc}</p>
             </div>
             <label className="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" defaultChecked className="sr-only peer" />
+              <input type="checkbox" defaultChecked className="sr-only peer" aria-label={item.title} />
               <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-500 peer-checked:bg-teal-600"></div>
             </label>
           </div>

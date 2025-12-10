@@ -196,11 +196,16 @@ export default function ETLQualityPage() {
                         <div className="flex items-center gap-2">
                           <div className="flex-1 h-2 bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden">
                             <div
-                              className={`h-full ${
-                                metric.status === 'passed' ? 'bg-green-500' :
-                                metric.status === 'warning' ? 'bg-yellow-500' : 'bg-red-500'
+                              className={`h-full transition-all ${
+                                metric.status === 'passed' ? 'bg-color-success' :
+                                metric.status === 'warning' ? 'bg-color-warning' : 'bg-color-error'
                               }`}
                               style={{ width: `${metric.value}%` }}
+                              role="progressbar"
+                              aria-valuenow={metric.value}
+                              aria-valuemin={0}
+                              aria-valuemax={100}
+                              aria-label={`${metric.name}: ${metric.value}%`}
                             />
                           </div>
                           <span className="text-sm font-medium">{metric.value}%</span>
