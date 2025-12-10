@@ -692,6 +692,10 @@ Este arquivo acompanha o plano de melhorias faseado descrito em `docs/PROPOSTA_A
   - ✅ `ApiDocsPage.tsx` - Button component
   - ✅ `ChangelogPage.tsx` - timeline com tokens
 
+- [x] [P1] Migrar módulo Exemplo para Design System:
+  - ✅ `ExemploPage.tsx` - status-card--info, Button, hover-lift
+  - ✅ `ExampleCard.tsx` - status colors semânticos
+
 ---
 
 ## Observações Finais

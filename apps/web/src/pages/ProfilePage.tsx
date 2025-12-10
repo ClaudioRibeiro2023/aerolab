@@ -8,7 +8,7 @@ export function ProfilePage() {
     <div className="max-w-3xl mx-auto">
       <h1 className="text-2xl font-bold text-text-primary mb-6">Meu Perfil</h1>
 
-      <div className="bg-surface-elevated rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <div className="bg-surface-elevated rounded-xl border border-border-default overflow-hidden">
         {/* Header */}
         <div className="bg-gradient-to-r from-brand-primary to-brand-secondary p-8">
           <div className="flex items-center gap-6">

@@ -1,5 +1,6 @@
 import { AlertTriangle, RefreshCw, Home, ArrowLeft } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import { Button } from '@template/design-system'
 
 interface ErrorPageProps {
   /** Error code (e.g., 404, 500) */
@@ -41,8 +42,8 @@ export function ErrorPage({
         </div>
 
         {/* Icon */}
-        <div className="w-16 h-16 mx-auto rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center mb-6">
-          <AlertTriangle className="w-8 h-8 text-red-600 dark:text-red-400" />
+        <div className="w-16 h-16 mx-auto rounded-full bg-color-error/10 flex items-center justify-center mb-6">
+          <AlertTriangle className="w-8 h-8 text-color-error" />
         </div>
 
         {/* Title */}
@@ -54,28 +55,16 @@ export function ErrorPage({
         {/* Actions */}
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           {showBack && (
-            <button
-              onClick={handleGoBack}
-              className="flex items-center justify-center gap-2 px-6 py-3 bg-surface-elevated text-text-primary rounded-lg hover:bg-surface-muted transition-colors border border-gray-200 dark:border-gray-700"
-            >
-              <ArrowLeft size={18} />
+            <Button variant="outline" leftIcon={<ArrowLeft size={18} />} onClick={handleGoBack}>
               Voltar
-            </button>
+            </Button>
           )}
-          <button
-            onClick={handleGoHome}
-            className="flex items-center justify-center gap-2 px-6 py-3 bg-surface-elevated text-text-primary rounded-lg hover:bg-surface-muted transition-colors border border-gray-200 dark:border-gray-700"
-          >
-            <Home size={18} />
+          <Button variant="outline" leftIcon={<Home size={18} />} onClick={handleGoHome}>
             Início
-          </button>
-          <button
-            onClick={handleReload}
-            className="flex items-center justify-center gap-2 px-6 py-3 bg-brand-primary text-white rounded-lg hover:bg-brand-secondary transition-colors"
-          >
-            <RefreshCw size={18} />
+          </Button>
+          <Button variant="primary" leftIcon={<RefreshCw size={18} />} onClick={handleReload}>
             Recarregar
-          </button>
+          </Button>
         </div>
       </div>
     </div>

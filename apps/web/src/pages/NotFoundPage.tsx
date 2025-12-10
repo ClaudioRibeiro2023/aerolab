@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Home, ArrowLeft } from 'lucide-react'
+import { Button } from '@template/design-system'
 
 export function NotFoundPage() {
   return (
@@ -11,19 +12,13 @@ export function NotFoundPage() {
           A página que você procura não existe ou foi movida.
         </p>
         <div className="flex items-center justify-center gap-4">
-          <button
-            onClick={() => window.history.back()}
-            className="flex items-center gap-2 px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-text-primary hover:bg-surface-muted transition-colors"
-          >
-            <ArrowLeft size={18} />
+          <Button variant="outline" leftIcon={<ArrowLeft size={18} />} onClick={() => window.history.back()}>
             Voltar
-          </button>
-          <Link
-            to="/"
-            className="flex items-center gap-2 px-6 py-2 bg-brand-primary text-white rounded-lg hover:bg-brand-secondary transition-colors"
-          >
-            <Home size={18} />
-            Início
+          </Button>
+          <Link to="/">
+            <Button variant="primary" leftIcon={<Home size={18} />}>
+              Início
+            </Button>
           </Link>
         </div>
       </div>
