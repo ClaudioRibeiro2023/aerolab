@@ -712,6 +712,58 @@ Este arquivo acompanha o plano de melhorias faseado descrito em `docs/PROPOSTA_A
 
 ---
 
+## Evolução do Design System (Dezembro 2024)
+
+### Novos Componentes Criados
+
+- [x] [P1] `StatusBadge` - Badge de status com variantes semânticas:
+  - ✅ `packages/design-system/src/components/StatusBadge/`
+  - ✅ Variantes: success, warning, error, info, pending
+  - ✅ Tamanhos: sm, md
+  - ✅ Suporte a ícones
+  - ✅ Story: `StatusBadge.stories.tsx`
+
+- [x] [P1] `Alert` - Componente de alerta com variantes:
+  - ✅ `packages/design-system/src/components/Alert/`
+  - ✅ Variantes: info, success, warning, error
+  - ✅ Suporte a título, descrição, ícone e ações
+  - ✅ Story: `Alert.stories.tsx`
+
+- [x] [P1] `PageHeader` - Header de página reutilizável:
+  - ✅ `packages/design-system/src/layout/PageHeader/`
+  - ✅ Props: title, description, icon, actions, children
+  - ✅ Story: `PageHeader.stories.tsx`
+
+- [x] [P1] `EmptyState` - Estado vazio para listas/tabelas:
+  - ✅ `packages/design-system/src/layout/EmptyState/`
+  - ✅ Props: title, description, icon, actions, children
+  - ✅ Story: `EmptyState.stories.tsx`
+
+### Integração dos Novos Componentes
+
+- [x] [P1] Integrar `PageHeader` nos módulos:
+  - ✅ `ETLPage.tsx` - Header com ícone Database
+  - ✅ `ETLLogsPage.tsx` - Header com ícone History
+  - ✅ `MetricsPage.tsx` - Header com ícone Activity
+  - ✅ `HealthPage.tsx` - Header com ícone HeartPulse
+  - ✅ `DocsPage.tsx` - Header com ícone BookOpen
+  - ✅ `ExemploPage.tsx` - Header com ícone Sparkles
+
+- [x] [P1] Integrar `StatusBadge` nos módulos:
+  - ✅ `ExampleCard.tsx` - Status de exemplos
+  - ✅ `MyDataPage.tsx` - Status de solicitações LGPD
+
+- [x] [P1] Integrar `Alert` e `EmptyState`:
+  - ✅ `MyDataPage.tsx` - Alert de contato DPO, EmptyState para lista vazia
+
+### Limpeza do Repositório
+
+- [x] [P0] Remover pasta `front-modelo/` redundante:
+  - ✅ Removido em 2024-12-10
+  - ✅ Era uma cópia completa do projeto (247MB, 21.952 arquivos)
+
+---
+
 ## Observações Finais
 
 ### Como usar este arquivo
