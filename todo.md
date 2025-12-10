@@ -676,6 +676,17 @@ Este arquivo acompanha o plano de melhorias faseado descrito em `docs/PROPOSTA_A
   - ✅ Eliminadas classes `bg-gray-*`, `text-gray-*` hardcoded
   - ✅ Netlify.toml para deploy em produção
 
+- [x] [P1] Migrar módulo Observability para Design System:
+  - ✅ `HealthPage.tsx` - tokens + Button component
+  - ✅ `MetricsPage.tsx` - tokens + Button component
+  - ✅ `LogsPage.tsx` - form-input, form-select, Button
+  - ✅ `DataQualityPage.tsx` - status-card--, Button
+
+- [x] [P1] Migrar módulo LGPD para Design System:
+  - ✅ `LGPDPage.tsx` - cards com hover-lift
+  - ✅ `ConsentPage.tsx` - status-card--info
+  - ✅ `MyDataPage.tsx` - Button, animate-scale-in no modal
+
 ---
 
 ## Observações Finais
