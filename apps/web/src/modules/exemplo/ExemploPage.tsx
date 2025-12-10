@@ -2,6 +2,7 @@ import { Info, Code, Folder, FileText, Plus } from 'lucide-react'
 import { ExampleCard } from './components'
 import { useExampleData } from './hooks'
 import { Button } from '@template/design-system'
+import { PageHeader } from '@template/design-system'
 
 export function ExemploPage() {
   const { items, isLoading } = useExampleData()
@@ -17,18 +18,24 @@ export function ExemploPage() {
               Este é um módulo de exemplo
             </h2>
             <p className="text-color-info/80">
-              Substitua este conteúdo pelo seu próprio módulo. Este arquivo serve como 
-              referência de estrutura e pode ser removido após criar seus módulos.
+              Substitua este conteúdo pelo seu próprio módulo. Este arquivo serve como referência de
+              estrutura e pode ser removido após criar seus módulos.
             </p>
           </div>
         </div>
       </div>
 
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-text-primary">Exemplo de Módulo</h1>
-        <Button variant="primary" leftIcon={<Plus size={18} />}>
-          Novo Item
-        </Button>
+      <div className="mb-6">
+        <PageHeader
+          title="Exemplo de Módulo"
+          description="Modelo de referência para criação de novos módulos. Use como base para os seus."
+          icon={<Code size={24} />}
+          actions={
+            <Button variant="primary" leftIcon={<Plus size={18} />}>
+              Novo Item
+            </Button>
+          }
+        />
       </div>
 
       {/* Example Items */}
@@ -54,10 +61,11 @@ export function ExemploPage() {
             <h3 className="font-semibold text-text-primary">Estrutura de Módulos</h3>
           </div>
           <p className="text-text-secondary text-sm mb-4">
-            Cada módulo deve ter sua própria pasta em <code className="bg-surface-muted px-1 rounded">src/modules/</code>
+            Cada módulo deve ter sua própria pasta em{' '}
+            <code className="bg-surface-muted px-1 rounded">src/modules/</code>
           </p>
           <pre className="bg-surface-muted p-3 rounded-lg text-xs overflow-x-auto">
-{`modules/exemplo/
+            {`modules/exemplo/
 ├── components/
 ├── hooks/
 ├── services/
@@ -74,10 +82,11 @@ export function ExemploPage() {
             <h3 className="font-semibold text-text-primary">Adicionando Rotas</h3>
           </div>
           <p className="text-text-secondary text-sm mb-4">
-            Adicione suas rotas no arquivo <code className="bg-surface-muted px-1 rounded">App.tsx</code>
+            Adicione suas rotas no arquivo{' '}
+            <code className="bg-surface-muted px-1 rounded">App.tsx</code>
           </p>
           <pre className="bg-surface-muted p-3 rounded-lg text-xs overflow-x-auto">
-{`<Route 
+            {`<Route 
   path="/meu-modulo/*" 
   element={<MeuModuloRoutes />} 
 />`}
@@ -96,15 +105,23 @@ export function ExemploPage() {
         <ul className="space-y-2 text-text-secondary">
           <li className="flex items-center gap-2">
             <input type="checkbox" className="rounded" readOnly aria-label="Checklist item" />
-            <span>Criar pasta do módulo em <code className="bg-surface-muted px-1 rounded">src/modules/</code></span>
+            <span>
+              Criar pasta do módulo em{' '}
+              <code className="bg-surface-muted px-1 rounded">src/modules/</code>
+            </span>
           </li>
           <li className="flex items-center gap-2">
             <input type="checkbox" className="rounded" readOnly aria-label="Checklist item" />
-            <span>Adicionar rota no <code className="bg-surface-muted px-1 rounded">App.tsx</code></span>
+            <span>
+              Adicionar rota no <code className="bg-surface-muted px-1 rounded">App.tsx</code>
+            </span>
           </li>
           <li className="flex items-center gap-2">
             <input type="checkbox" className="rounded" readOnly aria-label="Checklist item" />
-            <span>Adicionar item no menu em <code className="bg-surface-muted px-1 rounded">AppSidebar.tsx</code></span>
+            <span>
+              Adicionar item no menu em{' '}
+              <code className="bg-surface-muted px-1 rounded">AppSidebar.tsx</code>
+            </span>
           </li>
           <li className="flex items-center gap-2">
             <input type="checkbox" className="rounded" readOnly aria-label="Checklist item" />

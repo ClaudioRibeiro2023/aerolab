@@ -1,2 +1,2 @@
-export { PageHeader, type PageHeaderProps } from './PageHeader'
 export { EmptyState, type EmptyStateProps } from './EmptyState'
+export { default } from './EmptyState'

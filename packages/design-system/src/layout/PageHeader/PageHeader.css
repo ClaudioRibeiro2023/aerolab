@@ -1,0 +1,64 @@
+/**
+ * PageHeader Styles
+ */
+
+.ds-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-lg, 1.5rem);
+}
+
+.ds-page-header__main {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md, 1rem);
+}
+
+.ds-page-header__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  border-radius: var(--radius-xl, 0.75rem);
+  background: rgba(0, 135, 168, 0.1);
+  color: var(--brand-primary, #0087a8);
+}
+
+.ds-page-header__title {
+  margin: 0;
+  font-size: var(--font-size-3xl, 1.875rem);
+  font-weight: 700;
+  color: var(--text-primary, #0f172a);
+}
+
+.ds-page-header__description {
+  margin: 0.25rem 0 0;
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--text-secondary, #475569);
+}
+
+.ds-page-header__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.ds-page-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm, 0.5rem);
+}
+
+@media (max-width: 640px) {
+  .ds-page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ds-page-header__actions {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+}

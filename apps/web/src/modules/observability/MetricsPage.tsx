@@ -1,5 +1,14 @@
-import { Activity, TrendingUp, TrendingDown, Clock, Server, Database, Zap, RefreshCw } from 'lucide-react'
-import { Button } from '@template/design-system'
+import {
+  Activity,
+  TrendingUp,
+  TrendingDown,
+  Clock,
+  Server,
+  Database,
+  Zap,
+  RefreshCw,
+} from 'lucide-react'
+import { Button, PageHeader } from '@template/design-system'
 
 // Mock metrics data
 const MOCK_METRICS = {
@@ -29,20 +38,16 @@ export default function MetricsPage() {
       {/* Header */}
       <div className="bg-surface-elevated border-b border-border-default">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-color-info/10 text-color-info">
-                <Activity size={28} />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-text-primary">Métricas</h1>
-                <p className="text-text-secondary">Prometheus/metrics de API e jobs</p>
-              </div>
-            </div>
-            <Button variant="ghost" leftIcon={<RefreshCw size={18} />}>
-              Atualizar
-            </Button>
-          </div>
+          <PageHeader
+            title="Métricas"
+            description="Prometheus/metrics de API e jobs"
+            icon={<Activity size={28} />}
+            actions={
+              <Button variant="ghost" leftIcon={<RefreshCw size={18} />}>
+                Atualizar
+              </Button>
+            }
+          />
         </div>
       </div>
 
@@ -97,28 +102,49 @@ export default function MetricsPage() {
               </thead>
               <tbody>
                 {SERVICES.map(service => (
-                  <tr key={service.name} className="border-b border-gray-100 dark:border-gray-700/50 hover:bg-gray-50 dark:hover:bg-gray-700/30">
+                  <tr
+                    key={service.name}
+                    className="border-b border-gray-100 dark:border-gray-700/50 hover:bg-gray-50 dark:hover:bg-gray-700/30"
+                  >
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
-                        {service.name.includes('Redis') ? <Database size={16} className="text-gray-400" /> :
-                         service.name.includes('PostgreSQL') ? <Database size={16} className="text-gray-400" /> :
-                         <Server size={16} className="text-gray-400" />}
-                        <span className="font-medium text-gray-900 dark:text-white">{service.name}</span>
+                        {service.name.includes('Redis') ? (
+                          <Database size={16} className="text-gray-400" />
+                        ) : service.name.includes('PostgreSQL') ? (
+                          <Database size={16} className="text-gray-400" />
+                        ) : (
+                          <Server size={16} className="text-gray-400" />
+                        )}
+                        <span className="font-medium text-gray-900 dark:text-white">
+                          {service.name}
+                        </span>
                       </div>
                     </td>
                     <td className="px-4 py-3">
-                      <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium ${
-                        service.status === 'healthy' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' :
-                        service.status === 'warning' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400' :
-                        'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
-                      }`}>
-                        <span className={`w-1.5 h-1.5 rounded-full ${STATUS_COLORS[service.status as keyof typeof STATUS_COLORS]}`} />
+                      <span
+                        className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium ${
+                          service.status === 'healthy'
+                            ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                            : service.status === 'warning'
+                              ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
+                              : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+                        }`}
+                      >
+                        <span
+                          className={`w-1.5 h-1.5 rounded-full ${STATUS_COLORS[service.status as keyof typeof STATUS_COLORS]}`}
+                        />
                         {service.status}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{service.requests.toLocaleString()}</td>
-                    <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{service.latency}ms</td>
-                    <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{service.errors}%</td>
+                    <td className="px-4 py-3 text-gray-600 dark:text-gray-400">
+                      {service.requests.toLocaleString()}
+                    </td>
+                    <td className="px-4 py-3 text-gray-600 dark:text-gray-400">
+                      {service.latency}ms
+                    </td>
+                    <td className="px-4 py-3 text-gray-600 dark:text-gray-400">
+                      {service.errors}%
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -129,7 +155,9 @@ export default function MetricsPage() {
         {/* Charts Placeholder */}
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Requisições por Tempo</h3>
+            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">
+              Requisições por Tempo
+            </h3>
             <div className="h-48 flex items-center justify-center text-gray-400">
               <div className="text-center">
                 <Activity size={40} className="mx-auto mb-2 opacity-50" />
@@ -139,7 +167,9 @@ export default function MetricsPage() {
             </div>
           </div>
           <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Latência p95/p99</h3>
+            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">
+              Latência p95/p99
+            </h3>
             <div className="h-48 flex items-center justify-center text-gray-400">
               <div className="text-center">
                 <Clock size={40} className="mx-auto mb-2 opacity-50" />
@@ -177,7 +207,9 @@ function MetricCard({ title, value, unit, change, icon }: MetricCardProps) {
         <span className="text-sm text-gray-500">{unit}</span>
       </div>
       {!isNeutral && (
-        <div className={`flex items-center gap-1 mt-2 text-sm ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
+        <div
+          className={`flex items-center gap-1 mt-2 text-sm ${isPositive ? 'text-green-600' : 'text-red-600'}`}
+        >
           {isPositive ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
           <span>{Math.abs(change)}%</span>
         </div>

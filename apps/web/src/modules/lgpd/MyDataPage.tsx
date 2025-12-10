@@ -1,6 +1,17 @@
 import { useState } from 'react'
-import { User, Download, Trash2, AlertTriangle, CheckCircle, Clock, FileDown, Mail } from 'lucide-react'
-import { Button } from '@template/design-system'
+import {
+  User,
+  Download,
+  Trash2,
+  AlertTriangle,
+  CheckCircle,
+  Clock,
+  FileDown,
+  Mail,
+} from 'lucide-react'
+import { Button, StatusBadge } from '@template/design-system'
+import { EmptyState } from '@template/design-system'
+import { Alert } from '@template/design-system'
 
 type RequestStatus = 'pending' | 'processing' | 'completed'
 
@@ -13,14 +24,23 @@ interface DataRequest {
 }
 
 const MOCK_REQUESTS: DataRequest[] = [
-  { id: '1', type: 'export', status: 'completed', createdAt: '2024-02-15T10:00:00', completedAt: '2024-02-15T10:30:00' },
+  {
+    id: '1',
+    type: 'export',
+    status: 'completed',
+    createdAt: '2024-02-15T10:00:00',
+    completedAt: '2024-02-15T10:30:00',
+  },
   { id: '2', type: 'export', status: 'processing', createdAt: '2024-03-10T14:00:00' },
 ]
 
-const STATUS_CONFIG: Record<RequestStatus, { icon: typeof Clock; color: string; label: string }> = {
-  pending: { icon: Clock, color: 'text-gray-500', label: 'Pendente' },
-  processing: { icon: Clock, color: 'text-blue-500', label: 'Em processamento' },
-  completed: { icon: CheckCircle, color: 'text-green-500', label: 'Concluído' },
+const STATUS_CONFIG: Record<
+  RequestStatus,
+  { icon: typeof Clock; label: string; variant: 'warning' | 'info' | 'success' }
+> = {
+  pending: { icon: Clock, label: 'Pendente', variant: 'warning' },
+  processing: { icon: Clock, label: 'Em processamento', variant: 'info' },
+  completed: { icon: CheckCircle, label: 'Concluído', variant: 'success' },
 }
 
 export default function MyDataPage() {
@@ -72,8 +92,8 @@ export default function MyDataPage() {
               <h2 className="text-lg font-semibold text-text-primary">Exportar Dados</h2>
             </div>
             <p className="text-sm text-text-secondary mb-4">
-              Solicite uma cópia de todos os seus dados pessoais armazenados em nosso sistema. 
-              O arquivo será enviado para seu email em até 24 horas.
+              Solicite uma cópia de todos os seus dados pessoais armazenados em nosso sistema. O
+              arquivo será enviado para seu email em até 24 horas.
             </p>
             <Button
               variant="primary"
@@ -94,8 +114,8 @@ export default function MyDataPage() {
               <h2 className="text-lg font-semibold text-text-primary">Excluir Dados</h2>
             </div>
             <p className="text-sm text-text-secondary mb-4">
-              Solicite a exclusão permanente de todos os seus dados pessoais. 
-              Esta ação é irreversível e pode levar até 30 dias.
+              Solicite a exclusão permanente de todos os seus dados pessoais. Esta ação é
+              irreversível e pode levar até 30 dias.
             </p>
             <Button
               variant="danger"
@@ -117,7 +137,7 @@ export default function MyDataPage() {
                 <h3 className="text-xl font-bold">Confirmar Exclusão</h3>
               </div>
               <p className="text-text-secondary mb-4">
-                Você está prestes a solicitar a exclusão permanente de todos os seus dados pessoais. 
+                Você está prestes a solicitar a exclusão permanente de todos os seus dados pessoais.
                 Esta ação é <strong>irreversível</strong>.
               </p>
               <ul className="text-sm text-text-muted mb-6 space-y-1">
@@ -126,18 +146,10 @@ export default function MyDataPage() {
                 <li>• Você receberá uma confirmação por email</li>
               </ul>
               <div className="flex gap-3">
-                <Button
-                  variant="outline"
-                  fullWidth
-                  onClick={() => setShowDeleteConfirm(false)}
-                >
+                <Button variant="outline" fullWidth onClick={() => setShowDeleteConfirm(false)}>
                   Cancelar
                 </Button>
-                <Button
-                  variant="danger"
-                  fullWidth
-                  onClick={requestDelete}
-                >
+                <Button variant="danger" fullWidth onClick={requestDelete}>
                   Confirmar Exclusão
                 </Button>
               </div>
@@ -146,11 +158,17 @@ export default function MyDataPage() {
         )}
 
         {/* Request History */}
-        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Histórico de Solicitações</h2>
-          
+        <div className="bg-surface-elevated rounded-xl border border-border-default p-6">
+          <h2 className="text-lg font-semibold text-text-primary mb-4">
+            Histórico de Solicitações
+          </h2>
+
           {requests.length === 0 ? (
-            <p className="text-gray-500 text-center py-8">Nenhuma solicitação realizada</p>
+            <EmptyState
+              title="Nenhuma solicitação realizada"
+              description="Suas solicitações de exportação ou exclusão de dados aparecerão aqui."
+              icon={<Clock size={24} />}
+            />
           ) : (
             <div className="space-y-3">
               {requests.map(request => {
@@ -159,33 +177,37 @@ export default function MyDataPage() {
                 return (
                   <div
                     key={request.id}
-                    className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg"
+                    className="flex items-center justify-between p-4 bg-surface-muted rounded-lg"
                   >
                     <div className="flex items-center gap-3">
                       {request.type === 'export' ? (
-                        <Download size={20} className="text-blue-500" />
+                        <Download size={20} className="text-color-info" />
                       ) : (
-                        <Trash2 size={20} className="text-red-500" />
+                        <Trash2 size={20} className="text-color-error" />
                       )}
                       <div>
-                        <p className="font-medium text-gray-900 dark:text-white">
+                        <p className="font-medium text-text-primary">
                           {request.type === 'export' ? 'Exportação de Dados' : 'Exclusão de Dados'}
                         </p>
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm text-text-muted">
                           Solicitado em {new Date(request.createdAt).toLocaleDateString('pt-BR')}
+                          {request.completedAt &&
+                            ` · Concluído em ${new Date(request.completedAt).toLocaleDateString('pt-BR')}`}
                         </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <StatusIcon size={16} className={config.color} />
-                      <span className={`text-sm ${config.color}`}>{config.label}</span>
+                      <StatusIcon size={16} className="text-text-muted" />
+                      <StatusBadge variant={config.variant} size="sm">
+                        {config.label}
+                      </StatusBadge>
                       {request.status === 'completed' && request.type === 'export' && (
                         <button
                           type="button"
-                          className="ml-2 p-1.5 hover:bg-gray-200 dark:hover:bg-gray-600 rounded"
+                          className="ml-2 p-1.5 rounded hover:bg-surface-muted"
                           title="Download"
                         >
-                          <FileDown size={16} className="text-primary" />
+                          <FileDown size={16} className="text-brand-primary" />
                         </button>
                       )}
                     </div>
@@ -197,12 +219,19 @@ export default function MyDataPage() {
         </div>
 
         {/* Contact */}
-        <div className="mt-8 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center gap-3">
-          <Mail size={20} className="text-gray-400" />
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            Dúvidas? Entre em contato: <a href="mailto:dpo@empresa.com.br" className="text-primary hover:underline">dpo@empresa.com.br</a>
-          </p>
-        </div>
+        <Alert
+          variant="info"
+          icon={<Mail size={20} />}
+          description={
+            <span>
+              Dúvidas? Entre em contato:{' '}
+              <a href="mailto:dpo@empresa.com.br" className="text-color-info hover:underline">
+                dpo@empresa.com.br
+              </a>
+            </span>
+          }
+          className="mt-8"
+        />
       </div>
     </div>
   )

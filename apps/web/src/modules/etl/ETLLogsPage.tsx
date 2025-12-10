@@ -1,6 +1,15 @@
 import { useState, useMemo } from 'react'
-import { History, Search, Filter, Download, RefreshCw, CheckCircle, XCircle, Clock } from 'lucide-react'
-import { Button } from '@template/design-system'
+import {
+  History,
+  Search,
+  Filter,
+  Download,
+  RefreshCw,
+  CheckCircle,
+  XCircle,
+  Clock,
+} from 'lucide-react'
+import { Button, PageHeader } from '@template/design-system'
 import type { ImportLogEntry, ImportStatus } from './types'
 
 interface LogEntry {
@@ -33,8 +42,16 @@ const MOCK_LOGS: LogEntry[] = [
     logs: [
       { timestamp: '2024-03-12T10:00:00', level: 'info', message: 'Iniciando importação' },
       { timestamp: '2024-03-12T10:01:00', level: 'info', message: 'Processando 5000 registros' },
-      { timestamp: '2024-03-12T10:04:00', level: 'warning', message: '15 registros com erros de validação' },
-      { timestamp: '2024-03-12T10:05:30', level: 'info', message: 'Importação concluída com sucesso' },
+      {
+        timestamp: '2024-03-12T10:04:00',
+        level: 'warning',
+        message: '15 registros com erros de validação',
+      },
+      {
+        timestamp: '2024-03-12T10:05:30',
+        level: 'info',
+        message: 'Importação concluída com sucesso',
+      },
     ],
   },
   {
@@ -67,8 +84,16 @@ const MOCK_LOGS: LogEntry[] = [
     recordsError: 1400,
     logs: [
       { timestamp: '2024-03-12T08:00:00', level: 'info', message: 'Iniciando parse do JSON' },
-      { timestamp: '2024-03-12T08:01:00', level: 'warning', message: 'Formato inconsistente detectado' },
-      { timestamp: '2024-03-12T08:02:15', level: 'error', message: 'Erro fatal: JSON malformado na linha 601' },
+      {
+        timestamp: '2024-03-12T08:01:00',
+        level: 'warning',
+        message: 'Formato inconsistente detectado',
+      },
+      {
+        timestamp: '2024-03-12T08:02:15',
+        level: 'error',
+        message: 'Erro fatal: JSON malformado na linha 601',
+      },
     ],
   },
   {
@@ -84,13 +109,24 @@ const MOCK_LOGS: LogEntry[] = [
     recordsError: 0,
     logs: [
       { timestamp: '2024-03-11T14:00:00', level: 'info', message: 'Lendo shapefile' },
-      { timestamp: '2024-03-11T14:05:00', level: 'info', message: 'Convertendo coordenadas para EPSG:4326' },
-      { timestamp: '2024-03-11T14:10:00', level: 'info', message: 'Importação geoespacial concluída' },
+      {
+        timestamp: '2024-03-11T14:05:00',
+        level: 'info',
+        message: 'Convertendo coordenadas para EPSG:4326',
+      },
+      {
+        timestamp: '2024-03-11T14:10:00',
+        level: 'info',
+        message: 'Importação geoespacial concluída',
+      },
     ],
   },
 ]
 
-const STATUS_CONFIG: Record<ImportStatus, { icon: typeof CheckCircle; color: string; label: string }> = {
+const STATUS_CONFIG: Record<
+  ImportStatus,
+  { icon: typeof CheckCircle; color: string; label: string }
+> = {
   completed: { icon: CheckCircle, color: 'text-green-500', label: 'Concluído' },
   failed: { icon: XCircle, color: 'text-red-500', label: 'Falha' },
   running: { icon: Clock, color: 'text-blue-500', label: 'Em execução' },
@@ -122,25 +158,21 @@ export default function ETLLogsPage() {
       {/* Header */}
       <div className="bg-surface-elevated border-b border-border-default">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-color-warning/10 text-color-warning">
-                <History size={28} />
+          <PageHeader
+            title="Logs & Histórico"
+            description="Rastreabilidade e reprocessamento"
+            icon={<History size={28} />}
+            actions={
+              <div className="flex items-center gap-2">
+                <Button variant="ghost" leftIcon={<Download size={18} />}>
+                  Exportar
+                </Button>
+                <Button variant="ghost" leftIcon={<RefreshCw size={18} />}>
+                  Atualizar
+                </Button>
               </div>
-              <div>
-                <h1 className="text-2xl font-bold text-text-primary">Logs & Histórico</h1>
-                <p className="text-text-secondary">Rastreabilidade e reprocessamento</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <Button variant="ghost" leftIcon={<Download size={18} />}>
-                Exportar
-              </Button>
-              <Button variant="ghost" leftIcon={<RefreshCw size={18} />}>
-                Atualizar
-              </Button>
-            </div>
-          </div>
+            }
+          />
         </div>
       </div>
 
@@ -191,7 +223,9 @@ export default function ETLLogsPage() {
                   }`}
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-medium text-gray-900 dark:text-white">{log.sourceName}</span>
+                    <span className="font-medium text-gray-900 dark:text-white">
+                      {log.sourceName}
+                    </span>
                     <div className={`flex items-center gap-1 ${config.color}`}>
                       <StatusIcon size={16} />
                       <span className="text-sm">{config.label}</span>
@@ -204,17 +238,11 @@ export default function ETLLogsPage() {
                     <span className="text-gray-500">
                       Total: {log.recordsTotal.toLocaleString()}
                     </span>
-                    <span className="text-green-600">
-                      ✓ {log.recordsSuccess.toLocaleString()}
-                    </span>
+                    <span className="text-green-600">✓ {log.recordsSuccess.toLocaleString()}</span>
                     {log.recordsError > 0 && (
-                      <span className="text-red-600">
-                        ✗ {log.recordsError.toLocaleString()}
-                      </span>
+                      <span className="text-red-600">✗ {log.recordsError.toLocaleString()}</span>
                     )}
-                    {log.duration && (
-                      <span className="text-gray-400">⏱ {log.duration}</span>
-                    )}
+                    {log.duration && <span className="text-gray-400">⏱ {log.duration}</span>}
                   </div>
                 </button>
               )
@@ -232,7 +260,9 @@ export default function ETLLogsPage() {
             {selectedLog ? (
               <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6 sticky top-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-bold text-gray-900 dark:text-white">{selectedLog.sourceName}</h2>
+                  <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+                    {selectedLog.sourceName}
+                  </h2>
                   <button
                     type="button"
                     className="flex items-center gap-1 text-sm text-primary hover:underline"
@@ -246,24 +276,35 @@ export default function ETLLogsPage() {
                 <div className="grid grid-cols-3 gap-3 mb-4">
                   <div className="p-3 bg-gray-50 dark:bg-gray-700/50 rounded text-center">
                     <div className="text-xs text-gray-500">Total</div>
-                    <div className="font-bold text-gray-900 dark:text-white">{selectedLog.recordsTotal.toLocaleString()}</div>
+                    <div className="font-bold text-gray-900 dark:text-white">
+                      {selectedLog.recordsTotal.toLocaleString()}
+                    </div>
                   </div>
                   <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded text-center">
                     <div className="text-xs text-green-600">Sucesso</div>
-                    <div className="font-bold text-green-700">{selectedLog.recordsSuccess.toLocaleString()}</div>
+                    <div className="font-bold text-green-700">
+                      {selectedLog.recordsSuccess.toLocaleString()}
+                    </div>
                   </div>
                   <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded text-center">
                     <div className="text-xs text-red-600">Erros</div>
-                    <div className="font-bold text-red-700">{selectedLog.recordsError.toLocaleString()}</div>
+                    <div className="font-bold text-red-700">
+                      {selectedLog.recordsError.toLocaleString()}
+                    </div>
                   </div>
                 </div>
 
                 {/* Timeline */}
                 <div>
-                  <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Timeline</h3>
+                  <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                    Timeline
+                  </h3>
                   <div className="space-y-2 max-h-[400px] overflow-y-auto">
                     {selectedLog.logs.map((entry, idx) => (
-                      <div key={idx} className={`flex gap-3 p-2 rounded ${LOG_LEVEL_COLORS[entry.level]}`}>
+                      <div
+                        key={idx}
+                        className={`flex gap-3 p-2 rounded ${LOG_LEVEL_COLORS[entry.level]}`}
+                      >
                         <span className="text-xs font-mono whitespace-nowrap opacity-75">
                           {new Date(entry.timestamp).toLocaleTimeString('pt-BR')}
                         </span>

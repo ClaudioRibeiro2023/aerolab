@@ -1,6 +1,16 @@
 import { useState, useEffect } from 'react'
-import { HeartPulse, CheckCircle, XCircle, AlertTriangle, RefreshCw, Clock, Database, Server, Wifi } from 'lucide-react'
-import { Button } from '@template/design-system'
+import {
+  HeartPulse,
+  CheckCircle,
+  XCircle,
+  AlertTriangle,
+  RefreshCw,
+  Clock,
+  Database,
+  Server,
+  Wifi,
+} from 'lucide-react'
+import { Button, PageHeader } from '@template/design-system'
 
 type HealthStatus = 'healthy' | 'degraded' | 'unhealthy'
 
@@ -16,18 +26,61 @@ interface HealthCheck {
 // Mock health data
 const MOCK_HEALTH: HealthCheck[] = [
   { name: 'API Server', status: 'healthy', latency: 12, lastCheck: new Date().toISOString() },
-  { name: 'PostgreSQL', status: 'healthy', latency: 25, lastCheck: new Date().toISOString(), details: { connections: 45, maxConnections: 100 } },
-  { name: 'Redis Cache', status: 'healthy', latency: 2, lastCheck: new Date().toISOString(), details: { usedMemory: '256MB', hitRate: '98.5%' } },
+  {
+    name: 'PostgreSQL',
+    status: 'healthy',
+    latency: 25,
+    lastCheck: new Date().toISOString(),
+    details: { connections: 45, maxConnections: 100 },
+  },
+  {
+    name: 'Redis Cache',
+    status: 'healthy',
+    latency: 2,
+    lastCheck: new Date().toISOString(),
+    details: { usedMemory: '256MB', hitRate: '98.5%' },
+  },
   { name: 'Keycloak Auth', status: 'healthy', latency: 85, lastCheck: new Date().toISOString() },
-  { name: 'File Storage', status: 'degraded', latency: 450, message: 'Alta latência detectada', lastCheck: new Date().toISOString() },
-  { name: 'Email Service', status: 'unhealthy', message: 'Conexão recusada', lastCheck: new Date().toISOString() },
-  { name: 'Background Jobs', status: 'healthy', lastCheck: new Date().toISOString(), details: { queued: 12, processing: 3, failed: 0 } },
+  {
+    name: 'File Storage',
+    status: 'degraded',
+    latency: 450,
+    message: 'Alta latência detectada',
+    lastCheck: new Date().toISOString(),
+  },
+  {
+    name: 'Email Service',
+    status: 'unhealthy',
+    message: 'Conexão recusada',
+    lastCheck: new Date().toISOString(),
+  },
+  {
+    name: 'Background Jobs',
+    status: 'healthy',
+    lastCheck: new Date().toISOString(),
+    details: { queued: 12, processing: 3, failed: 0 },
+  },
 ]
 
 const STATUS_CONFIG = {
-  healthy: { icon: CheckCircle, color: 'text-green-500', bg: 'bg-green-50 dark:bg-green-900/20', label: 'Saudável' },
-  degraded: { icon: AlertTriangle, color: 'text-yellow-500', bg: 'bg-yellow-50 dark:bg-yellow-900/20', label: 'Degradado' },
-  unhealthy: { icon: XCircle, color: 'text-red-500', bg: 'bg-red-50 dark:bg-red-900/20', label: 'Indisponível' },
+  healthy: {
+    icon: CheckCircle,
+    color: 'text-green-500',
+    bg: 'bg-green-50 dark:bg-green-900/20',
+    label: 'Saudável',
+  },
+  degraded: {
+    icon: AlertTriangle,
+    color: 'text-yellow-500',
+    bg: 'bg-yellow-50 dark:bg-yellow-900/20',
+    label: 'Degradado',
+  },
+  unhealthy: {
+    icon: XCircle,
+    color: 'text-red-500',
+    bg: 'bg-red-50 dark:bg-red-900/20',
+    label: 'Indisponível',
+  },
 }
 
 export default function HealthPage() {
@@ -37,8 +90,8 @@ export default function HealthPage() {
   const overallStatus: HealthStatus = MOCK_HEALTH.some(h => h.status === 'unhealthy')
     ? 'unhealthy'
     : MOCK_HEALTH.some(h => h.status === 'degraded')
-    ? 'degraded'
-    : 'healthy'
+      ? 'degraded'
+      : 'healthy'
 
   const refresh = () => {
     setIsRefreshing(true)
@@ -64,30 +117,26 @@ export default function HealthPage() {
       {/* Header */}
       <div className="bg-surface-elevated border-b border-border-default">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className={`p-2 rounded-lg ${STATUS_CONFIG[overallStatus].bg} ${STATUS_CONFIG[overallStatus].color}`}>
-                <HeartPulse size={28} />
+          <PageHeader
+            title="Saúde do Sistema"
+            description="Health checks, filas e storage"
+            icon={<HeartPulse size={28} />}
+            actions={
+              <div className="flex items-center gap-4">
+                <span className="text-sm text-text-muted">
+                  Última atualização: {lastRefresh.toLocaleTimeString('pt-BR')}
+                </span>
+                <Button
+                  variant="ghost"
+                  leftIcon={<RefreshCw size={18} className={isRefreshing ? 'animate-spin' : ''} />}
+                  onClick={refresh}
+                  disabled={isRefreshing}
+                >
+                  Atualizar
+                </Button>
               </div>
-              <div>
-                <h1 className="text-2xl font-bold text-text-primary">Saúde do Sistema</h1>
-                <p className="text-text-secondary">Health checks, filas e storage</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-text-muted">
-                Última atualização: {lastRefresh.toLocaleTimeString('pt-BR')}
-              </span>
-              <Button 
-                variant="ghost" 
-                leftIcon={<RefreshCw size={18} className={isRefreshing ? 'animate-spin' : ''} />}
-                onClick={refresh}
-                disabled={isRefreshing}
-              >
-                Atualizar
-              </Button>
-            </div>
-          </div>
+            }
+          />
         </div>
       </div>
 
@@ -104,7 +153,8 @@ export default function HealthPage() {
                 Status Geral: {STATUS_CONFIG[overallStatus].label}
               </h2>
               <p className="text-text-secondary">
-                {MOCK_HEALTH.filter(h => h.status === 'healthy').length} de {MOCK_HEALTH.length} serviços operacionais
+                {MOCK_HEALTH.filter(h => h.status === 'healthy').length} de {MOCK_HEALTH.length}{' '}
+                serviços operacionais
               </p>
             </div>
           </div>
@@ -116,7 +166,7 @@ export default function HealthPage() {
             const config = STATUS_CONFIG[check.status]
             const StatusIcon = config.icon
             const ServiceIcon = getIcon(check.name)
-            
+
             return (
               <div
                 key={check.name}
@@ -131,7 +181,9 @@ export default function HealthPage() {
                 </div>
 
                 <div className="flex items-center gap-4 text-sm">
-                  <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${config.bg} ${config.color}`}>
+                  <span
+                    className={`px-2 py-0.5 rounded-full text-xs font-medium ${config.bg} ${config.color}`}
+                  >
                     {config.label}
                   </span>
                   {check.latency !== undefined && (
@@ -152,7 +204,9 @@ export default function HealthPage() {
                       {Object.entries(check.details).map(([key, value]) => (
                         <div key={key}>
                           <span className="text-gray-500">{key}: </span>
-                          <span className="font-medium text-gray-700 dark:text-gray-300">{String(value)}</span>
+                          <span className="font-medium text-gray-700 dark:text-gray-300">
+                            {String(value)}
+                          </span>
                         </div>
                       ))}
                     </div>
@@ -165,7 +219,9 @@ export default function HealthPage() {
 
         {/* Endpoints */}
         <div className="mt-6 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Endpoints de Health Check</h3>
+          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+            Endpoints de Health Check
+          </h3>
           <div className="space-y-2 font-mono text-sm">
             <div className="flex items-center gap-3 p-2 bg-gray-50 dark:bg-gray-700/50 rounded">
               <span className="text-green-600">GET</span>

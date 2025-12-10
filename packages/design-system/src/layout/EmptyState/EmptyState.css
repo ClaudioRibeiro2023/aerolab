@@ -1,0 +1,57 @@
+/**
+ * EmptyState Styles
+ */
+
+.ds-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--spacing-lg, 1.5rem);
+  border-radius: var(--radius-lg, 0.5rem);
+  background: var(--surface-muted, #f1f5f9);
+  color: var(--text-secondary, #475569);
+}
+
+.ds-empty-state__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 9999px;
+  background: var(--surface-elevated, #ffffff);
+  color: var(--text-muted, #94a3b8);
+  margin-bottom: var(--spacing-md, 1rem);
+}
+
+.ds-empty-state__icon svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.ds-empty-state__title {
+  margin: 0;
+  font-size: var(--font-size-base, 1rem);
+  font-weight: 600;
+  color: var(--text-primary, #0f172a);
+}
+
+.ds-empty-state__description {
+  margin: 0.5rem 0 0;
+  font-size: var(--font-size-sm, 0.875rem);
+}
+
+.ds-empty-state__body {
+  margin-top: 0.75rem;
+  font-size: var(--font-size-sm, 0.875rem);
+}
+
+.ds-empty-state__actions {
+  margin-top: var(--spacing-md, 1rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm, 0.5rem);
+  justify-content: center;
+}

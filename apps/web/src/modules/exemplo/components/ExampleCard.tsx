@@ -1,4 +1,5 @@
 import type { ExampleItem } from '../types'
+import { StatusBadge } from '@template/design-system'
 
 interface ExampleCardProps {
   item: ExampleItem
@@ -6,11 +7,12 @@ interface ExampleCardProps {
 }
 
 export function ExampleCard({ item, onClick }: ExampleCardProps) {
-  const statusColors = {
-    active: 'bg-color-success/10 text-color-success',
-    inactive: 'bg-surface-muted text-text-muted',
-    pending: 'bg-color-warning/10 text-color-warning',
-  }
+  const variantByStatus: Record<ExampleItem['status'], 'success' | 'warning' | 'info' | 'pending'> =
+    {
+      active: 'success',
+      inactive: 'pending',
+      pending: 'warning',
+    }
 
   return (
     <div
@@ -19,9 +21,9 @@ export function ExampleCard({ item, onClick }: ExampleCardProps) {
     >
       <div className="flex items-start justify-between mb-3">
         <h3 className="font-semibold text-text-primary">{item.title}</h3>
-        <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusColors[item.status]}`}>
+        <StatusBadge variant={variantByStatus[item.status]} size="sm">
           {item.status}
-        </span>
+        </StatusBadge>
       </div>
       <p className="text-text-secondary text-sm mb-3">{item.description}</p>
       <p className="text-text-muted text-xs">

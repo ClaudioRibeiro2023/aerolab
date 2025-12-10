@@ -1,5 +1,16 @@
 import { Link } from 'react-router-dom'
-import { BookOpen, Rocket, FileText, Code, Layers, History, HelpCircle, ExternalLink, Search } from 'lucide-react'
+import {
+  BookOpen,
+  Rocket,
+  FileText,
+  Code,
+  Layers,
+  History,
+  HelpCircle,
+  ExternalLink,
+  Search,
+} from 'lucide-react'
+import { PageHeader } from '@template/design-system'
 
 const SECTIONS = [
   {
@@ -47,9 +58,21 @@ const SECTIONS = [
 ]
 
 const QUICK_START_STEPS = [
-  { step: 1, title: 'Configurar ambiente', description: 'Clone o repositório e instale as dependências com pnpm install' },
-  { step: 2, title: 'Iniciar serviços', description: 'Execute docker-compose up para iniciar PostgreSQL, Redis e Keycloak' },
-  { step: 3, title: 'Rodar aplicação', description: 'Execute pnpm dev para iniciar o servidor de desenvolvimento' },
+  {
+    step: 1,
+    title: 'Configurar ambiente',
+    description: 'Clone o repositório e instale as dependências com pnpm install',
+  },
+  {
+    step: 2,
+    title: 'Iniciar serviços',
+    description: 'Execute docker-compose up para iniciar PostgreSQL, Redis e Keycloak',
+  },
+  {
+    step: 3,
+    title: 'Rodar aplicação',
+    description: 'Execute pnpm dev para iniciar o servidor de desenvolvimento',
+  },
   { step: 4, title: 'Acessar o sistema', description: 'Abra http://localhost:5173 no navegador' },
 ]
 
@@ -59,25 +82,25 @@ export default function DocsPage() {
       {/* Header */}
       <div className="bg-surface-elevated border-b border-border-default">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex items-center gap-4">
-            <div className="p-3 rounded-xl bg-brand-primary/10 text-brand-primary">
-              <BookOpen size={32} />
+          <PageHeader
+            title="Documentação"
+            description="Guias, tutoriais e referências do sistema"
+            icon={<BookOpen size={32} />}
+          >
+            {/* Search */}
+            <div className="mt-4 relative max-w-2xl">
+              <Search
+                size={20}
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted"
+              />
+              <input
+                type="text"
+                placeholder="Buscar na documentação..."
+                className="form-input pl-12 py-3 text-lg rounded-xl focus-ring"
+                aria-label="Buscar na documentação"
+              />
             </div>
-            <div>
-              <h1 className="text-3xl font-bold text-text-primary">Documentação</h1>
-              <p className="text-text-secondary">Guias, tutoriais e referências do sistema</p>
-            </div>
-          </div>
-          
-          {/* Search */}
-          <div className="mt-6 relative max-w-2xl">
-            <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted" />
-            <input
-              type="text"
-              placeholder="Buscar na documentação..."
-              className="form-input pl-12 py-3 text-lg rounded-xl focus-ring"
-            />
-          </div>
+          </PageHeader>
         </div>
       </div>
 
@@ -92,7 +115,9 @@ export default function DocsPage() {
                 to={section.path}
                 className="group bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 hover:shadow-lg hover:border-primary/50 transition-all"
               >
-                <div className={`w-12 h-12 rounded-lg ${section.color} flex items-center justify-center mb-4`}>
+                <div
+                  className={`w-12 h-12 rounded-lg ${section.color} flex items-center justify-center mb-4`}
+                >
                   <Icon size={24} />
                 </div>
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary transition-colors">
@@ -112,7 +137,10 @@ export default function DocsPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {QUICK_START_STEPS.map(item => (
-              <div key={item.step} className="relative p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+              <div
+                key={item.step}
+                className="relative p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg"
+              >
                 <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">
                   {item.step}
                 </div>
@@ -127,15 +155,30 @@ export default function DocsPage() {
         <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-xl p-6">
           <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Links Úteis</h2>
           <div className="flex flex-wrap gap-4">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+            <a
+              href="https://github.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+            >
               <ExternalLink size={16} className="text-primary" />
               <span>GitHub Repository</span>
             </a>
-            <a href="https://docs.example.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+            <a
+              href="https://docs.example.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+            >
               <ExternalLink size={16} className="text-primary" />
               <span>API Swagger</span>
             </a>
-            <a href="https://storybook.example.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+            <a
+              href="https://storybook.example.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+            >
               <ExternalLink size={16} className="text-primary" />
               <span>Storybook</span>
             </a>

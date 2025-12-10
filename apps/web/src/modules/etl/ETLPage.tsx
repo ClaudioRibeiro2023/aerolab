@@ -1,22 +1,92 @@
 import { useState, useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Database, Upload, Plus, RefreshCw } from 'lucide-react'
-import { Button } from '@template/design-system'
+import { Button, PageHeader } from '@template/design-system'
 import { ImportCard, ETLFilters, JobProgress, DataSourceCard } from './components'
 import type { ETLFilter, DataSource, ImportJob, DataSourceType } from './types'
 
 // Mock data - replace with API calls
 const MOCK_SOURCES: DataSource[] = [
-  { id: '1', name: 'Planilha Vendas Q1', type: 'csv', description: 'Dados de vendas do primeiro trimestre', config: {}, createdAt: '2024-01-15', updatedAt: '2024-03-01' },
-  { id: '2', name: 'API CRM', type: 'api', description: 'Integração com sistema CRM', config: {}, createdAt: '2024-02-01', updatedAt: '2024-03-10' },
-  { id: '3', name: 'Dados Geográficos', type: 'shapefile', description: 'Shapefiles de municípios', config: {}, createdAt: '2024-01-20', updatedAt: '2024-02-15' },
-  { id: '4', name: 'Eventos JSON', type: 'json', description: 'Log de eventos do sistema', config: {}, createdAt: '2024-03-01', updatedAt: '2024-03-12' },
+  {
+    id: '1',
+    name: 'Planilha Vendas Q1',
+    type: 'csv',
+    description: 'Dados de vendas do primeiro trimestre',
+    config: {},
+    createdAt: '2024-01-15',
+    updatedAt: '2024-03-01',
+  },
+  {
+    id: '2',
+    name: 'API CRM',
+    type: 'api',
+    description: 'Integração com sistema CRM',
+    config: {},
+    createdAt: '2024-02-01',
+    updatedAt: '2024-03-10',
+  },
+  {
+    id: '3',
+    name: 'Dados Geográficos',
+    type: 'shapefile',
+    description: 'Shapefiles de municípios',
+    config: {},
+    createdAt: '2024-01-20',
+    updatedAt: '2024-02-15',
+  },
+  {
+    id: '4',
+    name: 'Eventos JSON',
+    type: 'json',
+    description: 'Log de eventos do sistema',
+    config: {},
+    createdAt: '2024-03-01',
+    updatedAt: '2024-03-12',
+  },
 ]
 
 const MOCK_JOBS: ImportJob[] = [
-  { id: '1', sourceId: '1', sourceName: 'Planilha Vendas Q1', type: 'csv', status: 'completed', progress: 100, recordsTotal: 5000, recordsProcessed: 5000, recordsSuccess: 4985, recordsError: 15, startedAt: '2024-03-12T10:00:00', completedAt: '2024-03-12T10:05:30', logs: [] },
-  { id: '2', sourceId: '2', sourceName: 'API CRM', type: 'api', status: 'running', progress: 65, recordsTotal: 10000, recordsProcessed: 6500, startedAt: '2024-03-12T14:00:00', logs: [] },
-  { id: '3', sourceId: '4', sourceName: 'Eventos JSON', type: 'json', status: 'failed', progress: 30, recordsTotal: 2000, recordsProcessed: 600, errorMessage: 'Formato inválido na linha 601', startedAt: '2024-03-12T09:00:00', completedAt: '2024-03-12T09:02:15', logs: [] },
+  {
+    id: '1',
+    sourceId: '1',
+    sourceName: 'Planilha Vendas Q1',
+    type: 'csv',
+    status: 'completed',
+    progress: 100,
+    recordsTotal: 5000,
+    recordsProcessed: 5000,
+    recordsSuccess: 4985,
+    recordsError: 15,
+    startedAt: '2024-03-12T10:00:00',
+    completedAt: '2024-03-12T10:05:30',
+    logs: [],
+  },
+  {
+    id: '2',
+    sourceId: '2',
+    sourceName: 'API CRM',
+    type: 'api',
+    status: 'running',
+    progress: 65,
+    recordsTotal: 10000,
+    recordsProcessed: 6500,
+    startedAt: '2024-03-12T14:00:00',
+    logs: [],
+  },
+  {
+    id: '3',
+    sourceId: '4',
+    sourceName: 'Eventos JSON',
+    type: 'json',
+    status: 'failed',
+    progress: 30,
+    recordsTotal: 2000,
+    recordsProcessed: 600,
+    errorMessage: 'Formato inválido na linha 601',
+    startedAt: '2024-03-12T09:00:00',
+    completedAt: '2024-03-12T09:02:15',
+    logs: [],
+  },
 ]
 
 const IMPORT_OPTIONS: Array<{ type: DataSourceType; title: string; subtitle: string }> = [
@@ -29,7 +99,7 @@ const IMPORT_OPTIONS: Array<{ type: DataSourceType; title: string; subtitle: str
 export default function ETLPage() {
   const [searchParams] = useSearchParams()
   const srcFilter = searchParams.get('src') as DataSourceType | null
-  
+
   const [filters, setFilters] = useState<ETLFilter>({
     search: '',
     type: srcFilter || 'all',
@@ -41,7 +111,8 @@ export default function ETLPage() {
   const filteredSources = useMemo(() => {
     return MOCK_SOURCES.filter(source => {
       if (filters.type && filters.type !== 'all' && source.type !== filters.type) return false
-      if (filters.search && !source.name.toLowerCase().includes(filters.search.toLowerCase())) return false
+      if (filters.search && !source.name.toLowerCase().includes(filters.search.toLowerCase()))
+        return false
       return true
     })
   }, [filters])
@@ -50,7 +121,8 @@ export default function ETLPage() {
     return MOCK_JOBS.filter(job => {
       if (filters.type && filters.type !== 'all' && job.type !== filters.type) return false
       if (filters.status && filters.status !== 'all' && job.status !== filters.status) return false
-      if (filters.search && !job.sourceName.toLowerCase().includes(filters.search.toLowerCase())) return false
+      if (filters.search && !job.sourceName.toLowerCase().includes(filters.search.toLowerCase()))
+        return false
       return true
     })
   }, [filters])
@@ -62,25 +134,21 @@ export default function ETLPage() {
       {/* Header */}
       <div className="bg-surface-elevated border-b border-border-default">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-brand-primary/10 text-brand-primary">
-                <Database size={28} />
+          <PageHeader
+            title="ETL & Integração"
+            description="Importação, tratamento e catálogo de dados"
+            icon={<Database size={28} />}
+            actions={
+              <div className="flex items-center gap-2">
+                <Button variant="ghost" leftIcon={<RefreshCw size={18} />}>
+                  Atualizar
+                </Button>
+                <Button variant="primary" leftIcon={<Plus size={18} />}>
+                  Nova Fonte
+                </Button>
               </div>
-              <div>
-                <h1 className="text-2xl font-bold text-text-primary">ETL & Integração</h1>
-                <p className="text-text-secondary">Importação, tratamento e catálogo de dados</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <Button variant="ghost" leftIcon={<RefreshCw size={18} />}>
-                Atualizar
-              </Button>
-              <Button variant="primary" leftIcon={<Plus size={18} />}>
-                Nova Fonte
-              </Button>
-            </div>
-          </div>
+            }
+          />
         </div>
       </div>
 
@@ -142,11 +210,7 @@ export default function ETLPage() {
         </div>
 
         {/* Filters */}
-        <ETLFilters
-          filters={filters}
-          onChange={setFilters}
-          showStatus={activeTab === 'jobs'}
-        />
+        <ETLFilters filters={filters} onChange={setFilters} showStatus={activeTab === 'jobs'} />
 
         {/* Content */}
         <div className="mt-6">
@@ -156,9 +220,15 @@ export default function ETLPage() {
                 <DataSourceCard
                   key={source.id}
                   source={source}
-                  onRun={() => { /* TODO: implementar run */ }}
-                  onEdit={() => { /* TODO: implementar edit */ }}
-                  onDelete={() => { /* TODO: implementar delete */ }}
+                  onRun={() => {
+                    /* TODO: implementar run */
+                  }}
+                  onEdit={() => {
+                    /* TODO: implementar edit */
+                  }}
+                  onDelete={() => {
+                    /* TODO: implementar delete */
+                  }}
                 />
               ))}
               {filteredSources.length === 0 && (
