@@ -24,18 +24,18 @@ O **Template Platform** é um monorepo para aplicações web corporativas, compo
 
 ## 2. Stack Tecnológica
 
-| Camada | Tecnologia | Versão |
-|--------|------------|--------|
-| **Frontend** | React | 18.x |
-| **Linguagem** | TypeScript | 5.3.x |
-| **Build** | Vite | 5.x |
-| **Estilização** | TailwindCSS | 3.x |
-| **Roteamento** | React Router | 6.x |
-| **Estado Servidor** | TanStack Query | 5.x |
-| **Autenticação** | OIDC (Keycloak) | oidc-client-ts 2.x |
-| **API** | FastAPI | 0.104+ |
-| **Gerenciador de Pacotes** | pnpm | 9.x |
-| **Testes E2E** | Playwright | 1.x |
+| Camada                     | Tecnologia      | Versão             |
+| -------------------------- | --------------- | ------------------ |
+| **Frontend**               | React           | 18.x               |
+| **Linguagem**              | TypeScript      | 5.3.x              |
+| **Build**                  | Vite            | 5.x                |
+| **Estilização**            | TailwindCSS     | 3.x                |
+| **Roteamento**             | React Router    | 6.x                |
+| **Estado Servidor**        | TanStack Query  | 5.x                |
+| **Autenticação**           | OIDC (Keycloak) | oidc-client-ts 2.x |
+| **API**                    | FastAPI         | 0.104+             |
+| **Gerenciador de Pacotes** | pnpm            | 9.x                |
+| **Testes E2E**             | Playwright      | 1.x                |
 
 ---
 
@@ -66,19 +66,24 @@ apps/web/
 ### 3.2 Packages Compartilhados
 
 #### `@template/shared`
+
 Lógica compartilhada entre projetos:
+
 - **auth/** — AuthContext, useAuth, oidcConfig, tipos
 - **api/** — Cliente HTTP com interceptors
 - **utils/** — Formatters, helpers
 
 #### `@template/design-system`
+
 Componentes UI reutilizáveis:
+
 - **components/** — Botões, Cards, Inputs, etc.
 - **layout/** — Containers, Grids
 - **navigation/** — Menus, Breadcrumbs
 - **filters/** — Componentes de filtro
 
 #### `@template/types`
+
 Tipos TypeScript compartilhados (use quando não há lógica associada).
 
 ---
@@ -92,11 +97,13 @@ Tipos TypeScript compartilhados (use quando não há lógica associada).
 **Decisão:** Centralizar em `packages/shared/src/auth/`.
 
 **Consequências:**
+
 - ✅ Single source of truth para autenticação
 - ✅ Facilita manutenção e testes
 - ✅ Permite reutilização em outras apps do monorepo
 
 **Uso:**
+
 ```typescript
 import { AuthProvider, useAuth, type Role } from '@template/shared'
 ```
@@ -110,6 +117,7 @@ import { AuthProvider, useAuth, type Role } from '@template/shared'
 **Decisão:** Manter apenas `packages/shared/src/auth/oidcConfig.ts`.
 
 **Consequências:**
+
 - ✅ Configuração única para todo o projeto
 - ✅ Facilita mudança de provider OIDC
 - ✅ Variáveis de ambiente centralizadas
@@ -133,6 +141,7 @@ modules/[nome]/
 ```
 
 **Consequências:**
+
 - ✅ Código relacionado fica junto
 - ✅ Facilita encontrar arquivos
 - ✅ Módulos podem ser extraídos para packages separados
@@ -165,6 +174,7 @@ modules/[nome]/
 ### 5.2 Desenvolvimento (Demo Mode)
 
 Com `VITE_DEMO_MODE=true`:
+
 - Bypass completo de autenticação
 - Usuário mock: `Demo User`
 - Todas as roles disponíveis: `ADMIN`, `GESTOR`, `OPERADOR`, `VIEWER`
@@ -172,6 +182,7 @@ Com `VITE_DEMO_MODE=true`:
 ### 5.3 Testes E2E
 
 Com `MODE=e2e`:
+
 - Bypass de autenticação
 - Roles configuráveis via query param: `?roles=ADMIN,GESTOR`
 - Ou via localStorage: `e2e-roles`
@@ -182,26 +193,32 @@ Com `MODE=e2e`:
 
 ### Roles Disponíveis
 
-| Role | Descrição | Acesso |
-|------|-----------|--------|
-| `ADMIN` | Administrador | Acesso total |
-| `GESTOR` | Gestor | Configurações, relatórios |
-| `OPERADOR` | Operador | Operações do dia-a-dia |
-| `VIEWER` | Visualizador | Apenas leitura |
+| Role       | Descrição     | Acesso                    |
+| ---------- | ------------- | ------------------------- |
+| `ADMIN`    | Administrador | Acesso total              |
+| `GESTOR`   | Gestor        | Configurações, relatórios |
+| `OPERADOR` | Operador      | Operações do dia-a-dia    |
+| `VIEWER`   | Visualizador  | Apenas leitura            |
 
 ### Uso no Código
 
 ```typescript
 // Verificar role única
 const { hasRole } = useAuth()
-if (hasRole('ADMIN')) { /* ... */ }
+if (hasRole('ADMIN')) {
+  /* ... */
+}
 
 // Verificar múltiplas roles (todas necessárias)
-if (hasRole(['ADMIN', 'GESTOR'])) { /* ... */ }
+if (hasRole(['ADMIN', 'GESTOR'])) {
+  /* ... */
+}
 
 // Verificar se tem alguma das roles
 const { hasAnyRole } = useAuth()
-if (hasAnyRole(['ADMIN', 'GESTOR'])) { /* ... */ }
+if (hasAnyRole(['ADMIN', 'GESTOR'])) {
+  /* ... */
+}
 ```
 
 ### Protegendo Rotas
@@ -223,17 +240,18 @@ if (hasAnyRole(['ADMIN', 'GESTOR'])) { /* ... */ }
 
 ### 7.1 Nomenclatura
 
-| Tipo | Convenção | Exemplo |
-|------|-----------|---------|
-| Componentes | PascalCase | `UserCard.tsx` |
-| Hooks | camelCase com `use` | `useDebounce.ts` |
-| Services | camelCase com `.service` | `users.service.ts` |
-| Types | PascalCase | `UserRole`, `AuthUser` |
-| Constantes | SCREAMING_SNAKE | `ALL_ROLES`, `API_URL` |
+| Tipo        | Convenção                | Exemplo                |
+| ----------- | ------------------------ | ---------------------- |
+| Componentes | PascalCase               | `UserCard.tsx`         |
+| Hooks       | camelCase com `use`      | `useDebounce.ts`       |
+| Services    | camelCase com `.service` | `users.service.ts`     |
+| Types       | PascalCase               | `UserRole`, `AuthUser` |
+| Constantes  | SCREAMING_SNAKE          | `ALL_ROLES`, `API_URL` |
 
 ### 7.2 Imports
 
 Ordem preferencial:
+
 1. React/libs externas
 2. `@template/*` packages
 3. `@/` aliases locais
@@ -261,11 +279,11 @@ Preferir **named exports** sobre default exports:
 
 ```typescript
 // ✅ Preferido
-export function UserCard() { }
+export function UserCard() {}
 export { UserCard } from './UserCard'
 
 // ❌ Evitar
-export default function UserCard() { }
+export default function UserCard() {}
 ```
 
 ---
@@ -284,7 +302,7 @@ VITE_KEYCLOAK_REALM=template
 VITE_KEYCLOAK_CLIENT_ID=template-web
 
 # App
-VITE_APP_URL=http://localhost:3000
+VITE_APP_URL=http://localhost:13000
 
 # Development
 VITE_DEMO_MODE=false
@@ -327,6 +345,7 @@ pnpm -C apps/web test:e2e
 Consulte o arquivo `todo.md` para o plano detalhado de melhorias.
 
 **Fases principais:**
+
 1. ✅ Fase 0 — Fundamentos (concluída)
 2. ⏳ Fase 1 — Arquitetura & Organização
 3. ⏳ Fase 2 — Qualidade & Testes
@@ -336,4 +355,4 @@ Consulte o arquivo `todo.md` para o plano detalhado de melhorias.
 
 ---
 
-*Última atualização: Dezembro/2024*
+_Última atualização: Dezembro/2024_

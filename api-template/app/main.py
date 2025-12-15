@@ -1,7 +1,7 @@
 """
 Template API - FastAPI
 """
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI, HTTPException, status, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from datetime import datetime
@@ -9,6 +9,7 @@ import os
 
 from .logging_config import get_logger
 from .middleware import RequestLoggingMiddleware, SecurityHeadersMiddleware
+from .rate_limit import setup_rate_limiting, limiter, rate_limit_health, rate_limit_api
 
 # ============================================================================
 # Logging
@@ -44,13 +45,17 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000",
         "http://localhost:5173",
-        os.getenv("FRONTEND_URL", "http://localhost:3000"),
+        "http://localhost:13000",
+        os.getenv("FRONTEND_URL", "http://localhost:13000"),
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-    expose_headers=["X-Request-ID"],
+    expose_headers=["X-Request-ID", "X-RateLimit-Limit", "X-RateLimit-Remaining", "X-RateLimit-Reset"],
 )
+
+# Rate limiting
+setup_rate_limiting(app)
 
 # ============================================================================
 # Models

@@ -2,7 +2,7 @@
 
 **Data:** Dezembro/2024  
 **Versão:** 1.0  
-**Autor:** Análise Arquitetural Automatizada  
+**Autor:** Análise Arquitetural Automatizada
 
 ---
 
@@ -10,18 +10,19 @@
 
 ### 1.1 Identificação
 
-| Atributo | Valor |
-|----------|-------|
-| **Tipo de Aplicação** | Monorepo (Frontend React + API Template FastAPI) |
-| **Stack Principal** | React 18, TypeScript, Vite, TailwindCSS, FastAPI (Python) |
-| **Gerenciador de Pacotes** | pnpm 9.x com workspaces |
-| **Autenticação** | Keycloak/OIDC com bypass para desenvolvimento |
-| **Infraestrutura** | Docker Compose (PostgreSQL, Redis, Keycloak) |
-| **Testes** | Playwright (E2E) |
+| Atributo                   | Valor                                                     |
+| -------------------------- | --------------------------------------------------------- |
+| **Tipo de Aplicação**      | Monorepo (Frontend React + API Template FastAPI)          |
+| **Stack Principal**        | React 18, TypeScript, Vite, TailwindCSS, FastAPI (Python) |
+| **Gerenciador de Pacotes** | pnpm 9.x com workspaces                                   |
+| **Autenticação**           | Keycloak/OIDC com bypass para desenvolvimento             |
+| **Infraestrutura**         | Docker Compose (PostgreSQL, Redis, Keycloak)              |
+| **Testes**                 | Playwright (E2E)                                          |
 
 ### 1.2 Propósito
 
 Template corporativo para criação de aplicações web com:
+
 - Sistema de roles (ADMIN, GESTOR, OPERADOR, VIEWER)
 - Design System compartilhado
 - Autenticação OIDC pronta para produção
@@ -75,12 +76,12 @@ Template corporativo para criação de aplicações web com:
 
 #### ⚠️ O que precisa melhorar
 
-| Problema | Localização | Impacto |
-|----------|-------------|---------|
-| Duplicação de AuthContext | `apps/web/src/contexts/AuthContext.tsx` vs `packages/shared/src/auth/AuthContext.tsx` | Confusão, manutenção duplicada |
-| Pastas vazias sem utilidade | `src/hooks/`, `src/services/`, `src/modules/`, `src/types/` | Estrutura incompleta, falta de padrão |
-| Lógica no App.tsx | Rotas e imports concentrados em `App.tsx` | Difícil manutenção quando escalar |
-| Config de auth em dois lugares | `src/config/auth.ts` + `packages/shared/src/auth/oidcConfig.ts` | Duplicação de configuração |
+| Problema                       | Localização                                                                           | Impacto                               |
+| ------------------------------ | ------------------------------------------------------------------------------------- | ------------------------------------- |
+| Duplicação de AuthContext      | `apps/web/src/contexts/AuthContext.tsx` vs `packages/shared/src/auth/AuthContext.tsx` | Confusão, manutenção duplicada        |
+| Pastas vazias sem utilidade    | `src/hooks/`, `src/services/`, `src/modules/`, `src/types/`                           | Estrutura incompleta, falta de padrão |
+| Lógica no App.tsx              | Rotas e imports concentrados em `App.tsx`                                             | Difícil manutenção quando escalar     |
+| Config de auth em dois lugares | `src/config/auth.ts` + `packages/shared/src/auth/oidcConfig.ts`                       | Duplicação de configuração            |
 
 #### 🚨 Riscos
 
@@ -98,12 +99,12 @@ Template corporativo para criação de aplicações web com:
 
 #### ⚠️ O que precisa melhorar
 
-| Problema | Exemplo | Recomendação |
-|----------|---------|--------------|
-| Tipos inline | Tipos definidos dentro de `AuthContext.tsx` | Extrair para `@template/types` |
-| API client básico | `packages/shared/src/api/client.ts` sem retry, interceptors | Implementar estratégias de resiliência |
-| Formatters/Helpers genéricos | `packages/shared/src/utils/` pouco populado | Adicionar utilities comuns |
-| Falta de barrel exports consistentes | Alguns `index.ts` incompletos | Padronizar exports |
+| Problema                             | Exemplo                                                     | Recomendação                           |
+| ------------------------------------ | ----------------------------------------------------------- | -------------------------------------- |
+| Tipos inline                         | Tipos definidos dentro de `AuthContext.tsx`                 | Extrair para `@template/types`         |
+| API client básico                    | `packages/shared/src/api/client.ts` sem retry, interceptors | Implementar estratégias de resiliência |
+| Formatters/Helpers genéricos         | `packages/shared/src/utils/` pouco populado                 | Adicionar utilities comuns             |
+| Falta de barrel exports consistentes | Alguns `index.ts` incompletos                               | Padronizar exports                     |
 
 ### 2.3 Testes
 
@@ -116,12 +117,12 @@ Template corporativo para criação de aplicações web com:
 
 #### ⚠️ O que precisa melhorar
 
-| Problema | Impacto | Prioridade |
-|----------|---------|------------|
-| Zero testes unitários | Regressões não detectadas em lógica isolada | Alta |
-| Sem teste de integração de API | API client não testado | Média |
-| Cobertura desconhecida | Sem métricas de cobertura configuradas | Média |
-| Testes E2E não testam erros | Apenas happy path | Baixa |
+| Problema                       | Impacto                                     | Prioridade |
+| ------------------------------ | ------------------------------------------- | ---------- |
+| Zero testes unitários          | Regressões não detectadas em lógica isolada | Alta       |
+| Sem teste de integração de API | API client não testado                      | Média      |
+| Cobertura desconhecida         | Sem métricas de cobertura configuradas      | Média      |
+| Testes E2E não testam erros    | Apenas happy path                           | Baixa      |
 
 #### 🎯 Recomendação
 
@@ -140,11 +141,11 @@ Template corporativo para criação de aplicações web com:
 
 #### ⚠️ O que precisa melhorar
 
-| Problema | Arquivo | Ação |
-|----------|---------|------|
-| `.env` commitado | `apps/web/.env` (336 bytes) | Remover do git, usar apenas `.env.example` |
-| Sem validação de env vars | Startup não valida variáveis obrigatórias | Usar `zod` ou similar para validar |
-| Sem env para staging | Apenas dev/prod implícitos | Criar `.env.staging.example` |
+| Problema                  | Arquivo                                   | Ação                                       |
+| ------------------------- | ----------------------------------------- | ------------------------------------------ |
+| `.env` commitado          | `apps/web/.env` (336 bytes)               | Remover do git, usar apenas `.env.example` |
+| Sem validação de env vars | Startup não valida variáveis obrigatórias | Usar `zod` ou similar para validar         |
+| Sem env para staging      | Apenas dev/prod implícitos                | Criar `.env.staging.example`               |
 
 ### 2.5 Infraestrutura & Deploy
 
@@ -158,16 +159,17 @@ Template corporativo para criação de aplicações web com:
 
 #### ⚠️ O que precisa melhorar
 
-| Problema | Impacto | Ação |
-|----------|---------|------|
-| Sem CI/CD | Deploy manual, sem automação | Criar workflows GitHub Actions |
-| Pasta `db/` vazia | Sem migrations ou seeds SQL | Definir estratégia de migrations |
-| Sem multi-stage build | Imagens Docker maiores que necessário | Otimizar Dockerfiles |
-| Credenciais hardcoded no compose | `admin/admin`, `template/template` | Usar env vars ou secrets |
+| Problema                         | Impacto                               | Ação                             |
+| -------------------------------- | ------------------------------------- | -------------------------------- |
+| Sem CI/CD                        | Deploy manual, sem automação          | Criar workflows GitHub Actions   |
+| Pasta `db/` vazia                | Sem migrations ou seeds SQL           | Definir estratégia de migrations |
+| Sem multi-stage build            | Imagens Docker maiores que necessário | Otimizar Dockerfiles             |
+| Credenciais hardcoded no compose | `admin/admin`, `template/template`    | Usar env vars ou secrets         |
 
 #### 🎯 Recomendação Prioritária
 
 Criar pipelines para:
+
 1. **CI** — Lint, typecheck, testes em cada PR
 2. **CD** — Build e push de imagens Docker
 3. **Preview** — Ambientes efêmeros para PRs
@@ -176,13 +178,13 @@ Criar pipelines para:
 
 #### ⚠️ Estado Atual: Insuficiente
 
-| Aspecto | Estado | Necessidade |
-|---------|--------|-------------|
-| Logging | `console.log/error` básico | Logger estruturado (JSON) |
-| Error tracking | Inexistente | Sentry ou similar |
-| Métricas | Inexistente | Prometheus/Grafana |
-| Tracing | Inexistente | OpenTelemetry |
-| Error Boundary | Inexistente | Componente React para catch de erros |
+| Aspecto        | Estado                     | Necessidade                          |
+| -------------- | -------------------------- | ------------------------------------ |
+| Logging        | `console.log/error` básico | Logger estruturado (JSON)            |
+| Error tracking | Inexistente                | Sentry ou similar                    |
+| Métricas       | Inexistente                | Prometheus/Grafana                   |
+| Tracing        | Inexistente                | OpenTelemetry                        |
+| Error Boundary | Inexistente                | Componente React para catch de erros |
 
 #### 🎯 Recomendação
 
@@ -202,14 +204,14 @@ Criar pipelines para:
 
 #### ⚠️ O que precisa melhorar
 
-| Problema | Impacto | Ação |
-|----------|---------|------|
-| Sem Prettier config explícita | Formatação inconsistente | Criar `.prettierrc` |
-| Sem ESLint config na raiz | Cada package configura individualmente | Centralizar config |
-| Sem husky/lint-staged | Código não formatado pode ser commitado | Adicionar pre-commit hooks |
-| Sem commitlint | Mensagens de commit inconsistentes | Adicionar conventional commits |
-| Sem CONTRIBUTING.md | Novos devs sem guia de contribuição | Criar documento |
-| Sem template de PR/Issue | PRs sem padrão | Criar templates GitHub |
+| Problema                      | Impacto                                 | Ação                           |
+| ----------------------------- | --------------------------------------- | ------------------------------ |
+| Sem Prettier config explícita | Formatação inconsistente                | Criar `.prettierrc`            |
+| Sem ESLint config na raiz     | Cada package configura individualmente  | Centralizar config             |
+| Sem husky/lint-staged         | Código não formatado pode ser commitado | Adicionar pre-commit hooks     |
+| Sem commitlint                | Mensagens de commit inconsistentes      | Adicionar conventional commits |
+| Sem CONTRIBUTING.md           | Novos devs sem guia de contribuição     | Criar documento                |
+| Sem template de PR/Issue      | PRs sem padrão                          | Criar templates GitHub         |
 
 ---
 
@@ -234,25 +236,27 @@ Os seguintes princípios guiarão todas as melhorias propostas:
 **Objetivo:** Eliminar dívidas críticas e estabelecer base sólida para evoluções.
 
 **Critérios de Sucesso:**
-- [ ] Nenhum arquivo sensível (`.env`) no repositório
-- [ ] AuthContext único e documentado
-- [ ] Pastas vazias removidas ou com README explicativo
-- [ ] Scripts de validação rodando corretamente
+
+- [x] Nenhum arquivo sensível (`.env`) no repositório
+- [x] AuthContext único e documentado
+- [x] Pastas vazias removidas ou com README explicativo
+- [x] Scripts de validação rodando corretamente
 
 **Escopo:** Limpeza, padronização mínima, documentação de decisões.
 
 **Entregáveis Principais:**
 
-| # | Entregável | Prioridade |
-|---|------------|------------|
-| 0.1 | Remover `apps/web/.env` do git, adicionar ao `.gitignore` | P0 |
-| 0.2 | Unificar AuthContext (manter apenas em `packages/shared`) | P0 |
-| 0.3 | Unificar config de OIDC (remover `src/config/auth.ts`, usar `packages/shared/src/auth/oidcConfig.ts`) | P0 |
-| 0.4 | Remover ou documentar pastas vazias (`src/hooks/`, `src/services/`, etc.) | P1 |
-| 0.5 | Validar e atualizar `VALIDATION_CHECKLIST.md` | P1 |
-| 0.6 | Criar arquivo `ARCHITECTURE.md` documentando decisões | P2 |
+| #   | Entregável                                                                                            | Prioridade |
+| --- | ----------------------------------------------------------------------------------------------------- | ---------- |
+| 0.1 | Remover `apps/web/.env` do git, adicionar ao `.gitignore`                                             | P0         |
+| 0.2 | Unificar AuthContext (manter apenas em `packages/shared`)                                             | P0         |
+| 0.3 | Unificar config de OIDC (remover `src/config/auth.ts`, usar `packages/shared/src/auth/oidcConfig.ts`) | P0         |
+| 0.4 | Remover ou documentar pastas vazias (`src/hooks/`, `src/services/`, etc.)                             | P1         |
+| 0.5 | Validar e atualizar `VALIDATION_CHECKLIST.md`                                                         | P1         |
+| 0.6 | Criar arquivo `ARCHITECTURE.md` documentando decisões                                                 | P2         |
 
 **Riscos & Dependências:**
+
 - Mudança no AuthContext pode quebrar imports em `apps/web`
 
 ---
@@ -262,25 +266,27 @@ Os seguintes princípios guiarão todas as melhorias propostas:
 **Objetivo:** Estabelecer estrutura escalável e padrões claros para novos módulos.
 
 **Critérios de Sucesso:**
-- [ ] Estrutura de módulos definida e documentada
-- [ ] Pelo menos um módulo de exemplo seguindo o padrão
-- [ ] Tipos centralizados em `@template/types`
-- [ ] Router refatorado para lazy loading
+
+- [x] Estrutura de módulos definida e documentada
+- [x] Pelo menos um módulo de exemplo seguindo o padrão
+- [x] Tipos centralizados em `@template/types`
+- [x] Router refatorado para lazy loading
 
 **Escopo:** Arquitetura de pastas, tipagem, roteamento.
 
 **Entregáveis Principais:**
 
-| # | Entregável | Prioridade |
-|---|------------|------------|
-| 1.1 | Definir e documentar estrutura padrão de módulos em `src/modules/[nome]/` | P0 |
-| 1.2 | Migrar tipos de `AuthContext.tsx` para `@template/types` | P0 |
-| 1.3 | Implementar lazy loading nas rotas (`React.lazy` + `Suspense`) | P1 |
-| 1.4 | Criar módulo de exemplo completo com estrutura padrão | P1 |
-| 1.5 | Implementar Error Boundary global | P1 |
-| 1.6 | Refatorar `App.tsx` para usar route config object | P2 |
+| #   | Entregável                                                                | Prioridade |
+| --- | ------------------------------------------------------------------------- | ---------- |
+| 1.1 | Definir e documentar estrutura padrão de módulos em `src/modules/[nome]/` | P0         |
+| 1.2 | Migrar tipos de `AuthContext.tsx` para `@template/types`                  | P0         |
+| 1.3 | Implementar lazy loading nas rotas (`React.lazy` + `Suspense`)            | P1         |
+| 1.4 | Criar módulo de exemplo completo com estrutura padrão                     | P1         |
+| 1.5 | Implementar Error Boundary global                                         | P1         |
+| 1.6 | Refatorar `App.tsx` para usar route config object                         | P2         |
 
 **Riscos & Dependências:**
+
 - Depende da Fase 0 (AuthContext unificado)
 - Lazy loading pode afetar testes E2E (aguardar loading states)
 
@@ -291,27 +297,29 @@ Os seguintes princípios guiarão todas as melhorias propostas:
 **Objetivo:** Garantir qualidade através de automação e cobertura de testes.
 
 **Critérios de Sucesso:**
-- [ ] ESLint e Prettier configurados na raiz
-- [ ] Husky + lint-staged rodando em pre-commit
-- [ ] Vitest configurado com pelo menos 5 testes unitários
-- [ ] Coverage mínimo de 40% em `packages/shared`
+
+- [x] ESLint e Prettier configurados na raiz
+- [x] Husky + lint-staged rodando em pre-commit
+- [x] Vitest configurado com pelo menos 5 testes unitários
+- [x] Coverage mínimo de 40% em `packages/shared`
 
 **Escopo:** Linting, formatação, testes unitários.
 
 **Entregáveis Principais:**
 
-| # | Entregável | Prioridade |
-|---|------------|------------|
-| 2.1 | Criar `.eslintrc.cjs` na raiz com config compartilhada | P0 |
-| 2.2 | Criar `.prettierrc` e `.prettierignore` na raiz | P0 |
-| 2.3 | Instalar e configurar Husky + lint-staged | P0 |
-| 2.4 | Instalar e configurar Vitest em `packages/shared` | P1 |
-| 2.5 | Criar testes unitários para `formatters.ts` e `helpers.ts` | P1 |
-| 2.6 | Criar testes para `apiClient` (com mocks) | P1 |
-| 2.7 | Configurar coverage report e definir thresholds | P2 |
-| 2.8 | Adicionar testes para hooks de autenticação | P2 |
+| #   | Entregável                                                 | Prioridade |
+| --- | ---------------------------------------------------------- | ---------- |
+| 2.1 | Criar `.eslintrc.cjs` na raiz com config compartilhada     | P0         |
+| 2.2 | Criar `.prettierrc` e `.prettierignore` na raiz            | P0         |
+| 2.3 | Instalar e configurar Husky + lint-staged                  | P0         |
+| 2.4 | Instalar e configurar Vitest em `packages/shared`          | P1         |
+| 2.5 | Criar testes unitários para `formatters.ts` e `helpers.ts` | P1         |
+| 2.6 | Criar testes para `apiClient` (com mocks)                  | P1         |
+| 2.7 | Configurar coverage report e definir thresholds            | P2         |
+| 2.8 | Adicionar testes para hooks de autenticação                | P2         |
 
 **Riscos & Dependências:**
+
 - Vitest precisa de config específica para monorepo
 
 ---
@@ -321,26 +329,28 @@ Os seguintes princípios guiarão todas as melhorias propostas:
 **Objetivo:** Automatizar CI/CD e garantir deploys confiáveis.
 
 **Critérios de Sucesso:**
-- [ ] Pipeline de CI rodando em cada PR (lint, typecheck, test)
-- [ ] Pipeline de CD para build de imagens Docker
-- [ ] Credenciais removidas do docker-compose (usar env vars)
-- [ ] Documentação de deploy atualizada
+
+- [x] Pipeline de CI rodando em cada PR (lint, typecheck, test)
+- [x] Pipeline de CD para build de imagens Docker
+- [x] Credenciais removidas do docker-compose (usar env vars)
+- [x] Documentação de deploy atualizada
 
 **Escopo:** GitHub Actions, Docker, documentação de deploy.
 
 **Entregáveis Principais:**
 
-| # | Entregável | Prioridade |
-|---|------------|------------|
-| 3.1 | Criar `.github/workflows/ci.yml` (lint, typecheck, test) | P0 |
-| 3.2 | Criar `.github/workflows/docker.yml` (build images) | P1 |
-| 3.3 | Refatorar `docker-compose.yml` para usar env vars | P1 |
-| 3.4 | Criar `docker-compose.override.yml` para desenvolvimento | P1 |
-| 3.5 | Otimizar Dockerfiles com multi-stage build | P2 |
-| 3.6 | Criar templates de PR e Issue (`.github/PULL_REQUEST_TEMPLATE.md`) | P2 |
-| 3.7 | Documentar processo de deploy em `docs/DEPLOY.md` | P2 |
+| #   | Entregável                                                         | Prioridade |
+| --- | ------------------------------------------------------------------ | ---------- |
+| 3.1 | Criar `.github/workflows/ci.yml` (lint, typecheck, test)           | P0         |
+| 3.2 | Criar `.github/workflows/docker.yml` (build images)                | P1         |
+| 3.3 | Refatorar `docker-compose.yml` para usar env vars                  | P1         |
+| 3.4 | Criar `docker-compose.override.yml` para desenvolvimento           | P1         |
+| 3.5 | Otimizar Dockerfiles com multi-stage build                         | P2         |
+| 3.6 | Criar templates de PR e Issue (`.github/PULL_REQUEST_TEMPLATE.md`) | P2         |
+| 3.7 | Documentar processo de deploy em `docs/DEPLOY.md`                  | P2         |
 
 **Riscos & Dependências:**
+
 - CI precisa de secrets configurados no GitHub
 - Testes E2E no CI requerem setup de Playwright
 
@@ -351,26 +361,28 @@ Os seguintes princípios guiarão todas as melhorias propostas:
 **Objetivo:** Garantir visibilidade em produção e resiliência a falhas.
 
 **Critérios de Sucesso:**
-- [ ] Error Boundary capturando erros não tratados
-- [ ] Logging estruturado na API
-- [ ] Health checks detalhados implementados
-- [ ] API client com retry e timeout configuráveis
+
+- [x] Error Boundary capturando erros não tratados
+- [x] Logging estruturado na API
+- [x] Health checks detalhados implementados
+- [x] API client com retry e timeout configuráveis
 
 **Escopo:** Error handling, logging, resiliência.
 
 **Entregáveis Principais:**
 
-| # | Entregável | Prioridade |
-|---|------------|------------|
-| 4.1 | Implementar Error Boundary com fallback UI | P0 |
-| 4.2 | Adicionar logging estruturado na API FastAPI (loguru/structlog) | P1 |
-| 4.3 | Implementar retry com backoff exponencial no apiClient | P1 |
-| 4.4 | Criar health check detalhado (`/health/ready`, `/health/live`) | P1 |
-| 4.5 | Configurar Sentry ou similar para error tracking (opcional) | P2 |
-| 4.6 | Adicionar request/response logging no apiClient | P2 |
-| 4.7 | Implementar circuit breaker pattern (opcional) | P3 |
+| #   | Entregável                                                      | Prioridade |
+| --- | --------------------------------------------------------------- | ---------- |
+| 4.1 | Implementar Error Boundary com fallback UI                      | P0         |
+| 4.2 | Adicionar logging estruturado na API FastAPI (loguru/structlog) | P1         |
+| 4.3 | Implementar retry com backoff exponencial no apiClient          | P1         |
+| 4.4 | Criar health check detalhado (`/health/ready`, `/health/live`)  | P1         |
+| 4.5 | Configurar Sentry ou similar para error tracking (opcional)     | P2         |
+| 4.6 | Adicionar request/response logging no apiClient                 | P2         |
+| 4.7 | Implementar circuit breaker pattern (opcional)                  | P3         |
 
 **Riscos & Dependências:**
+
 - Sentry requer conta e configuração de DSN
 
 ---
@@ -380,40 +392,42 @@ Os seguintes princípios guiarão todas as melhorias propostas:
 **Objetivo:** Maximizar produtividade do time e padronizar contribuições.
 
 **Critérios de Sucesso:**
-- [ ] Onboarding de novo dev em < 30 minutos
-- [ ] Conventional commits enforçados
-- [ ] ADRs documentando decisões arquiteturais
-- [ ] Scripts de automação para tarefas comuns
+
+- [x] Onboarding de novo dev em < 30 minutos
+- [x] Conventional commits enforçados
+- [x] ADRs documentando decisões arquiteturais
+- [x] Scripts de automação para tarefas comuns
 
 **Escopo:** Documentação, convenções, automação.
 
 **Entregáveis Principais:**
 
-| # | Entregável | Prioridade |
-|---|------------|------------|
-| 5.1 | Criar `CONTRIBUTING.md` com guia de contribuição | P0 |
-| 5.2 | Configurar commitlint + conventional commits | P1 |
-| 5.3 | Criar script `scripts/new-module.js` para scaffolding de módulos | P1 |
-| 5.4 | Criar pasta `docs/adr/` com template de ADR | P2 |
-| 5.5 | Adicionar script de validação de ambiente (`scripts/check-env.js`) | P2 |
-| 5.6 | Criar `docs/TROUBLESHOOTING.md` com problemas comuns | P2 |
-| 5.7 | Configurar Renovate/Dependabot para updates de deps | P3 |
+| #   | Entregável                                                         | Prioridade |
+| --- | ------------------------------------------------------------------ | ---------- |
+| 5.1 | Criar `CONTRIBUTING.md` com guia de contribuição                   | P0         |
+| 5.2 | Configurar commitlint + conventional commits                       | P1         |
+| 5.3 | Criar script `scripts/new-module.js` para scaffolding de módulos   | P1         |
+| 5.4 | Criar pasta `docs/adr/` com template de ADR                        | P2         |
+| 5.5 | Adicionar script de validação de ambiente (`scripts/check-env.js`) | P2         |
+| 5.6 | Criar `docs/TROUBLESHOOTING.md` com problemas comuns               | P2         |
+| 5.7 | Configurar Renovate/Dependabot para updates de deps                | P3         |
 
 **Riscos & Dependências:**
+
 - Commitlint pode frustrar desenvolvedores não familiarizados
 
 ---
 
 ## 5. Roadmap Resumido
 
-| Fase | Foco Principal | Impacto Esperado | Estimativa |
-|------|----------------|------------------|------------|
-| **0** | Diagnóstico + Fundamentos Mínimos | Base estável, sem duplicações | 1-2 dias |
-| **1** | Arquitetura & Organização | Código modular e escalável | 2-3 dias |
-| **2** | Testes & Qualidade de Código | Menos bugs, regressões detectadas | 3-4 dias |
-| **3** | Infraestrutura & Deploy | Deploy automatizado e confiável | 2-3 dias |
-| **4** | Observabilidade & Robustez | Visibilidade em prod, resiliência | 2-3 dias |
-| **5** | DX & Governança | Time mais produtivo, padrões claros | 2-3 dias |
+| Fase  | Foco Principal                    | Impacto Esperado                    | Estimativa |
+| ----- | --------------------------------- | ----------------------------------- | ---------- |
+| **0** | Diagnóstico + Fundamentos Mínimos | Base estável, sem duplicações       | 1-2 dias   |
+| **1** | Arquitetura & Organização         | Código modular e escalável          | 2-3 dias   |
+| **2** | Testes & Qualidade de Código      | Menos bugs, regressões detectadas   | 3-4 dias   |
+| **3** | Infraestrutura & Deploy           | Deploy automatizado e confiável     | 2-3 dias   |
+| **4** | Observabilidade & Robustez        | Visibilidade em prod, resiliência   | 2-3 dias   |
+| **5** | DX & Governança                   | Time mais produtivo, padrões claros | 2-3 dias   |
 
 **Total Estimado:** 12-18 dias de trabalho (1 desenvolvedor)
 
@@ -429,15 +443,15 @@ Os seguintes princípios guiarão todas as melhorias propostas:
 
 ### 6.2 Ferramentas Recomendadas
 
-| Categoria | Ferramenta | Motivo |
-|-----------|------------|--------|
-| Testes Unitários | Vitest | Integração nativa com Vite, rápido |
-| Formatação | Prettier | Padrão de mercado, zero config |
-| Linting | ESLint + @typescript-eslint | Catch de bugs em tempo de dev |
-| Pre-commit | Husky + lint-staged | Garantir qualidade antes do commit |
-| Commits | Commitlint | Mensagens padronizadas |
-| Error Tracking | Sentry | Padrão de mercado, bom free tier |
-| Deps Updates | Renovate | Mais configurável que Dependabot |
+| Categoria        | Ferramenta                  | Motivo                             |
+| ---------------- | --------------------------- | ---------------------------------- |
+| Testes Unitários | Vitest                      | Integração nativa com Vite, rápido |
+| Formatação       | Prettier                    | Padrão de mercado, zero config     |
+| Linting          | ESLint + @typescript-eslint | Catch de bugs em tempo de dev      |
+| Pre-commit       | Husky + lint-staged         | Garantir qualidade antes do commit |
+| Commits          | Commitlint                  | Mensagens padronizadas             |
+| Error Tracking   | Sentry                      | Padrão de mercado, bom free tier   |
+| Deps Updates     | Renovate                    | Mais configurável que Dependabot   |
 
 ### 6.3 Próximos Passos Além do Escopo
 
@@ -465,4 +479,4 @@ O plano faseado proposto permite evolução incremental, onde **cada fase entreg
 
 ---
 
-*Documento gerado como parte da análise arquitetural do repositório Template Platform.*
+_Documento gerado como parte da análise arquitetural do repositório Template Platform._

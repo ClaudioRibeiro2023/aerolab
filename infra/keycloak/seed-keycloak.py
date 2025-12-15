@@ -137,11 +137,13 @@ class KeycloakSeeder:
             "serviceAccountsEnabled": False,
             "redirectUris": [
                 "http://localhost:3000/*",
-                "http://localhost:5173/*"
+                "http://localhost:5173/*",
+                "http://localhost:13000/*"
             ],
             "webOrigins": [
                 "http://localhost:3000",
-                "http://localhost:5173"
+                "http://localhost:5173",
+                "http://localhost:13000"
             ],
             "protocol": "openid-connect",
             "attributes": {

@@ -1,0 +1,50 @@
+Database Migrations with Alembic
+=================================
+
+This directory contains Alembic database migration scripts.
+
+## Quick Start
+
+1. Set DATABASE_URL environment variable:
+   ```bash
+   export DATABASE_URL=postgresql://user:password@localhost:5432/dbname
+   ```
+
+2. Create a new migration:
+   ```bash
+   cd api-template
+   alembic revision --autogenerate -m "description of changes"
+   ```
+
+3. Apply migrations:
+   ```bash
+   alembic upgrade head
+   ```
+
+4. Rollback last migration:
+   ```bash
+   alembic downgrade -1
+   ```
+
+5. View migration history:
+   ```bash
+   alembic history
+   ```
+
+## Commands Reference
+
+- `alembic upgrade head` - Apply all pending migrations
+- `alembic downgrade -1` - Rollback one migration
+- `alembic downgrade base` - Rollback all migrations
+- `alembic current` - Show current revision
+- `alembic history` - Show migration history
+- `alembic revision -m "message"` - Create empty migration
+- `alembic revision --autogenerate -m "message"` - Auto-generate migration from models
+
+## Best Practices
+
+1. Always review auto-generated migrations before applying
+2. Test migrations on a copy of production data
+3. Keep migrations small and focused
+4. Use meaningful migration messages
+5. Never edit migrations after they've been applied to production

@@ -64,7 +64,7 @@ $requiredFiles = @(
     "apps/web/index.html",
     "apps/web/src/main.tsx",
     "apps/web/src/App.tsx",
-    "apps/web/src/contexts/AuthContext.tsx",
+    "packages/shared/src/auth/AuthContext.tsx",
     "packages/design-system/package.json",
     "packages/shared/package.json",
     "packages/types/package.json",
@@ -190,7 +190,7 @@ if ($errors.Count -eq 0) {
     Write-Host "`nPróximos passos:" -ForegroundColor Cyan
     Write-Host "  1. cd apps/web" -ForegroundColor White
     Write-Host "  2. pnpm run dev" -ForegroundColor White
-    Write-Host "  3. Acesse http://localhost:3000`n" -ForegroundColor White
+    Write-Host "  3. Acesse http://localhost:13000`n" -ForegroundColor White
     
     exit 0
 } else {

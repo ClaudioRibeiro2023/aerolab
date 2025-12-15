@@ -12,6 +12,7 @@ Este diretório contém scripts para configurar o Keycloak para autenticação.
 ### seed-keycloak.py
 
 Cria automaticamente:
+
 - Realm `template`
 - Client `template-web` (público, com PKCE)
 - Roles: ADMIN, GESTOR, OPERADOR, VIEWER
@@ -45,8 +46,8 @@ Se preferir configurar manualmente:
 2. Client ID: `template-web`
 3. Client Protocol: `openid-connect`
 4. Access Type: `public`
-5. Valid Redirect URIs: `http://localhost:3000/*`
-6. Web Origins: `http://localhost:3000`
+5. Valid Redirect URIs: `http://localhost:13000/*`
+6. Web Origins: `http://localhost:13000`
 
 ### 3. Criar Roles
 
