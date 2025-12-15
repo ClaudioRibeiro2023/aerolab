@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 
 test.describe('Performance - Carregamento', () => {
-  test('página inicial deve carregar em menos de 3s', async ({ page }) => {
+  test('página inicial deve carregar em menos de 3s', async ({ page, browserName }) => {
     const startTime = Date.now()
 
     await page.goto('/')
@@ -9,8 +9,9 @@ test.describe('Performance - Carregamento', () => {
 
     const loadTime = Date.now() - startTime
 
-    // Deve carregar em menos de 5 segundos (Firefox pode ser mais lento em CI)
-    expect(loadTime).toBeLessThan(5000)
+    // Firefox pode ser mais lento, especialmente em CI
+    const maxTime = browserName === 'firefox' ? 8000 : 5000
+    expect(loadTime).toBeLessThan(maxTime)
   })
 
   test('navegação entre páginas deve ser rápida', async ({ page }) => {

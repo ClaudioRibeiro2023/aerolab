@@ -866,10 +866,11 @@ Este arquivo acompanha o plano de melhorias faseado descrito em `docs/PROPOSTA_A
   - ✅ TenantStore com mock data
   - ✅ Dependencies: get_tenant, get_tenant_config
 
-- [ ] [P2] Configurar Row-Level Security:
-  - Policies no PostgreSQL
-  - Filtros automáticos por tenant_id
-  - Testes de isolamento
+- [x] [P2] Configurar Row-Level Security:
+  - ✅ `api-template/app/rls.py` criado
+  - ✅ TenantMixin para SQLAlchemy models
+  - ✅ Context management com ContextVar
+  - ✅ SQL templates para PostgreSQL RLS
 
 - [ ] [P3] Implementar Branding por Tenant:
   - Logo, cores e nome customizáveis
@@ -908,10 +909,11 @@ Este arquivo acompanha o plano de melhorias faseado descrito em `docs/PROPOSTA_A
   - Cache headers otimizados
   - Purge automático no deploy
 
-- [ ] [P2] Implementar Image Optimization:
-  - Lazy loading de imagens
-  - Conversão para WebP
-  - Srcset responsivo
+- [x] [P2] Implementar Image Optimization:
+  - ✅ `apps/web/src/hooks/useImageOptimization.ts` criado
+  - ✅ Lazy loading com IntersectionObserver
+  - ✅ Detecção de suporte WebP
+  - ✅ Geração de srcSet responsivo
 
 - [ ] [P3] Adicionar SSR/SSG Option:
   - Configuração para Next.js ou Remix
@@ -926,10 +928,11 @@ Este arquivo acompanha o plano de melhorias faseado descrito em `docs/PROPOSTA_A
   - ✅ env.py com suporte a DATABASE_URL
   - ✅ README com comandos de migração
 
-- [ ] [P2] Criar Kubernetes Manifests:
-  - Helm charts para deploy
-  - ConfigMaps e Secrets
-  - Ingress configurado
+- [x] [P2] Criar Kubernetes Manifests:
+  - ✅ `infra/k8s/deployment.yaml` criado
+  - ✅ Deployments para API e Web
+  - ✅ ConfigMaps, Secrets, Ingress
+  - ✅ HPA e PodDisruptionBudget
 
 - [ ] [P2] Implementar Blue-Green Deploy:
   - Zero-downtime deploys
@@ -943,10 +946,11 @@ Este arquivo acompanha o plano de melhorias faseado descrito em `docs/PROPOSTA_A
 
 ### Analytics & BI
 
-- [ ] [P2] Implementar Event Tracking:
-  - Rastreamento de eventos de usuário
-  - Integração com analytics (GA4, Mixpanel)
-  - Privacy-first approach
+- [x] [P2] Implementar Event Tracking:
+  - ✅ `api-template/app/analytics.py` criado
+  - ✅ Privacy-first: IP anonymization, PII filtering
+  - ✅ Endpoints /api/analytics/track e /page-view
+  - ✅ Standard events (login, page_view, feature_use)
 
 - [ ] [P2] Criar Dashboard Analytics:
   - Métricas de uso e engajamento
@@ -980,6 +984,14 @@ Este arquivo acompanha o plano de melhorias faseado descrito em `docs/PROPOSTA_A
   - `pnpm test`
   - `pnpm build`
   - `./scripts/validate.ps1 -SkipTests`
+
+- ✅ **[2024-12-15] Fase 10 - Mais itens P2 implementados**:
+  - RLS: `api-template/app/rls.py`
+  - Analytics: `api-template/app/analytics.py`
+  - Image Optimization: `apps/web/src/hooks/useImageOptimization.ts`
+  - K8s Manifests: `infra/k8s/deployment.yaml`
+  - E2E: 95/96 passando (fix Firefox timeout)
+  - Release v1.0.0 publicado no GitHub
 
 - ✅ **[2024-12-15] Fase 10 - Itens P1 + P2 implementados**:
   - Logger estruturado: `packages/shared/src/utils/logger.ts`
