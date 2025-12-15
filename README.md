@@ -1,44 +1,72 @@
 # 🚀 Template Platform
 
+> **Versão:** 1.0.0 | **Última atualização:** Dezembro 2024
+
 Um template moderno e robusto para criar aplicações web corporativas com React, TypeScript, TailwindCSS e autenticação via Keycloak.
 
 ## ✨ Características
 
-- **Monorepo** com pnpm workspaces
-- **React 18** + TypeScript + Vite
-- **TailwindCSS** para estilização
+### Core
+
+- **Monorepo** com pnpm 9.x workspaces
+- **React 18** + TypeScript 5.3 + Vite 5
+- **TailwindCSS 3** para estilização
 - **Autenticação OIDC** com Keycloak (bypass para modo demo/dev)
 - **Sistema de Roles** (ADMIN, GESTOR, OPERADOR, VIEWER)
-- **Design System** compartilhado
+- **Design System** compartilhado com Storybook
 - **Docker** pronto para produção
-- **Playwright** para testes E2E
+- **Playwright** para testes E2E (96 testes)
 - **Dark Mode** suportado
+
+### Produção & Escalabilidade (Fase 10)
+
+- **Rate Limiting** com slowapi
+- **CSRF Protection** com double-submit cookie
+- **Redis Session Store** para produção
+- **Database Migrations** com Alembic
+- **Row-Level Security** para multi-tenancy
+- **Kubernetes Manifests** com HPA e blue-green deploy
+- **Analytics** privacy-first com event tracking
+- **CDN Integration** com cache otimizado
 
 ## 📁 Estrutura do Projeto
 
 ```
 ├── apps/
-│   └── web/                    # Aplicação frontend principal
+│   └── web/                    # Aplicação frontend principal (React)
 │       ├── src/
 │       │   ├── components/     # Componentes React
-│       │   ├── contexts/       # Contexts (Auth, etc.)
 │       │   ├── pages/          # Páginas da aplicação
 │       │   ├── modules/        # Módulos de funcionalidades
-│       │   └── config/         # Configurações
-│       └── e2e/                # Testes E2E
+│       │   ├── hooks/          # Custom hooks
+│       │   └── lib/            # Utilitários (CDN, etc.)
+│       └── e2e/                # Testes E2E (Playwright)
 │
 ├── packages/
-│   ├── design-system/          # Componentes UI compartilhados
-│   ├── shared/                 # Utilitários compartilhados
-│   └── types/                  # Tipos TypeScript
+│   ├── design-system/          # Componentes UI + Storybook
+│   ├── shared/                 # Auth, API client, utils, logger
+│   └── types/                  # Tipos TypeScript compartilhados
+│
+├── api-template/               # API Backend (FastAPI)
+│   ├── app/                    # Código da aplicação
+│   │   ├── rate_limit.py       # Rate limiting
+│   │   ├── csrf.py             # CSRF protection
+│   │   ├── session.py          # Redis sessions
+│   │   ├── security.py         # CSP headers
+│   │   ├── audit.py            # Audit logging
+│   │   ├── analytics.py        # Event tracking
+│   │   ├── rls.py              # Row-level security
+│   │   └── tenant.py           # Multi-tenancy
+│   └── alembic/                # Database migrations
 │
 ├── infra/
-│   ├── docker-compose.yml      # Stack Docker
-│   └── keycloak/               # Config Keycloak
+│   ├── docker-compose.yml      # Stack Docker (Postgres, Redis, Keycloak)
+│   ├── keycloak/               # Keycloak config
+│   └── k8s/                    # Kubernetes manifests
 │
-├── api-template/               # Template de API (FastAPI)
-├── docs/                       # Documentação
-└── scripts/                    # Scripts de automação
+├── docs/                       # Documentação completa
+├── scripts/                    # Scripts de automação
+└── .github/workflows/          # CI/CD (GitHub Actions)
 ```
 
 ## 🚀 Início Rápido
@@ -91,12 +119,12 @@ docker compose -f infra/docker-compose.yml up -d
 
 O sistema suporta 4 roles padrão:
 
-| Role | Descrição |
-|------|-----------|
-| ADMIN | Acesso total ao sistema |
-| GESTOR | Gestão de módulos e usuários |
-| OPERADOR | Operações do dia-a-dia |
-| VIEWER | Apenas visualização |
+| Role     | Descrição                    |
+| -------- | ---------------------------- |
+| ADMIN    | Acesso total ao sistema      |
+| GESTOR   | Gestão de módulos e usuários |
+| OPERADOR | Operações do dia-a-dia       |
+| VIEWER   | Apenas visualização          |
 
 ### Protegendo Rotas
 
@@ -162,9 +190,9 @@ Edite as variáveis CSS em `src/styles/index.css`:
 
 ```css
 :root {
-  --brand-primary: #0087A8;
-  --brand-secondary: #005F73;
-  --brand-accent: #94D2BD;
+  --brand-primary: #0087a8;
+  --brand-secondary: #005f73;
+  --brand-accent: #94d2bd;
 }
 ```
 
@@ -184,14 +212,50 @@ pnpm test:e2e:ui
 
 ## 📝 Scripts Disponíveis
 
-| Comando | Descrição |
-|---------|-----------|
-| `pnpm dev` | Inicia dev server |
-| `pnpm build` | Build de produção |
-| `pnpm lint` | Executa linter |
-| `pnpm typecheck` | Verifica tipos |
-| `pnpm test:e2e` | Testes E2E |
+| Comando          | Descrição                                   |
+| ---------------- | ------------------------------------------- |
+| `pnpm dev`       | Inicia dev server em http://localhost:13000 |
+| `pnpm build`     | Build de produção (packages + app)          |
+| `pnpm lint`      | Executa ESLint                              |
+| `pnpm lint:fix`  | Corrige problemas de lint                   |
+| `pnpm format`    | Formata código com Prettier                 |
+| `pnpm typecheck` | Verifica tipos TypeScript                   |
+| `pnpm test`      | Testes unitários (Vitest)                   |
+| `pnpm test:e2e`  | Testes E2E (Playwright)                     |
+| `pnpm clean`     | Limpa node_modules e dist                   |
+
+## 📖 Documentação
+
+Toda a documentação está em [`docs/`](./docs/):
+
+| Documento                                       | Descrição                       |
+| ----------------------------------------------- | ------------------------------- |
+| [ARCHITECTURE.md](./docs/ARCHITECTURE.md)       | Arquitetura e decisões técnicas |
+| [GETTING_STARTED.md](./docs/GETTING_STARTED.md) | Guia de início rápido           |
+| [DEPLOY.md](./docs/DEPLOY.md)                   | Deploy local e produção         |
+| [DESIGN_SYSTEM.md](./docs/DESIGN_SYSTEM.md)     | Componentes e tokens            |
+| [ROLES_E_ACESSO.md](./docs/ROLES_E_ACESSO.md)   | Sistema de permissões           |
+| [BOOK_OF_TESTS.md](./docs/BOOK_OF_TESTS.md)     | Matriz de testes                |
+| [TROUBLESHOOTING.md](./docs/TROUBLESHOOTING.md) | Resolução de problemas          |
+
+## 🛠️ Tecnologias
+
+| Camada          | Tecnologia     | Versão |
+| --------------- | -------------- | ------ |
+| Frontend        | React          | 18.x   |
+| Linguagem       | TypeScript     | 5.3.x  |
+| Build           | Vite           | 5.x    |
+| Estilização     | TailwindCSS    | 3.x    |
+| Estado          | TanStack Query | 5.x    |
+| Auth            | oidc-client-ts | 2.x    |
+| API             | FastAPI        | 0.104+ |
+| Testes E2E      | Playwright     | 1.x    |
+| Package Manager | pnpm           | 9.x    |
 
 ## 📄 Licença
 
 MIT
+
+---
+
+_Para contribuir, veja [CONTRIBUTING.md](./CONTRIBUTING.md)_
