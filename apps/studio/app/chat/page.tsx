@@ -861,6 +861,11 @@ function ChatContent() {
                     className="w-40 px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     autoFocus
                   />
+                  {searchQuery && (
+                    <span className={`text-xs ${filteredMessages.length > 0 ? "text-emerald-400" : "text-red-400"}`}>
+                      {filteredMessages.length}/{messages.length}
+                    </span>
+                  )}
                   <button
                     onClick={() => { setShowSearch(false); setSearchQuery(""); }}
                     className="p-2 text-slate-400 hover:text-white"
