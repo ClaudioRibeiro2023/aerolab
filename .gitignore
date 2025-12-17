@@ -52,3 +52,24 @@ venv/
 
 # Docker
 *.pid
+
+# Python extras
+*.egg-info/
+.eggs/
+.mypy_cache/
+.ruff_cache/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Playwright
+playwright/.cache/
+
+# Storybook
+storybook-static/
+
+# Misc
+*.bak
+*.tmp
+*.temp
+.env.development.local
+.env.test.local
