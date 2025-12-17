@@ -44,7 +44,7 @@ Priorização: DR1 > DR2 > DR3 > DR4
 
 Explicação detalhada da decisão:
 
-```
+```text
 [Código, diagrama ou configuração relevante]
 ```
 
@@ -154,8 +154,8 @@ Plano de rollback caso necessário:
 
 ### Internas
 
-- [Documento interno](../caminho/documento.md)
-- [ADR relacionado](./ADR-XXX.md)
+- Documento interno: `../caminho/documento.md`
+- ADR relacionado: `./ADR-XXX.md`
 
 ### Externas
 

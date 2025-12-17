@@ -122,7 +122,7 @@ docs/
 │
 ├── _archive/                   # Docs arquivados (histórico)
 ├── _backlog/                   # Ideias e backlog
-└── _report/                    # Relatórios de consolidação
+└── 00-auditoria/               # Relatórios de auditoria
 ```
 
 ---

@@ -44,15 +44,15 @@ pnpm dev
 
 ### Comandos Úteis
 
-| Comando | Descrição |
-|---------|-----------|
-| `pnpm dev` | Inicia o dev server |
-| `pnpm build` | Build de produção |
-| `pnpm lint` | Executa ESLint |
-| `pnpm lint:fix` | Corrige problemas de lint |
-| `pnpm format` | Formata código com Prettier |
-| `pnpm typecheck` | Verifica tipos TypeScript |
-| `pnpm test` | Executa testes unitários |
+| Comando          | Descrição                   |
+| ---------------- | --------------------------- |
+| `pnpm dev`       | Inicia o dev server         |
+| `pnpm build`     | Build de produção           |
+| `pnpm lint`      | Executa ESLint              |
+| `pnpm lint:fix`  | Corrige problemas de lint   |
+| `pnpm format`    | Formata código com Prettier |
+| `pnpm typecheck` | Verifica tipos TypeScript   |
+| `pnpm test`      | Executa testes unitários    |
 
 ---
 
@@ -105,6 +105,7 @@ modules/
 ### Passo a Passo
 
 1. **Crie a pasta do módulo:**
+
    ```bash
    mkdir -p apps/web/src/modules/meu-modulo/{components,hooks,services}
    ```
@@ -115,9 +116,10 @@ modules/
    - `index.ts` — Exporte o módulo
 
 3. **Registre a rota em `App.tsx`:**
+
    ```tsx
    const MeuModuloPage = lazy(() => import('./modules/meu-modulo/MeuModuloPage'))
-   
+
    // Na configuração de rotas:
    <Route path="/meu-modulo" element={<MeuModuloPage />} />
    ```
@@ -130,14 +132,14 @@ modules/
 
 ### Nomenclatura
 
-| Tipo | Convenção | Exemplo |
-|------|-----------|---------|
-| Componentes | PascalCase | `UserCard.tsx` |
-| Hooks | camelCase com `use` | `useUserData.ts` |
-| Funções/variáveis | camelCase | `getUserById` |
-| Tipos/Interfaces | PascalCase | `UserProfile` |
-| Constantes | UPPER_SNAKE_CASE | `API_BASE_URL` |
-| Arquivos CSS/styles | kebab-case | `user-card.css` |
+| Tipo                | Convenção           | Exemplo          |
+| ------------------- | ------------------- | ---------------- |
+| Componentes         | PascalCase          | `UserCard.tsx`   |
+| Hooks               | camelCase com `use` | `useUserData.ts` |
+| Funções/variáveis   | camelCase           | `getUserById`    |
+| Tipos/Interfaces    | PascalCase          | `UserProfile`    |
+| Constantes          | UPPER_SNAKE_CASE    | `API_BASE_URL`   |
+| Arquivos CSS/styles | kebab-case          | `user-card.css`  |
 
 ### Organização de Imports
 
@@ -175,12 +177,14 @@ import type { User } from './types'
 ### Antes de Abrir um PR
 
 1. **Atualize sua branch:**
+
    ```bash
    git checkout main && git pull
    git checkout sua-branch && git rebase main
    ```
 
 2. **Execute as verificações:**
+
    ```bash
    pnpm lint
    pnpm typecheck
@@ -223,17 +227,17 @@ Usamos [Conventional Commits](https://www.conventionalcommits.org/) para manter 
 
 ### Tipos
 
-| Tipo | Descrição |
-|------|-----------|
-| `feat` | Nova funcionalidade |
-| `fix` | Correção de bug |
-| `docs` | Apenas documentação |
-| `style` | Formatação (não afeta código) |
-| `refactor` | Refatoração de código |
-| `test` | Adição/correção de testes |
-| `chore` | Tarefas de manutenção |
-| `perf` | Melhoria de performance |
-| `ci` | Mudanças em CI/CD |
+| Tipo       | Descrição                     |
+| ---------- | ----------------------------- |
+| `feat`     | Nova funcionalidade           |
+| `fix`      | Correção de bug               |
+| `docs`     | Apenas documentação           |
+| `style`    | Formatação (não afeta código) |
+| `refactor` | Refatoração de código         |
+| `test`     | Adição/correção de testes     |
+| `chore`    | Tarefas de manutenção         |
+| `perf`     | Melhoria de performance       |
+| `ci`       | Mudanças em CI/CD             |
 
 ### Exemplos
 
@@ -248,6 +252,6 @@ refactor(modules): extrair lógica para hooks customizados
 
 ## Dúvidas?
 
-- Consulte a [documentação](/docs)
+- Consulte o [portal de documentação](./docs/INDEX.md)
 - Abra uma issue com a label `question`
 - Converse com a equipe no canal do projeto

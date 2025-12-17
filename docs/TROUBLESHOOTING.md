@@ -19,6 +19,7 @@ Guia de resolução de problemas comuns no Template Platform.
 **Sintoma:** Erro de permissão ao instalar dependências.
 
 **Solução:**
+
 ```bash
 # Windows (Admin PowerShell)
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
@@ -34,7 +35,9 @@ sudo chown -R $(whoami) ~/.pnpm-store
 **Sintoma:** Erro "Cannot find module '@template/shared'"
 
 **Soluções:**
+
 1. Verifique se os packages foram buildados:
+
    ```bash
    pnpm build:packages
    ```
@@ -56,12 +59,15 @@ sudo chown -R $(whoami) ~/.pnpm-store
 **Sintoma:** Alterações não refletem automaticamente.
 
 **Soluções:**
+
 1. Verifique se o dev server está rodando:
+
    ```bash
    pnpm dev
    ```
 
 2. Limpe o cache do Vite:
+
    ```bash
    rm -rf node_modules/.vite
    pnpm dev
@@ -78,6 +84,7 @@ sudo chown -R $(whoami) ~/.pnpm-store
 **Sintoma:** `FATAL ERROR: CALL_AND_RETRY_LAST Allocation failed`
 
 **Solução:**
+
 ```bash
 # Aumentar memória do Node
 NODE_OPTIONS="--max-old-space-size=4096" pnpm build
@@ -90,7 +97,9 @@ NODE_OPTIONS="--max-old-space-size=4096" pnpm build
 **Sintoma:** TypeScript errors durante o build.
 
 **Soluções:**
+
 1. Execute typecheck primeiro:
+
    ```bash
    pnpm typecheck
    ```
@@ -106,6 +115,7 @@ NODE_OPTIONS="--max-old-space-size=4096" pnpm build
 **Sintoma:** Imagens/fonts 404 em produção.
 
 **Soluções:**
+
 1. Verifique se assets estão em `public/` ou importados corretamente.
 
 2. Verifique `base` no `vite.config.ts`:
@@ -124,7 +134,9 @@ NODE_OPTIONS="--max-old-space-size=4096" pnpm build
 **Sintoma:** Após login no Keycloak, volta para a página sem autenticar.
 
 **Soluções:**
+
 1. Verifique as variáveis de ambiente:
+
    ```env
    VITE_KEYCLOAK_URL=http://localhost:8080
    VITE_KEYCLOAK_REALM=template
@@ -144,7 +156,9 @@ NODE_OPTIONS="--max-old-space-size=4096" pnpm build
 **Sintoma:** Token expira e não renova automaticamente.
 
 **Soluções:**
+
 1. Verifique se `oidc-client-ts` está configurado com `automaticSilentRenew`:
+
    ```ts
    const config = {
      automaticSilentRenew: true,
@@ -161,7 +175,9 @@ NODE_OPTIONS="--max-old-space-size=4096" pnpm build
 **Sintoma:** Autenticação não é bypassada em modo demo.
 
 **Soluções:**
+
 1. Verifique se a variável está setada:
+
    ```env
    VITE_DEMO_MODE=true
    ```
@@ -177,7 +193,9 @@ NODE_OPTIONS="--max-old-space-size=4096" pnpm build
 **Sintoma:** API retorna Internal Server Error.
 
 **Soluções:**
+
 1. Verifique logs da API:
+
    ```bash
    docker-compose logs api
    # ou
@@ -195,7 +213,9 @@ NODE_OPTIONS="--max-old-space-size=4096" pnpm build
 **Sintoma:** "Access-Control-Allow-Origin" error.
 
 **Soluções:**
+
 1. Verifique se a origem está permitida no FastAPI:
+
    ```python
    app.add_middleware(
        CORSMiddleware,
@@ -213,7 +233,9 @@ NODE_OPTIONS="--max-old-space-size=4096" pnpm build
 **Sintoma:** Requests demoram e falham.
 
 **Soluções:**
+
 1. Aumente o timeout no API client:
+
    ```ts
    const client = createApiClient({ timeout: 60000 })
    ```
@@ -231,12 +253,15 @@ NODE_OPTIONS="--max-old-space-size=4096" pnpm build
 **Sintoma:** `docker-compose up` falha.
 
 **Soluções:**
+
 1. Verifique logs:
+
    ```bash
    docker-compose logs <service-name>
    ```
 
 2. Verifique se as portas estão livres:
+
    ```bash
    # Windows
    netstat -ano | findstr :5432
@@ -257,6 +282,7 @@ NODE_OPTIONS="--max-old-space-size=4096" pnpm build
 **Sintoma:** Keycloak container reinicia constantemente.
 
 **Soluções:**
+
 1. Verifique memória disponível (mínimo 512MB para Keycloak).
 
 2. Verifique se o banco de dados está acessível.
@@ -275,7 +301,9 @@ NODE_OPTIONS="--max-old-space-size=4096" pnpm build
 **Sintoma:** "Connection refused" para PostgreSQL.
 
 **Soluções:**
+
 1. Verifique se o container está rodando:
+
    ```bash
    docker-compose ps postgres
    ```
@@ -291,8 +319,8 @@ NODE_OPTIONS="--max-old-space-size=4096" pnpm build
 
 ## Ainda com problemas?
 
-1. Pesquise nas [issues do repositório](../../issues)
-2. Consulte a [documentação](/docs)
+1. Pesquise nas [issues do repositório](https://github.com/ClaudioRibeiro2023/Modelo/issues)
+2. Consulte o [portal de documentação](./INDEX.md)
 3. Abra uma nova issue com:
    - Descrição do problema
    - Passos para reproduzir
