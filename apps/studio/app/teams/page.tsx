@@ -132,8 +132,13 @@ export default function TeamsPage() {
     setLoading(true);
     try {
       const [ag, tm] = await Promise.all([api.get("/agents"), api.get("/teams")]);
-      setAgents(ag.data || []);
-      setTeams(tm.data || []);
+      setAgents(Array.isArray(ag.data) ? ag.data : []);
+      const teamsData = Array.isArray(tm.data) ? tm.data : [];
+      // Garantir que members seja sempre um array
+      setTeams(teamsData.map((t: TeamItem) => ({
+        ...t,
+        members: Array.isArray(t.members) ? t.members : []
+      })));
     } catch (e: any) {
       toast.error(e?.response?.data?.detail || "Erro ao carregar dados");
     } finally {

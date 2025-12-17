@@ -109,8 +109,8 @@ export default function WorkflowsPage() {
     setLoading(true);
     try {
       const [ag, wf] = await Promise.all([api.get("/agents"), api.get("/workflows/registry")]);
-      setAgents(ag.data || []);
-      setWorkflows(wf.data || []);
+      setAgents(Array.isArray(ag.data) ? ag.data : []);
+      setWorkflows(Array.isArray(wf.data) ? wf.data : []);
       if (!selRunWf && wf.data?.length) setSelRunWf(wf.data[0].name);
       if (!newStepAgent && ag.data?.length) setNewStepAgent(ag.data[0].name);
     } catch (e: any) { toast.error("Erro ao carregar"); }
