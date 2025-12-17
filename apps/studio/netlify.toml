@@ -35,22 +35,22 @@ Referrer-Policy = "strict-origin-when-cross-origin"
 [context.production]
 command = "npm run build"
 [context.production.environment]
-NEXT_PUBLIC_APP_NAME = "Agno Multi-Agent Platform"
+NEXT_PUBLIC_APP_NAME = "AeroLab Platform"
 
 # Staging (branch: staging)
 [context.staging]
 command = "npm run build"
 [context.staging.environment]
-NEXT_PUBLIC_APP_NAME = "Agno (Staging)"
+NEXT_PUBLIC_APP_NAME = "AeroLab (Staging)"
 
 # Deploy Previews (Pull Requests)
 [context.deploy-preview]
 command = "npm run build"
 [context.deploy-preview.environment]
-NEXT_PUBLIC_APP_NAME = "Agno (Preview)"
+NEXT_PUBLIC_APP_NAME = "AeroLab (Preview)"
 
 # Branch deploys
 [context.branch-deploy]
 command = "npm run build"
 [context.branch-deploy.environment]
-NEXT_PUBLIC_APP_NAME = "Agno (Branch)"
+NEXT_PUBLIC_APP_NAME = "AeroLab (Branch)"
