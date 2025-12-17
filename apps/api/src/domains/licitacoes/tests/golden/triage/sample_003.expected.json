@@ -1,0 +1,12 @@
+{
+  "licitacao_id": "55544433000177-2025-000015",
+  "expected_priority": "P0",
+  "expected_score_min": 0.75,
+  "expected_score_max": 1.00,
+  "expected_aderencia_min": 0.70,
+  "expected_motivos_contains": [
+    "aderência",
+    "portfólio"
+  ],
+  "description": "Mapeamento com VANT para dengue em MG - alta prioridade esperada"
+}

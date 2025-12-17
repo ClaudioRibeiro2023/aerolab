@@ -1,0 +1,20 @@
+{
+  "id": "PNCP-TEST-002",
+  "orgaoEntidade": {
+    "cnpj": "98765432000188",
+    "razaoSocial": "Secretaria de Saúde do Estado do Rio de Janeiro",
+    "uf": "RJ",
+    "municipio": {
+      "nome": "Rio de Janeiro"
+    }
+  },
+  "anoCompra": "2025",
+  "sequencialCompra": "000042",
+  "objetoCompra": "Aquisição de material de escritório e suprimentos administrativos",
+  "modalidadeId": 6,
+  "situacaoCompraId": 1,
+  "valorTotalEstimado": 25000.00,
+  "dataPublicacaoPncp": "2025-01-08T14:30:00",
+  "dataAberturaProposta": "2025-01-20T10:00:00",
+  "linkSistemaOrigem": "https://compras.rj.gov.br/edital/2025/042"
+}

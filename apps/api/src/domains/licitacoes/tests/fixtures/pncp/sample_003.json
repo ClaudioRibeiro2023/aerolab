@@ -1,0 +1,21 @@
+{
+  "id": "PNCP-TEST-003",
+  "orgaoEntidade": {
+    "cnpj": "55544433000177",
+    "razaoSocial": "Prefeitura Municipal de Belo Horizonte",
+    "uf": "MG",
+    "municipio": {
+      "nome": "Belo Horizonte"
+    }
+  },
+  "anoCompra": "2025",
+  "sequencialCompra": "000015",
+  "objetoCompra": "Contratação de serviços de mapeamento aerofotogramétrico com VANT para vigilância epidemiológica e controle de vetores da dengue",
+  "modalidadeId": 1,
+  "situacaoCompraId": 1,
+  "valorTotalEstimado": 1200000.00,
+  "dataPublicacaoPncp": "2025-01-05T08:00:00",
+  "dataAberturaProposta": "2025-02-01T09:00:00",
+  "dataEncerramentoProposta": "2025-02-01T17:00:00",
+  "linkSistemaOrigem": "https://compras.pbh.gov.br/edital/2025/015"
+}

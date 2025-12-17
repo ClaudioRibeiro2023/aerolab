@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Result",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "init",
+        "ok",
+        "needs_info",
+        "blocked",
+        "error"
+      ]
+    },
+    "payload_json": {
+      "type": "string"
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "status",
+    "payload_json",
+    "errors"
+  ],
+  "additionalProperties": true
+}

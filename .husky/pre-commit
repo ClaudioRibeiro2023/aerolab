@@ -1,1 +1,7 @@
-pnpm exec lint-staged
+#!/bin/sh
+set -e
+
+# garante binários locais (lint-staged/prettier etc.)
+export PATH="$(pwd)/node_modules/.bin:$PATH"
+
+pnpm -s lint-staged

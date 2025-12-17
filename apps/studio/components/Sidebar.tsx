@@ -95,6 +95,7 @@ const navigation: NavItem[] = [
   { name: "Times", href: "/teams", icon: "teams" },
   { name: "Workflows", href: "/workflows", icon: "workflows" },
   { name: "Domínios", href: "/domains", icon: "domains" },
+  { name: "Licitações", href: "/licitacoes", icon: "domains" },
 ];
 
 const tools: NavItem[] = [

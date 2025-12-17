@@ -1,0 +1,23 @@
+{
+  "name": "<name>",
+  "role": "<role>",
+  "instructions": [
+    "<regra 1>",
+    "<regra 2>"
+  ],
+  "model_provider": "<openai|anthropic|groq|google>",
+  "model_id": "<model_id>",
+  "tools": [],
+  "rag": {
+    "enabled": false,
+    "collection": null,
+    "top_k": 5
+  },
+  "memory": {
+    "short_term": true,
+    "project_memory": true
+  },
+  "output_schema_ref": "schemas/<step>.json",
+  "version": "0.1.0",
+  "status": "draft"
+}

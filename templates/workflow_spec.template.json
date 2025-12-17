@@ -1,0 +1,59 @@
+{
+  "name": "<workflow_name>",
+  "domain": "<domain>",
+  "version": "0.1.0",
+  "status": "draft",
+  "input_schema_ref": "schemas/input.json",
+  "state_defaults": {
+    "result": {
+      "status": "init",
+      "payload_json": "{}",
+      "errors": []
+    }
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "start"
+      },
+      {
+        "id": "planner",
+        "type": "agent",
+        "agent": "planner"
+      },
+      {
+        "id": "executor",
+        "type": "agent",
+        "agent": "executor"
+      },
+      {
+        "id": "critic",
+        "type": "agent",
+        "agent": "critic"
+      },
+      {
+        "id": "final",
+        "type": "end"
+      }
+    ],
+    "edges": [
+      {
+        "from": "start",
+        "to": "planner"
+      },
+      {
+        "from": "planner",
+        "to": "executor"
+      },
+      {
+        "from": "executor",
+        "to": "critic"
+      },
+      {
+        "from": "critic",
+        "to": "final"
+      }
+    ]
+  }
+}
