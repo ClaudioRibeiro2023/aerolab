@@ -67,7 +67,7 @@ Consolidar o AeroLab como plataforma corporativa de multi-agentes AI, integrando
 | AL-009 | Consolidar .env.example na raiz | P1 | M | ✅ Done |
 | AL-010 | Atualizar .gitignore com padrões faltantes | P1 | S | ✅ Done |
 | AL-011 | Remover package-lock.json do Studio (usar pnpm) | P1 | S | ✅ Done |
-| AL-012 | Atualizar ESLint para v9 (flat config) | P1 | L | ⏳ Todo |
+| AL-012 | Atualizar ESLint para v9 (flat config) | P1 | L | ✅ Done |
 | AL-013 | Configurar proxy /api no Next.js → backend | P1 | M | ✅ Done |
 | AL-014 | Smoke test: curl localhost:9000 + localhost:8000/health | P0 | S | ✅ Done |
 
