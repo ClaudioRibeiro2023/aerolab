@@ -114,38 +114,44 @@
 
 ---
 
-## Fase 4 — Agentes (Doc 05)
+## Fase 4 — Agentes (Doc 05) ✅
 
-### 4.1 Watcher
+### 4.1 Watcher ✅
 
-- [ ] Criar `agents/watcher.py`
-- [ ] Input: `SearchParams`
-- [ ] Output: `{ items: LicitacaoItem[], changes: ChangeEvent[] }`
-- [ ] Tools: `pncp_client`, `fetcher`, `dedup`, `diff`
-- [ ] Restrições: sem interpretação jurídica
+- [x] Criar `agents/watcher.py`
+- [x] Input: `SearchParams`
+- [x] Output: `{ items: LicitacaoItem[], changes: ChangeEvent[] }`
+- [x] Tools: `pncp_client`, `fetcher`, `dedup`, `diff`
+- [x] Restrições: sem interpretação jurídica
 
-### 4.2 Triage
+### 4.2 Triage ✅
 
-- [ ] Criar `agents/triage.py`
-- [ ] Input: `LicitacaoItem[]`
-- [ ] Output: `TriageScore[]`
-- [ ] Implementar fórmula de score (Doc 09, seção 10.1)
-- [ ] Restrições: explicar motivos; não inventar
+- [x] Criar `agents/triage.py`
+- [x] Input: `LicitacaoItem[]`
+- [x] Output: `TriageScore[]`
+- [x] Implementar fórmula de score (Doc 09, seção 10.1)
+- [x] Restrições: explicar motivos; não inventar
 
-### 4.3 Analyst
+### 4.3 Analyst ✅
 
-- [ ] Criar `agents/analyst.py`
-- [ ] Input: `LicitacaoItem` + `raw_documents`
-- [ ] Output: `AnalysisPack`
-- [ ] Tools: `parser_pdf`, `parser_html`, `rag_lei_14133` (futuro)
-- [ ] Restrições: não emitir parecer jurídico; citar evidências
+- [x] Criar `agents/analyst.py`
+- [x] Input: `LicitacaoItem` + `raw_documents`
+- [x] Output: `AnalysisPack`
+- [x] Tools: `parser_pdf`, `parser_html`, `rag_lei_14133` (futuro)
+- [x] Restrições: não emitir parecer jurídico; citar evidências
 
-### 4.4 Compliance
+### 4.4 Compliance ✅
 
-- [ ] Criar `agents/compliance.py`
-- [ ] Input: texto/output de outro agente
-- [ ] Output: `Pass/Fail` + mensagem
-- [ ] Validações: PII, injection, schema
+- [x] Criar `agents/compliance.py`
+- [x] Input: texto/output de outro agente
+- [x] Output: `Pass/Fail` + mensagem
+- [x] Validações: PII, injection, schema
+
+### 4.5 Testes ✅ (21 testes de agentes passando)
+
+- [x] Testes Triage: score, priorização, riscos
+- [x] Testes Analyst: análise, checklists, oportunidades
+- [x] Testes Compliance: PII, injection, sanitização
 
 ---
 
@@ -168,22 +174,22 @@
 
 ---
 
-## Fase 6 — Flows (Doc 06)
+## Fase 6 — Flows (Doc 06) ✅
 
-### 6.1 Templates
+### 6.1 Templates ✅
 
-- [ ] Criar `flows/templates/daily_monitor.template.json`
-- [ ] Criar `flows/templates/on_demand_analyze.template.json`
-- [ ] Definir `state_defaults` com `result` inicializado
+- [x] Criar `flows/templates/daily_monitor.template.json`
+- [x] Criar `flows/templates/on_demand_analyze.template.json`
+- [x] Definir `state_defaults` com `result` inicializado
 
-### 6.2 Orquestração
+### 6.2 Orquestração ✅
 
-- [ ] Implementar runner para `daily_monitor`:
+- [x] Implementar runner para `daily_monitor`:
   1. Watcher.search()
   2. Triage.score()
   3. Gerar Digest
   4. Persistir
-- [ ] Implementar runner para `on_demand_analyze`:
+- [x] Implementar runner para `on_demand_analyze`:
   1. Compliance.check_input()
   2. Watcher.get_detail()
   3. Analyst.analyze()

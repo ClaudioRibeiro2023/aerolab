@@ -1,0 +1,155 @@
+{
+  "template_id": "licitacoes_on_demand_analyze",
+  "template_version": "0.1.0",
+  "name": "On Demand Analyze - Licitações",
+  "description": "Análise sob demanda de edital de licitação",
+  "domain": "licitacoes",
+  "schedule": null,
+  "state_defaults": {
+    "mode": "analyze",
+    "input_as_text": null,
+    "licitacao_id": null,
+    "licitacao": null,
+    "document_text": null,
+    "analysis": null,
+    "result": {
+      "status": "init",
+      "run_id": null,
+      "payload_json": "{}",
+      "errors": [],
+      "warnings": []
+    }
+  },
+  "config_schema": {
+    "licitacao_id": {
+      "type": "string",
+      "required": false
+    },
+    "url": {
+      "type": "string",
+      "required": false
+    },
+    "text": {
+      "type": "string",
+      "required": false
+    },
+    "download_attachments": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start",
+      "next": "compliance_check_input"
+    },
+    {
+      "id": "compliance_check_input",
+      "type": "agent",
+      "agent": "compliance",
+      "action": "check_input",
+      "inputs": {
+        "text": "{{cfg.text || cfg.url || cfg.licitacao_id}}"
+      },
+      "outputs": {
+        "compliance_result": "state.compliance_input"
+      },
+      "on_error": "handle_error",
+      "next": "check_compliance_passed",
+      "condition": "state.compliance_input.passed == true"
+    },
+    {
+      "id": "check_compliance_passed",
+      "type": "condition",
+      "condition": "{{state.compliance_input.passed}}",
+      "on_true": "watcher_get_detail",
+      "on_false": "compliance_failed"
+    },
+    {
+      "id": "compliance_failed",
+      "type": "function",
+      "function": "set_compliance_error",
+      "inputs": {
+        "issues": "{{state.compliance_input.issues}}"
+      },
+      "next": "finalize"
+    },
+    {
+      "id": "watcher_get_detail",
+      "type": "agent",
+      "agent": "watcher",
+      "action": "get_detail",
+      "inputs": {
+        "external_id": "{{cfg.licitacao_id}}"
+      },
+      "outputs": {
+        "licitacao": "state.licitacao"
+      },
+      "on_error": "handle_error",
+      "next": "analyst_analyze",
+      "skip_if": "{{cfg.text != null}}"
+    },
+    {
+      "id": "analyst_analyze",
+      "type": "agent",
+      "agent": "analyst",
+      "action": "analyze",
+      "inputs": {
+        "item": "{{state.licitacao}}",
+        "document_text": "{{state.document_text || cfg.text}}"
+      },
+      "outputs": {
+        "analysis": "state.analysis"
+      },
+      "on_error": "handle_error",
+      "next": "compliance_check_output"
+    },
+    {
+      "id": "compliance_check_output",
+      "type": "agent",
+      "agent": "compliance",
+      "action": "check_output",
+      "inputs": {
+        "data": "{{state.analysis}}"
+      },
+      "outputs": {
+        "compliance_output": "state.compliance_output"
+      },
+      "next": "persist_analysis"
+    },
+    {
+      "id": "persist_analysis",
+      "type": "function",
+      "function": "persist_analysis_result",
+      "inputs": {
+        "licitacao": "{{state.licitacao}}",
+        "analysis": "{{state.analysis}}"
+      },
+      "next": "finalize"
+    },
+    {
+      "id": "handle_error",
+      "type": "function",
+      "function": "handle_flow_error",
+      "inputs": {
+        "error": "{{error}}",
+        "node": "{{current_node}}"
+      },
+      "next": "finalize"
+    },
+    {
+      "id": "finalize",
+      "type": "end",
+      "outputs": {
+        "result": "state.result",
+        "analysis": "state.analysis"
+      }
+    }
+  ],
+  "metadata": {
+    "created_at": "2025-12-17",
+    "author": "AeroLab",
+    "tags": ["licitacoes", "analyze", "on_demand"]
+  }
+}
