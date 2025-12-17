@@ -23,6 +23,7 @@ git commit -m "Initial commit from template"
 Substitua as referências ao template pelo nome do seu projeto:
 
 ### package.json (raiz)
+
 ```json
 {
   "name": "@meu-projeto/platform",
@@ -31,13 +32,15 @@ Substitua as referências ao template pelo nome do seu projeto:
 ```
 
 ### apps/web/package.json
+
 ```json
 {
   "name": "@meu-projeto/web"
 }
 ```
 
-### packages/*/package.json
+### packages/\*/package.json
+
 Atualize o nome de cada pacote para `@meu-projeto/*`
 
 ## 3. Configurar Keycloak
@@ -51,7 +54,9 @@ Atualize o nome de cada pacote para `@meu-projeto/*`
 ## 4. Configurar Cores e Logo
 
 ### Cores
+
 Edite `apps/web/src/styles/index.css`:
+
 ```css
 :root {
   --brand-primary: #SUA_COR;
@@ -61,6 +66,7 @@ Edite `apps/web/src/styles/index.css`:
 ```
 
 ### Logo
+
 - Substitua o favicon em `apps/web/public/`
 - Atualize o logo no `AppSidebar.tsx` e `LoginPage.tsx`
 
@@ -71,6 +77,7 @@ mkdir -p apps/web/src/modules/meu-modulo/{components,hooks,services}
 ```
 
 Crie o arquivo principal:
+
 ```tsx
 // apps/web/src/modules/meu-modulo/index.tsx
 export function MeuModuloPage() {
@@ -79,11 +86,12 @@ export function MeuModuloPage() {
 ```
 
 Adicione a rota em `App.tsx`:
+
 ```tsx
 import { MeuModuloPage } from '@/modules/meu-modulo'
 
 // Na seção de rotas:
-<Route path="/meu-modulo" element={<MeuModuloPage />} />
+;<Route path="/meu-modulo" element={<MeuModuloPage />} />
 ```
 
 ## 6. Rodar o Projeto
@@ -104,12 +112,12 @@ O servidor de desenvolvimento iniciará em **http://localhost:13000**.
 
 ## 7. Portas Padrão
 
-| Serviço | Porta | URL |
-|---------|-------|-----|
-| Frontend | 13000 | http://localhost:13000 |
-| API | 8000 | http://localhost:8000 |
-| Keycloak | 8080 | http://localhost:8080 |
-| Storybook | 6006 | http://localhost:6006 |
+| Serviço   | Porta | URL                    |
+| --------- | ----- | ---------------------- |
+| Frontend  | 13000 | http://localhost:13000 |
+| API       | 8000  | http://localhost:8000  |
+| Keycloak  | 8080  | http://localhost:8080  |
+| Storybook | 6006  | http://localhost:6006  |
 
 ## Próximos Passos
 

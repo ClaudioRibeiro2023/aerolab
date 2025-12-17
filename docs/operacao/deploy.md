@@ -91,6 +91,7 @@ docker push ghcr.io/seu-org/template-api:staging
 ### Via GitHub Actions (Recomendado)
 
 1. Crie uma tag de release:
+
    ```bash
    git tag v1.0.0
    git push origin v1.0.0
@@ -117,36 +118,36 @@ docker push ghcr.io/seu-org/template-api:staging
 
 ### Frontend (Web)
 
-| Variável | Descrição | Exemplo |
-|----------|-----------|---------|
-| `VITE_API_URL` | URL base da API | `https://api.exemplo.com` |
-| `VITE_KEYCLOAK_URL` | URL do Keycloak | `https://auth.exemplo.com` |
-| `VITE_KEYCLOAK_REALM` | Realm do Keycloak | `template` |
-| `VITE_KEYCLOAK_CLIENT_ID` | Client ID | `template-web` |
-| `VITE_DEMO_MODE` | Modo demo (bypass auth) | `false` |
+| Variável                  | Descrição               | Exemplo                    |
+| ------------------------- | ----------------------- | -------------------------- |
+| `VITE_API_URL`            | URL base da API         | `https://api.exemplo.com`  |
+| `VITE_KEYCLOAK_URL`       | URL do Keycloak         | `https://auth.exemplo.com` |
+| `VITE_KEYCLOAK_REALM`     | Realm do Keycloak       | `template`                 |
+| `VITE_KEYCLOAK_CLIENT_ID` | Client ID               | `template-web`             |
+| `VITE_DEMO_MODE`          | Modo demo (bypass auth) | `false`                    |
 
 ### Backend (API)
 
-| Variável | Descrição | Exemplo |
-|----------|-----------|---------|
-| `DATABASE_URL` | URL de conexão PostgreSQL | `postgresql://user:pass@host:5432/db` |
-| `REDIS_URL` | URL de conexão Redis | `redis://host:6379` |
-| `SECRET_KEY` | Chave secreta para JWT | `sua-chave-secreta-aqui` |
-| `KEYCLOAK_URL` | URL do Keycloak | `https://auth.exemplo.com` |
-| `KEYCLOAK_REALM` | Realm do Keycloak | `template` |
-| `LOG_LEVEL` | Nível de log | `info` |
-| `CORS_ORIGINS` | Origens permitidas | `https://app.exemplo.com` |
+| Variável         | Descrição                 | Exemplo                               |
+| ---------------- | ------------------------- | ------------------------------------- |
+| `DATABASE_URL`   | URL de conexão PostgreSQL | `postgresql://user:pass@host:5432/db` |
+| `REDIS_URL`      | URL de conexão Redis      | `redis://host:6379`                   |
+| `SECRET_KEY`     | Chave secreta para JWT    | `sua-chave-secreta-aqui`              |
+| `KEYCLOAK_URL`   | URL do Keycloak           | `https://auth.exemplo.com`            |
+| `KEYCLOAK_REALM` | Realm do Keycloak         | `template`                            |
+| `LOG_LEVEL`      | Nível de log              | `info`                                |
+| `CORS_ORIGINS`   | Origens permitidas        | `https://app.exemplo.com`             |
 
 ### Infraestrutura
 
-| Variável | Descrição | Default |
-|----------|-----------|---------|
-| `POSTGRES_USER` | Usuário do PostgreSQL | `template` |
-| `POSTGRES_PASSWORD` | Senha do PostgreSQL | - |
-| `POSTGRES_DB` | Nome do banco | `template_db` |
-| `REDIS_PASSWORD` | Senha do Redis | - |
-| `KEYCLOAK_ADMIN` | Admin do Keycloak | `admin` |
-| `KEYCLOAK_ADMIN_PASSWORD` | Senha admin Keycloak | - |
+| Variável                  | Descrição             | Default       |
+| ------------------------- | --------------------- | ------------- |
+| `POSTGRES_USER`           | Usuário do PostgreSQL | `template`    |
+| `POSTGRES_PASSWORD`       | Senha do PostgreSQL   | -             |
+| `POSTGRES_DB`             | Nome do banco         | `template_db` |
+| `REDIS_PASSWORD`          | Senha do Redis        | -             |
+| `KEYCLOAK_ADMIN`          | Admin do Keycloak     | `admin`       |
+| `KEYCLOAK_ADMIN_PASSWORD` | Senha admin Keycloak  | -             |
 
 ---
 
@@ -168,6 +169,7 @@ docker-compose up -d --force-recreate <service-name>
 ### Problemas de conexão com banco
 
 1. Verifique se o PostgreSQL está rodando:
+
    ```bash
    docker-compose ps postgres
    ```
@@ -180,6 +182,7 @@ docker-compose up -d --force-recreate <service-name>
 ### Problemas com Keycloak
 
 1. Verifique os logs:
+
    ```bash
    docker-compose logs keycloak
    ```
@@ -191,11 +194,13 @@ docker-compose up -d --force-recreate <service-name>
 ### API retornando 500
 
 1. Verifique os logs da API:
+
    ```bash
    docker-compose logs api
    ```
 
 2. Verifique variáveis de ambiente:
+
    ```bash
    docker-compose exec api env
    ```

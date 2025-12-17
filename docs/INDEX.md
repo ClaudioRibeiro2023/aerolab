@@ -1,141 +1,160 @@
-# Índice da Documentação
+# Portal de Documentação - Template Platform
 
-> Template Platform v1.0.0 | Última atualização: Dezembro 2024
+> **Versão:** 1.0.0 | **Última atualização:** Dezembro 2024
 
-Este arquivo serve como índice central para toda a documentação do projeto.
-
----
-
-## Por Onde Começar
-
-| Seu Objetivo           | Documento                                                    |
-| ---------------------- | ------------------------------------------------------------ |
-| Configurar o ambiente  | [operacao/setup-local.md](./operacao/setup-local.md)         |
-| Entender a arquitetura | [arquitetura/c4-container.md](./arquitetura/c4-container.md) |
-| Contribuir com código  | [../CONTRIBUTING.md](../CONTRIBUTING.md)                     |
-| Fazer deploy           | [DEPLOY.md](./DEPLOY.md)                                     |
-| Resolver problemas     | [TROUBLESHOOTING.md](./TROUBLESHOOTING.md)                   |
+Índice mestre da documentação. Esta é a **source of truth** para o projeto.
 
 ---
 
-## Documentação Completa
+## Quick Start
 
-### Entrada e Configuração
-
-| Documento                                  | Descrição                         | Audiência      |
-| ------------------------------------------ | --------------------------------- | -------------- |
-| [README.md](../README.md)                  | Visão geral do projeto            | Todos          |
-| [GETTING_STARTED.md](./GETTING_STARTED.md) | Setup inicial e primeiro módulo   | Novos devs     |
-| [CONTRIBUTING.md](../CONTRIBUTING.md)      | Guia de contribuição e convenções | Contribuidores |
-
-### Arquitetura e Design
-
-| Documento                                            | Descrição                       | Audiência          |
-| ---------------------------------------------------- | ------------------------------- | ------------------ |
-| [ARCHITECTURE.md](./ARCHITECTURE.md)                 | Estrutura, stack, ADRs          | Desenvolvedores    |
-| [PROPOSTA_ARQUITETURA.md](./PROPOSTA_ARQUITETURA.md) | Proposta detalhada de melhorias | Tech Leads         |
-| [DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md)               | Tokens, componentes, Storybook  | Frontend devs      |
-| [UI_UX_IMPROVEMENTS.md](./UI_UX_IMPROVEMENTS.md)     | Melhorias de UI/UX planejadas   | Designers/Frontend |
-
-### Funcionalidades
-
-| Documento                                | Descrição                    | Audiência |
-| ---------------------------------------- | ---------------------------- | --------- |
-| [ROLES_E_ACESSO.md](./ROLES_E_ACESSO.md) | Sistema de permissões RBAC   | Todos     |
-| [BOOK_OF_TESTS.md](./BOOK_OF_TESTS.md)   | Matriz de testes e cobertura | QA/Devs   |
-
-### Operações
-
-| Documento                                            | Descrição                       | Audiência   |
-| ---------------------------------------------------- | ------------------------------- | ----------- |
-| [DEPLOY.md](./DEPLOY.md)                             | Deploy local, staging, produção | DevOps/Devs |
-| [TROUBLESHOOTING.md](./TROUBLESHOOTING.md)           | Resolução de problemas comuns   | Todos       |
-| [VALIDATION_CHECKLIST.md](./VALIDATION_CHECKLIST.md) | Checklist de validação          | QA/Devs     |
-
-### Decisões Arquiteturais (ADR)
-
-| Documento                                    | Descrição                |
-| -------------------------------------------- | ------------------------ |
-| [adr/000-template.md](./adr/000-template.md) | Template para novos ADRs |
+| Objetivo                  | Documento                                                      |
+| ------------------------- | -------------------------------------------------------------- |
+| **Configurar ambiente**   | [operacao/setup-local.md](./operacao/setup-local.md)           |
+| **Entender arquitetura**  | [arquitetura/c4-container.md](./arquitetura/c4-container.md)   |
+| **Integrar autenticação** | [contratos-integracao/auth.md](./contratos-integracao/auth.md) |
+| **Consumir API**          | [contratos-integracao/api.md](./contratos-integracao/api.md)   |
+| **Resolver problemas**    | [TROUBLESHOOTING.md](./TROUBLESHOOTING.md)                     |
 
 ---
 
-## 🗂️ Estrutura da Documentação
+## Estrutura Canônica
+
+### 📐 Arquitetura (`arquitetura/`)
+
+Diagramas C4 Model da arquitetura do sistema.
+
+| Documento                                        | Nível | Descrição                             |
+| ------------------------------------------------ | ----- | ------------------------------------- |
+| [c4-context.md](./arquitetura/c4-context.md)     | L1    | Contexto - atores e sistemas externos |
+| [c4-container.md](./arquitetura/c4-container.md) | L2    | Containers - serviços deployáveis     |
+| [c4-component.md](./arquitetura/c4-component.md) | L3    | Componentes internos                  |
+
+### 🔗 Contratos de Integração (`contratos-integracao/`)
+
+Documentação para sistemas que integram com o Template Platform.
+
+| Documento                                       | Descrição                             |
+| ----------------------------------------------- | ------------------------------------- |
+| [auth.md](./contratos-integracao/auth.md)       | OIDC, JWT, JWKS, roles, exemplos      |
+| [api.md](./contratos-integracao/api.md)         | REST, rate limiting, erros, paginação |
+| [openapi.md](./contratos-integracao/openapi.md) | Swagger, geração de clientes          |
+
+### 🔧 Operação (`operacao/`)
+
+Guias de setup, deploy e operação.
+
+| Documento                                                 | Descrição                                   |
+| --------------------------------------------------------- | ------------------------------------------- |
+| [setup-local.md](./operacao/setup-local.md)               | Configuração do ambiente de desenvolvimento |
+| [deploy.md](./operacao/deploy.md)                         | Deploy em Docker, staging, produção         |
+| [variaveis-ambiente.md](./operacao/variaveis-ambiente.md) | Referência de env vars                      |
+| [convencoes.md](./operacao/convencoes.md)                 | Convenções de código e scripts              |
+
+### 🔐 Segurança (`seguranca/`)
+
+Documentação de segurança e controle de acesso.
+
+| Documento                                                | Descrição                                          |
+| -------------------------------------------------------- | -------------------------------------------------- |
+| [rbac.md](./seguranca/rbac.md)                           | Sistema de roles (ADMIN, GESTOR, OPERADOR, VIEWER) |
+| [headers-seguranca.md](./seguranca/headers-seguranca.md) | CSP, CORS, CSRF, headers HTTP                      |
+
+### 📋 ADRs (`adr_v2/`)
+
+Architecture Decision Records - decisões arquiteturais documentadas.
+
+| ADR                                          | Título                         | Status |
+| -------------------------------------------- | ------------------------------ | ------ |
+| [001](./adr_v2/001-stack-tecnologica.md)     | Stack Tecnológica              | Aceito |
+| [002](./adr_v2/002-arquitetura-modular.md)   | Arquitetura Modular (Monorepo) | Aceito |
+| [003](./adr_v2/003-autenticacao-jwt-rbac.md) | Autenticação JWT + RBAC        | Aceito |
+
+Ver [adr_v2/README.md](./adr_v2/README.md) para template e como contribuir.
+
+### 📚 Referência
+
+| Documento                                  | Descrição                          |
+| ------------------------------------------ | ---------------------------------- |
+| [99-mapa-do-repo.md](./99-mapa-do-repo.md) | Mapa completo do repositório       |
+| [DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md)     | Design System, tokens, componentes |
+| [BOOK_OF_TESTS.md](./BOOK_OF_TESTS.md)     | Matriz de testes e cobertura       |
+| [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) | Problemas comuns e soluções        |
+
+---
+
+## Estrutura de Pastas
 
 ```text
 docs/
-├── INDEX.md                    # Este arquivo (índice)
-├── ARCHITECTURE.md             # Arquitetura e decisões técnicas
-├── GETTING_STARTED.md          # Guia de início rápido
-├── DEPLOY.md                   # Guia de deploy
-├── DESIGN_SYSTEM.md            # Design System completo
-├── ROLES_E_ACESSO.md           # Sistema de permissões
+├── INDEX.md                    # Este arquivo (índice mestre)
+├── 99-mapa-do-repo.md          # Mapa do repositório
+├── DESIGN_SYSTEM.md            # Design System
 ├── BOOK_OF_TESTS.md            # Matriz de testes
-├── TROUBLESHOOTING.md          # Resolução de problemas
-├── VALIDATION_CHECKLIST.md     # Checklist de validação
-├── PROPOSTA_ARQUITETURA.md     # Proposta de melhorias
-├── UI_UX_IMPROVEMENTS.md       # Melhorias UI/UX
-└── adr/                        # Architecture Decision Records
-    └── 000-template.md
+├── TROUBLESHOOTING.md          # Troubleshooting
+│
+├── arquitetura/                # C4 Model diagrams
+│   ├── c4-context.md
+│   ├── c4-container.md
+│   └── c4-component.md
+│
+├── contratos-integracao/       # Para integradores
+│   ├── auth.md
+│   ├── api.md
+│   └── openapi.md
+│
+├── operacao/                   # DevOps
+│   ├── setup-local.md
+│   ├── deploy.md
+│   ├── variaveis-ambiente.md
+│   └── convencoes.md
+│
+├── seguranca/                  # Security
+│   ├── rbac.md
+│   └── headers-seguranca.md
+│
+├── adr_v2/                     # ADRs (padrão oficial)
+│   ├── README.md
+│   ├── template_v2.md
+│   ├── 001-stack-tecnologica.md
+│   ├── 002-arquitetura-modular.md
+│   └── 003-autenticacao-jwt-rbac.md
+│
+├── _archive/                   # Docs arquivados (histórico)
+├── _backlog/                   # Ideias e backlog
+└── _report/                    # Relatórios de consolidação
 ```
 
 ---
 
-## 📋 Status da Documentação
+## Links Úteis
 
-| Documento          | Status        | Última Atualização |
-| ------------------ | ------------- | ------------------ |
-| README.md          | ✅ Atualizado | Dez/2024           |
-| ARCHITECTURE.md    | ✅ Atualizado | Dez/2024           |
-| GETTING_STARTED.md | ✅ Atualizado | Dez/2024           |
-| DEPLOY.md          | ✅ Atualizado | Dez/2024           |
-| DESIGN_SYSTEM.md   | ✅ Atualizado | Dez/2024           |
-| ROLES_E_ACESSO.md  | ✅ Atualizado | Dez/2024           |
-| BOOK_OF_TESTS.md   | ✅ Novo       | Dez/2024           |
-| TROUBLESHOOTING.md | ✅ Atualizado | Dez/2024           |
-| CONTRIBUTING.md    | ✅ Atualizado | Dez/2024           |
+| Serviço            | URL Local                    |
+| ------------------ | ---------------------------- |
+| Frontend           | <http://localhost:13000>     |
+| API                | <http://localhost:8000>      |
+| API Docs (Swagger) | <http://localhost:8000/docs> |
+| Keycloak           | <http://localhost:8080>      |
+| Storybook          | <http://localhost:6006>      |
+
+**GitHub:** [ClaudioRibeiro2023/Modelo](https://github.com/ClaudioRibeiro2023/Modelo)
 
 ---
 
-## 🔗 Links Úteis
+## Manutenção
 
-### Desenvolvimento
+### Criar novo ADR
 
-- **Dev Server:** http://localhost:13000
-- **API:** http://localhost:8000
-- **Keycloak:** http://localhost:8080
-- **Storybook:** http://localhost:6006
-- **API Docs:** http://localhost:8000/docs
+1. Copie `adr_v2/template_v2.md`
+2. Preencha todas as seções (especialmente "Impacto em Integrações")
+3. Atualize `adr_v2/README.md` e este INDEX
 
-### Repositório
+### Atualizar docs
 
-- **GitHub:** [ClaudioRibeiro2023/Modelo](https://github.com/ClaudioRibeiro2023/Modelo)
-- **Issues:** Abra uma issue para bugs ou sugestões
-- **Pull Requests:** Siga o guia em CONTRIBUTING.md
+- Mantenha **pt-BR** em toda documentação
+- Atualize este INDEX ao criar/mover documentos
+- Use seção 6 "Impacto em Integrações" nos ADRs
 
 ---
 
-## 📝 Como Manter a Documentação
-
-### Ao Adicionar Funcionalidades
-
-1. Atualize o documento relevante (ex: ARCHITECTURE.md para mudanças de arquitetura)
-2. Adicione entrada no BOOK_OF_TESTS.md se criar novos testes
-3. Atualize este INDEX.md se criar novos documentos
-
-### Ao Tomar Decisões Arquiteturais
-
-1. Crie um novo ADR em `docs/adr/` usando o template
-2. Referencie o ADR no ARCHITECTURE.md
-
-### Convenções
-
-- Use **pt-BR** em toda a documentação
-- Mantenha títulos consistentes (H1 para título principal, H2 para seções)
-- Adicione data de última atualização em documentos importantes
-- Use tabelas para informações estruturadas
-- Inclua exemplos de código quando relevante
-
----
-
-_Documentação gerada e mantida pela equipe de desenvolvimento._
+_Documentação consolidada em 2024-12-16_

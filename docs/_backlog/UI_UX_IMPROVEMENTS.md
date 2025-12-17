@@ -11,16 +11,16 @@ Este documento identifica melhorias para tornar o template mais profissional, co
 
 ### Métricas Atuais
 
-| Aspecto | Estado | Prioridade |
-|---------|--------|------------|
-| Design System | 🟡 Parcial | P0 |
-| Tokens de Design | 🟡 Parcial | P0 |
-| Componentes Reutilizáveis | 🟡 Parcial | P0 |
-| Acessibilidade | 🟠 Necessita Melhorias | P1 |
-| Dark Mode | 🟡 Incompleto | P1 |
-| Responsividade | 🟡 Básica | P1 |
-| Animações/Transições | 🟡 Inconsistente | P2 |
-| Documentação UI | 🔴 Ausente | P1 |
+| Aspecto                   | Estado                 | Prioridade |
+| ------------------------- | ---------------------- | ---------- |
+| Design System             | 🟡 Parcial             | P0         |
+| Tokens de Design          | 🟡 Parcial             | P0         |
+| Componentes Reutilizáveis | 🟡 Parcial             | P0         |
+| Acessibilidade            | 🟠 Necessita Melhorias | P1         |
+| Dark Mode                 | 🟡 Incompleto          | P1         |
+| Responsividade            | 🟡 Básica              | P1         |
+| Animações/Transições      | 🟡 Inconsistente       | P2         |
+| Documentação UI           | 🔴 Ausente             | P1         |
 
 ---
 
@@ -29,6 +29,7 @@ Este documento identifica melhorias para tornar o template mais profissional, co
 ### 1.1 Problemas Identificados
 
 #### Tokens Insuficientes
+
 O `index.css` define apenas tokens básicos. Faltam:
 
 ```css
@@ -43,6 +44,7 @@ O `index.css` define apenas tokens básicos. Faltam:
 ```
 
 #### Cores Inconsistentes
+
 - Uso misto de cores Tailwind (`gray-200`, `teal-500`) e variáveis CSS (`--brand-primary`)
 - Dark mode usa cores diferentes em cada página (ex: `dark:bg-gray-700` vs `dark:bg-gray-800`)
 
@@ -63,27 +65,27 @@ O `index.css` define apenas tokens básicos. Faltam:
 
 ### 2.1 Componentes Ausentes ou Incompletos
 
-| Componente | Estado | Descrição |
-|------------|--------|-----------|
-| `Button` | 🔴 Ausente | Não existe componente Button reutilizável |
-| `Input` | 🔴 Ausente | Inputs são definidos inline em cada página |
-| `Select` | 🔴 Ausente | Apenas inline |
-| `Checkbox` | 🔴 Ausente | Apenas inline |
-| `Toggle/Switch` | 🔴 Ausente | Definido inline com CSS complexo |
-| `Modal/Dialog` | 🔴 Ausente | |
-| `Tooltip` | 🔴 Ausente | |
-| `Toast/Notification` | 🔴 Ausente | |
-| `Card` | 🔴 Ausente | Pattern repetido mas não componentizado |
-| `Badge` | 🔴 Ausente | |
-| `Avatar` | 🔴 Ausente | |
-| `Tabs` | 🔴 Ausente | Definido inline em ConfigPage |
-| `Dropdown` | 🔴 Ausente | |
-| `Table` | 🔴 Ausente | |
-| `Pagination` | 🔴 Ausente | |
-| `Breadcrumb` | 🟡 Inline | Definido no Header, não componentizado |
-| `Alert` | 🔴 Ausente | |
-| `Progress` | 🔴 Ausente | |
-| `Skeleton` | 🔴 Ausente | Para loading states |
+| Componente           | Estado     | Descrição                                  |
+| -------------------- | ---------- | ------------------------------------------ |
+| `Button`             | 🔴 Ausente | Não existe componente Button reutilizável  |
+| `Input`              | 🔴 Ausente | Inputs são definidos inline em cada página |
+| `Select`             | 🔴 Ausente | Apenas inline                              |
+| `Checkbox`           | 🔴 Ausente | Apenas inline                              |
+| `Toggle/Switch`      | 🔴 Ausente | Definido inline com CSS complexo           |
+| `Modal/Dialog`       | 🔴 Ausente |                                            |
+| `Tooltip`            | 🔴 Ausente |                                            |
+| `Toast/Notification` | 🔴 Ausente |                                            |
+| `Card`               | 🔴 Ausente | Pattern repetido mas não componentizado    |
+| `Badge`              | 🔴 Ausente |                                            |
+| `Avatar`             | 🔴 Ausente |                                            |
+| `Tabs`               | 🔴 Ausente | Definido inline em ConfigPage              |
+| `Dropdown`           | 🔴 Ausente |                                            |
+| `Table`              | 🔴 Ausente |                                            |
+| `Pagination`         | 🔴 Ausente |                                            |
+| `Breadcrumb`         | 🟡 Inline  | Definido no Header, não componentizado     |
+| `Alert`              | 🔴 Ausente |                                            |
+| `Progress`           | 🔴 Ausente |                                            |
+| `Skeleton`           | 🔴 Ausente | Para loading states                        |
 
 ### 2.2 Ações Recomendadas
 
@@ -115,15 +117,18 @@ O `index.css` define apenas tokens básicos. Faltam:
 ### 3.1 Problemas Identificados
 
 #### AppLayout
+
 - Usa `NAVIGATION` hardcoded diretamente (já refatorando)
 - CSS variables não documentadas (`--functions-panel-width`)
 
 #### Sidebar
+
 - Usa `style={{ background: '...' }}` inline (viola boas práticas)
 - Ícones importados manualmente em vez de usar sistema dinâmico
 - Largura fixa, não há estado "collapsed"
 
 #### Header
+
 - Breadcrumb gerado por regex simples, não semântico
 - Dark mode toggle não persiste preferência
 - Busca não implementada (apenas visual)
@@ -145,14 +150,15 @@ O `index.css` define apenas tokens básicos. Faltam:
 
 ### 4.1 Problemas Identificados
 
-| Arquivo | Problema |
-|---------|----------|
-| `DataSourceCard.tsx:46` | Botão sem texto discernível |
-| `ETLFilters.tsx:55,68` | Select sem nome acessível |
-| `FiltersConfigPage.tsx:505,527` | Inputs sem labels |
-| `FilterMultiSelect.tsx` | ARIA attributes inválidos |
+| Arquivo                         | Problema                    |
+| ------------------------------- | --------------------------- |
+| `DataSourceCard.tsx:46`         | Botão sem texto discernível |
+| `ETLFilters.tsx:55,68`          | Select sem nome acessível   |
+| `FiltersConfigPage.tsx:505,527` | Inputs sem labels           |
+| `FilterMultiSelect.tsx`         | ARIA attributes inválidos   |
 
 #### Problemas Gerais
+
 - Foco não visível em alguns elementos
 - Não há skip-links
 - Contrast ratio não verificado
@@ -342,6 +348,7 @@ O `index.css` define apenas tokens básicos. Faltam:
 ## 13. PLANO DE AÇÃO RESUMIDO
 
 ### Fase 1 - Fundação (P0) - 2-3 semanas
+
 1. Criar tokens de design completos
 2. Criar componentes base (Button, Input, Select, Card, Modal, Toast)
 3. Remover inline styles
@@ -349,6 +356,7 @@ O `index.css` define apenas tokens básicos. Faltam:
 5. Padronizar dark mode
 
 ### Fase 2 - Componentes (P1) - 2-3 semanas
+
 1. Criar componentes restantes (Tabs, Table, Dropdown, etc.)
 2. Implementar sidebar responsiva
 3. Sistema de busca global
@@ -356,6 +364,7 @@ O `index.css` define apenas tokens básicos. Faltam:
 5. Configurar Storybook
 
 ### Fase 3 - Polish (P2) - 1-2 semanas
+
 1. Animações e micro-interações
 2. Performance optimization
 3. Testes de acessibilidade
@@ -404,15 +413,15 @@ packages/design-system/
 
 ## 15. MÉTRICAS DE SUCESSO
 
-| Métrica | Atual | Meta |
-|---------|-------|------|
-| Componentes reutilizáveis | ~5 | 20+ |
-| Cobertura dark mode | ~60% | 100% |
-| A11y issues | 15+ | 0 |
-| Lighthouse Performance | N/A | 90+ |
-| Lighthouse Accessibility | N/A | 100 |
-| Bundle size (gzip) | 35KB | <30KB |
-| Time to First Paint | N/A | <1.5s |
+| Métrica                   | Atual | Meta  |
+| ------------------------- | ----- | ----- |
+| Componentes reutilizáveis | ~5    | 20+   |
+| Cobertura dark mode       | ~60%  | 100%  |
+| A11y issues               | 15+   | 0     |
+| Lighthouse Performance    | N/A   | 90+   |
+| Lighthouse Accessibility  | N/A   | 100   |
+| Bundle size (gzip)        | 35KB  | <30KB |
+| Time to First Paint       | N/A   | <1.5s |
 
 ---
 
@@ -432,6 +441,7 @@ packages/design-system/
 ### ✅ Fase 1 - Fundação (CONCLUÍDO)
 
 #### Design Tokens
+
 - [x] **Tokens de cores completos** (`index.css`)
   - Cores semânticas: `--color-success`, `--color-warning`, `--color-error`, `--color-info`
   - Status backgrounds para light/dark mode
@@ -441,24 +451,28 @@ packages/design-system/
   - Cores semânticas ajustadas para contraste adequado
 
 #### Componentes Base (Design System)
+
 - [x] Button, Input, Card, Modal, Toast, Tabs, Table, Dropdown, Skeleton
 - [x] Storybook configurado (http://localhost:6007)
 
 #### Acessibilidade (A11y)
+
 - [x] **ARIA attributes corrigidos:**
   - `FilterMultiSelect.tsx` - aria-expanded, role, aria-label
   - `FilterToggle.tsx` - aria-checked para string
-  - `Input.tsx` - aria-invalid para string  
+  - `Input.tsx` - aria-invalid para string
   - `Dropdown.tsx` - aria-expanded para string
   - `Tabs.tsx` - aria-selected para string
 
 #### Layout & Responsividade
+
 - [x] **Sidebar colapsível** com toggle e persistência
 - [x] **Mobile sidebar** (drawer) com overlay
 - [x] **Botão toggle do painel** reposicionado
 - [x] **Welcome banner** com gradiente correto
 
 #### Utilitários CSS
+
 - [x] Classes de progresso: `.progress-bar-track`, `.progress-bar-fill--*`
 - [x] Classes de status: `.status-badge--*`, `.status-card--*`
 - [x] Classes de texto: `.text-success`, `.text-warning`, etc.
@@ -480,13 +494,13 @@ packages/design-system/
 
 ### Métricas Atualizadas
 
-| Métrica | Anterior | Atual | Meta |
-|---------|----------|-------|------|
-| Componentes DS | ~5 | 9 | 20+ |
-| Cobertura dark mode | ~60% | ~90% | 100% |
-| A11y issues | 15+ | ~5 | 0 |
-| CSS Bundle | 64KB | 69KB | <80KB |
+| Métrica             | Anterior | Atual | Meta  |
+| ------------------- | -------- | ----- | ----- |
+| Componentes DS      | ~5       | 9     | 20+   |
+| Cobertura dark mode | ~60%     | ~90%  | 100%  |
+| A11y issues         | 15+      | ~5    | 0     |
+| CSS Bundle          | 64KB     | 69KB  | <80KB |
 
 ---
 
-*Documento atualizado manualmente. Última atualização: 10 Dezembro 2025*
+_Documento atualizado manualmente. Última atualização: 10 Dezembro 2025_

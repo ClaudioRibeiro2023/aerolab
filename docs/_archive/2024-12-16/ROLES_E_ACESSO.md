@@ -8,12 +8,12 @@ O sistema utiliza Keycloak como Identity Provider (IdP) e implementa OIDC/OAuth2
 
 ## Roles Disponíveis
 
-| Role | Descrição | Nível |
-|------|-----------|-------|
-| **ADMIN** | Administrador com acesso total | 1 (máximo) |
-| **GESTOR** | Gerente com acesso a relatórios e configurações | 2 |
-| **OPERADOR** | Operador com acesso a funcionalidades do dia-a-dia | 3 |
-| **VIEWER** | Apenas visualização | 4 (mínimo) |
+| Role         | Descrição                                          | Nível      |
+| ------------ | -------------------------------------------------- | ---------- |
+| **ADMIN**    | Administrador com acesso total                     | 1 (máximo) |
+| **GESTOR**   | Gerente com acesso a relatórios e configurações    | 2          |
+| **OPERADOR** | Operador com acesso a funcionalidades do dia-a-dia | 3          |
+| **VIEWER**   | Apenas visualização                                | 4 (mínimo) |
 
 ## Configuração no Keycloak
 
@@ -48,12 +48,12 @@ import { useAuth } from '@template/shared'
 
 function MyComponent() {
   const { hasRole, hasAnyRole } = useAuth()
-  
+
   // Verificar uma role específica
   if (hasRole('ADMIN')) {
     // Apenas admin
   }
-  
+
   // Verificar qualquer uma das roles
   if (hasAnyRole(['ADMIN', 'GESTOR'])) {
     // Admin OU gestor
@@ -66,11 +66,14 @@ function MyComponent() {
 ```tsx
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute'
 
-<Route path="/admin" element={
-  <ProtectedRoute requiredRoles={['ADMIN']}>
-    <AdminPage />
-  </ProtectedRoute>
-} />
+;<Route
+  path="/admin"
+  element={
+    <ProtectedRoute requiredRoles={['ADMIN']}>
+      <AdminPage />
+    </ProtectedRoute>
+  }
+/>
 ```
 
 ### Ocultar Elementos na UI
@@ -78,18 +81,14 @@ import { ProtectedRoute } from '@/components/auth/ProtectedRoute'
 ```tsx
 function Sidebar() {
   const { hasAnyRole } = useAuth()
-  
+
   return (
     <nav>
       <Link to="/">Home</Link>
-      
-      {hasAnyRole(['ADMIN', 'GESTOR']) && (
-        <Link to="/reports">Relatórios</Link>
-      )}
-      
-      {hasRole('ADMIN') && (
-        <Link to="/admin">Administração</Link>
-      )}
+
+      {hasAnyRole(['ADMIN', 'GESTOR']) && <Link to="/reports">Relatórios</Link>}
+
+      {hasRole('ADMIN') && <Link to="/admin">Administração</Link>}
     </nav>
   )
 }
@@ -138,6 +137,7 @@ VITE_DEMO_MODE=true
 ```
 
 Em demo mode:
+
 - Usuário é automaticamente autenticado
 - Todas as roles são concedidas
 - Nenhuma requisição ao Keycloak

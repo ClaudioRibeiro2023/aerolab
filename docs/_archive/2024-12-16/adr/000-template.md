@@ -27,10 +27,12 @@ Descreva a decisão tomada de forma clara e objetiva.
 **Descrição:** Breve descrição da alternativa.
 
 **Prós:**
+
 - Vantagem 1
 - Vantagem 2
 
 **Contras:**
+
 - Desvantagem 1
 - Desvantagem 2
 
@@ -39,9 +41,11 @@ Descreva a decisão tomada de forma clara e objetiva.
 **Descrição:** Breve descrição da alternativa.
 
 **Prós:**
+
 - Vantagem 1
 
 **Contras:**
+
 - Desvantagem 1
 
 ## Consequências
