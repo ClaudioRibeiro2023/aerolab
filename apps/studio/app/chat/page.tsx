@@ -52,6 +52,26 @@ interface Message {
 }
 
 // ============================================================
+// RELATIVE TIME FORMATTER
+// ============================================================
+
+function formatRelativeTime(date: Date): string {
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffSec = Math.floor(diffMs / 1000);
+  const diffMin = Math.floor(diffSec / 60);
+  const diffHour = Math.floor(diffMin / 60);
+  const diffDay = Math.floor(diffHour / 24);
+
+  if (diffSec < 60) return "agora";
+  if (diffMin < 60) return `há ${diffMin}min`;
+  if (diffHour < 24) return `há ${diffHour}h`;
+  if (diffDay === 1) return "ontem";
+  if (diffDay < 7) return `há ${diffDay} dias`;
+  return date.toLocaleDateString("pt-BR", { day: "2-digit", month: "short" });
+}
+
+// ============================================================
 // AVAILABLE MODELS
 // ============================================================
 
@@ -355,8 +375,10 @@ function ChatContent() {
   
   // Refs
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [showScrollButton, setShowScrollButton] = useState(false);
 
   // Load agents on mount
   useEffect(() => {
@@ -407,6 +429,25 @@ function ChatContent() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  // Detect scroll position for scroll-to-bottom button
+  useEffect(() => {
+    const container = messagesContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = container;
+      const isNearBottom = scrollHeight - scrollTop - clientHeight < 100;
+      setShowScrollButton(!isNearBottom && messages.length > 3);
+    };
+
+    container.addEventListener("scroll", handleScroll);
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, [messages.length]);
+
+  const scrollToBottom = useCallback(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, []);
 
   // Keyboard shortcuts - using refs to avoid stale closures
   useEffect(() => {
@@ -996,9 +1037,27 @@ function ChatContent() {
         />
 
         {/* Chat Container */}
-        <div className="flex-1 bg-slate-900/50 backdrop-blur-sm rounded-2xl border border-slate-800 flex flex-col overflow-hidden">
+        <div className="flex-1 bg-slate-900/50 backdrop-blur-sm rounded-2xl border border-slate-800 flex flex-col overflow-hidden relative">
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-6">
+          <div ref={messagesContainerRef} className="flex-1 overflow-y-auto p-6 space-y-6">
+          
+          {/* Scroll to bottom button */}
+          <AnimatePresence>
+            {showScrollButton && (
+              <motion.button
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                onClick={scrollToBottom}
+                className="fixed bottom-32 right-8 z-20 p-3 bg-blue-600 hover:bg-blue-500 text-white rounded-full shadow-lg shadow-blue-500/30 transition-colors"
+                title="Ir para o final"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                </svg>
+              </motion.button>
+            )}
+          </AnimatePresence>
             {messages.length === 0 ? (
               <div className="h-full flex items-center justify-center">
                 <EmptyState
@@ -1095,7 +1154,7 @@ function ChatContent() {
 
                       {/* Meta info */}
                       <div className={`flex items-center gap-3 mt-2 text-xs text-slate-500 ${message.role === "user" ? "justify-end" : ""}`}>
-                        <span>{message.timestamp.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}</span>
+                        <span title={message.timestamp.toLocaleString("pt-BR")}>{formatRelativeTime(message.timestamp)}</span>
                         {message.agent && <span>• {message.agent}</span>}
                         {message.model && (
                           <span className="text-slate-600">
