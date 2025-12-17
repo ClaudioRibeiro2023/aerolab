@@ -95,14 +95,14 @@ Consolidar o AeroLab como plataforma corporativa de multi-agentes AI, integrando
 |----|--------|------------|---------|--------|
 | AL-028 | Medir bundle size do Studio | P2 | S | ✅ Done |
 | AL-029 | Otimizar cold start do backend | P2 | M | ✅ Done |
-| AL-030 | Implementar caching de RAG | P2 | L | ⏳ Todo |
+| AL-030 | Implementar caching de RAG | P2 | L | ✅ Done |
 | AL-031 | Revisar UX do Agent Builder | P2 | L | ⏳ Todo |
 | AL-032 | Implementar onboarding wizard | P2 | L | ⏳ Todo |
-| AL-033 | Adicionar estados empty/loading/error | P2 | M | ⏳ Todo |
+| AL-033 | Adicionar estados empty/loading/error | P2 | M | ✅ Done |
 | AL-034 | Melhorar acessibilidade (a11y) | P2 | L | ⏳ Todo |
 | AL-035 | Consolidar UI duplicada (Agno2 → packages/ui) | P2 | L | ⏳ Todo |
 | AL-036 | Criar Storybook para design system | P2 | L | ⏳ Todo |
-| AL-037 | Implementar dark mode consistente | P2 | M | ⏳ Todo |
+| AL-037 | Implementar dark mode consistente | P2 | M | ✅ Done |
 | AL-038 | Configurar deploy staging (Netlify/Vercel) | P2 | M | ⏳ Todo |
 | AL-039 | Configurar deploy produção | P2 | L | ⏳ Todo |
 | AL-040 | Documentar arquitetura C4 atualizada | P2 | M | ⏳ Todo |
