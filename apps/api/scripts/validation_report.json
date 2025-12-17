@@ -1,0 +1,365 @@
+{
+  "timestamp": "2025-12-17T12:40:56.350448",
+  "endpoints": [
+    {
+      "method": "POST",
+      "path": "/auth/login"
+    },
+    {
+      "method": "GET",
+      "path": "/auth/me"
+    },
+    {
+      "method": "GET",
+      "path": "/"
+    },
+    {
+      "method": "GET",
+      "path": "/health"
+    },
+    {
+      "method": "GET",
+      "path": "/health/detailed"
+    },
+    {
+      "method": "GET",
+      "path": "/health/live"
+    },
+    {
+      "method": "GET",
+      "path": "/health/ready"
+    },
+    {
+      "method": "GET",
+      "path": "/agents"
+    },
+    {
+      "method": "POST",
+      "path": "/agents"
+    },
+    {
+      "method": "DELETE",
+      "path": "/agents/{agent_name}"
+    },
+    {
+      "method": "GET",
+      "path": "/teams"
+    },
+    {
+      "method": "GET",
+      "path": "/workflows"
+    },
+    {
+      "method": "GET",
+      "path": "/workflows/registry"
+    },
+    {
+      "method": "GET",
+      "path": "/rag/collections"
+    },
+    {
+      "method": "POST",
+      "path": "/rag/ingest-texts"
+    },
+    {
+      "method": "POST",
+      "path": "/rag/ingest-urls"
+    },
+    {
+      "method": "POST",
+      "path": "/rag/ingest-files"
+    },
+    {
+      "method": "POST",
+      "path": "/rag/query"
+    },
+    {
+      "method": "GET",
+      "path": "/rag/collections/{collection}/docs"
+    },
+    {
+      "method": "DELETE",
+      "path": "/rag/collections/{collection}"
+    },
+    {
+      "method": "DELETE",
+      "path": "/rag/collections/{collection}/docs/{doc_id}"
+    },
+    {
+      "method": "POST",
+      "path": "/hitl/start"
+    },
+    {
+      "method": "POST",
+      "path": "/hitl/complete"
+    },
+    {
+      "method": "GET",
+      "path": "/hitl/{session_id}"
+    },
+    {
+      "method": "GET",
+      "path": "/hitl"
+    },
+    {
+      "method": "POST",
+      "path": "/hitl/cancel"
+    },
+    {
+      "method": "POST",
+      "path": "/agents/{agent_name}/run"
+    },
+    {
+      "method": "GET",
+      "path": "/agents/{agent_name}"
+    },
+    {
+      "method": "POST",
+      "path": "/chat"
+    },
+    {
+      "method": "POST",
+      "path": "/chat/stream"
+    },
+    {
+      "method": "GET",
+      "path": "/chat/history"
+    },
+    {
+      "method": "GET",
+      "path": "/logs"
+    },
+    {
+      "method": "GET",
+      "path": "/domains"
+    },
+    {
+      "method": "GET",
+      "path": "/models"
+    },
+    {
+      "method": "GET",
+      "path": "/metrics"
+    },
+    {
+      "method": "GET",
+      "path": "/api/status"
+    }
+  ],
+  "llm_providers": [
+    {
+      "provider": "groq",
+      "status": "ok",
+      "model": "llama-3.3-70b-versatile",
+      "response": "OK"
+    },
+    {
+      "provider": "openai",
+      "status": "ok",
+      "model": "gpt-4o-mini",
+      "response": "OK"
+    },
+    {
+      "provider": "anthropic",
+      "status": "ok",
+      "model": "claude-3-haiku",
+      "response": "OK"
+    },
+    {
+      "provider": "google",
+      "status": "error",
+      "error": "404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods."
+    },
+    {
+      "provider": "mistral",
+      "status": "ok",
+      "model": "mistral-small",
+      "response": "OK"
+    },
+    {
+      "provider": "cohere",
+      "status": "error",
+      "error": "headers: {'access-control-expose-headers': 'X-Debug-Trace-ID', 'cache-control': 'no-cache, no-store, no-transform, must-revalidate, private, max-age=0', 'content-encoding': 'gzip', 'content-type': 'application/json', 'expires': 'Thu, 01 Jan 1970 00:00:00 GMT', 'pragma': 'no-cache', 'vary': 'Origin,Accept-Encoding', 'x-accel-expires': '0', 'x-debug-trace-id': '729a6aa223749bc981c2dfd35aefc754', 'x-endpoint-monthly-call-limit': '1000', 'x-trial-endpoint-call-limit': '20', 'x-trial-endpoint-call-remaining': '19', 'date': 'Wed, 17 Dec 2025 15:41:05 GMT', 'x-envoy-upstream-service-time': '21', 'server': 'envoy', 'via': '1.1 google', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', 'transfer-encoding': 'chunked'}, status_code: 404, body: {'id': 'd58969ae-3bc7-46cf-9af9-d621da4e850f', 'message': \"model 'command-r' was removed on September 15, 2025. See https://docs.cohere.com/docs/models#command for a list of models you can use instead.\"}"
+    }
+  ],
+  "env_variables": [
+    {
+      "key": "GROQ_API_KEY",
+      "status": "configured",
+      "length": 56
+    },
+    {
+      "key": "OPENAI_API_KEY",
+      "status": "configured",
+      "length": 164
+    },
+    {
+      "key": "ANTHROPIC_API_KEY",
+      "status": "configured",
+      "length": 108
+    },
+    {
+      "key": "GOOGLE_API_KEY",
+      "status": "configured",
+      "length": 39
+    },
+    {
+      "key": "MISTRAL_API_KEY",
+      "status": "configured",
+      "length": 32
+    },
+    {
+      "key": "COHERE_API_KEY",
+      "status": "configured",
+      "length": 40
+    }
+  ],
+  "frontend_pages": [
+    {
+      "route": "/",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\page.tsx"
+    },
+    {
+      "route": "/agents",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\agents\\page.tsx"
+    },
+    {
+      "route": "/benchmarks",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\benchmarks\\page.tsx"
+    },
+    {
+      "route": "/chat",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\chat\\page.tsx"
+    },
+    {
+      "route": "/dashboard",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\dashboard\\page.tsx"
+    },
+    {
+      "route": "/domains",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\domains\\page.tsx"
+    },
+    {
+      "route": "/editor",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\editor\\page.tsx"
+    },
+    {
+      "route": "/flow-studio",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\flow-studio\\page.tsx"
+    },
+    {
+      "route": "/help",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\help\\page.tsx"
+    },
+    {
+      "route": "/hitl",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\hitl\\page.tsx"
+    },
+    {
+      "route": "/logs",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\logs\\page.tsx"
+    },
+    {
+      "route": "/marketplace",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\marketplace\\page.tsx"
+    },
+    {
+      "route": "/settings",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\settings\\page.tsx"
+    },
+    {
+      "route": "/teams",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\teams\\page.tsx"
+    },
+    {
+      "route": "/workflows",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\workflows\\page.tsx"
+    },
+    {
+      "route": "/workflows/builder",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\workflows\\builder\\page.tsx"
+    },
+    {
+      "route": "/workflows/templates",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\workflows\\templates\\page.tsx"
+    },
+    {
+      "route": "/teams/builder",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\teams\\builder\\page.tsx"
+    },
+    {
+      "route": "/teams/new",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\teams\\new\\page.tsx"
+    },
+    {
+      "route": "/teams/[name]",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\teams\\[name]\\page.tsx"
+    },
+    {
+      "route": "/teams/[name]/edit",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\teams\\[name]\\edit\\page.tsx"
+    },
+    {
+      "route": "/teams/[name]/run",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\teams\\[name]\\run\\page.tsx"
+    },
+    {
+      "route": "/rag/collections",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\rag\\collections\\page.tsx"
+    },
+    {
+      "route": "/rag/ingest",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\rag\\ingest\\page.tsx"
+    },
+    {
+      "route": "/rag/query",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\rag\\query\\page.tsx"
+    },
+    {
+      "route": "/marketplace/publish",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\marketplace\\publish\\page.tsx"
+    },
+    {
+      "route": "/domains/corporate",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\domains\\corporate\\page.tsx"
+    },
+    {
+      "route": "/domains/data",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\domains\\data\\page.tsx"
+    },
+    {
+      "route": "/domains/devops",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\domains\\devops\\page.tsx"
+    },
+    {
+      "route": "/domains/finance",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\domains\\finance\\page.tsx"
+    },
+    {
+      "route": "/domains/geo",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\domains\\geo\\page.tsx"
+    },
+    {
+      "route": "/domains/legal",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\domains\\legal\\page.tsx"
+    },
+    {
+      "route": "/agents/new",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\agents\\new\\page.tsx"
+    },
+    {
+      "route": "/agents/[name]",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\agents\\[name]\\page.tsx"
+    },
+    {
+      "route": "/agents/[name]/analytics",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\agents\\[name]\\analytics\\page.tsx"
+    },
+    {
+      "route": "/agents/[name]/edit",
+      "file": "E:\\.ai\\AeroLab\\apps\\studio\\app\\agents\\[name]\\edit\\page.tsx"
+    }
+  ],
+  "errors": [],
+  "warnings": []
+}

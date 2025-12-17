@@ -630,15 +630,26 @@ class AgentRunRequest(BaseModel):
     stream: bool = False
 
 
-async def call_llm(prompt: str, model: str = "llama-3.3-70b-versatile", agent_name: str = "Assistant") -> dict:
-    """Call LLM API (Groq, OpenAI, or Anthropic) based on available keys."""
+async def call_llm(prompt: str, model: str = "llama-3.3-70b-versatile", agent_name: str = "Assistant", provider: str = None) -> dict:
+    """Call LLM API based on available keys. Supports: Groq, OpenAI, Anthropic, Mistral."""
     import os
     
     groq_key = os.getenv("GROQ_API_KEY", "")
     openai_key = os.getenv("OPENAI_API_KEY", "")
     anthropic_key = os.getenv("ANTHROPIC_API_KEY", "")
+    mistral_key = os.getenv("MISTRAL_API_KEY", "")
     
-    system_prompt = f"Você é {agent_name}, um assistente de IA útil e profissional. Responda de forma clara, concisa e em português brasileiro."
+    system_prompt = f"Você é {agent_name}, um assistente de IA útil e profissional da plataforma AeroLab. Responda de forma clara, concisa e em português brasileiro."
+    
+    # Route to specific provider if requested
+    if provider:
+        provider = provider.lower()
+        if provider == "openai" and openai_key:
+            groq_key = ""  # Skip Groq
+        elif provider == "anthropic" and anthropic_key:
+            groq_key = openai_key = ""  # Skip Groq and OpenAI
+        elif provider == "mistral" and mistral_key:
+            groq_key = openai_key = anthropic_key = ""  # Skip others
     
     # Try Groq first (fastest and free tier)
     if groq_key and len(groq_key) > 10:
@@ -732,10 +743,38 @@ async def call_llm(prompt: str, model: str = "llama-3.3-70b-versatile", agent_na
         except Exception as e:
             logger.error(f"Anthropic API error: {e}")
     
+    # Try Mistral
+    if mistral_key and len(mistral_key) > 10:
+        try:
+            from mistralai import Mistral
+            client = Mistral(api_key=mistral_key)
+            
+            response = client.chat.complete(
+                model="mistral-small-latest",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": prompt}
+                ]
+            )
+            
+            response_text = response.choices[0].message.content
+            return {
+                "success": True,
+                "response": response_text,
+                "model": "mistral-small",
+                "provider": "mistral",
+                "tokens": {
+                    "input": response.usage.prompt_tokens if response.usage else 0,
+                    "output": response.usage.completion_tokens if response.usage else 0
+                }
+            }
+        except Exception as e:
+            logger.error(f"Mistral API error: {e}")
+    
     # Fallback demo response
     return {
         "success": False,
-        "response": f"[Demo] Nenhuma API key de LLM válida configurada. Configure GROQ_API_KEY, OPENAI_API_KEY ou ANTHROPIC_API_KEY no arquivo .env",
+        "response": f"[Demo] Nenhuma API key de LLM válida configurada. Configure GROQ_API_KEY, OPENAI_API_KEY, ANTHROPIC_API_KEY ou MISTRAL_API_KEY no arquivo .env",
         "model": "demo",
         "provider": "fallback",
         "tokens": {"input": 0, "output": 0}
