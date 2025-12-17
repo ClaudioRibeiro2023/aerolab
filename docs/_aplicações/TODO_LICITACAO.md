@@ -260,12 +260,17 @@
 
 ---
 
-## Fase 9 — RAG jurídico (Doc 01) — P1
+## Fase 9 — RAG jurídico (Doc 01) ✅
 
-- [ ] Ingerir Lei 14.133/2021 no RAG
-- [ ] Ingerir checklists e padrões internos
+- [x] Criar `services/rag_juridico.py` com:
+  - [x] Lei 14.133/2021 (capítulos e artigos)
+  - [x] Checklists de habilitação
+  - [x] Busca semântica em capítulos
+  - [x] Identificação de artigos relevantes
+  - [x] Contexto jurídico para análise
+- [x] 22 testes de RAG Jurídico passando
 - [ ] (Opcional) Ingerir acórdãos TCU selecionados
-- [ ] Integrar no agente Analyst
+- [ ] Integrar RAG no agente Analyst (em produção)
 
 ---
 
