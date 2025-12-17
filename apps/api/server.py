@@ -472,10 +472,86 @@ async def workflows_registry():
 @app.get("/rag/collections", tags=["RAG"])
 async def list_rag_collections():
     """List RAG collections (fallback)."""
-    return [
-        {"id": "1", "name": "Documentation", "documents": 10, "status": "active"},
-        {"id": "2", "name": "Knowledge Base", "documents": 25, "status": "active"},
-    ]
+    return {
+        "collections": ["Documentation", "Knowledge Base", "FAQ"],
+        "items": [
+            {"id": "1", "name": "Documentation", "documents": 10, "status": "active"},
+            {"id": "2", "name": "Knowledge Base", "documents": 25, "status": "active"},
+        ]
+    }
+
+
+@app.post("/rag/ingest-texts", tags=["RAG"])
+async def rag_ingest_texts(collection: str = "", texts: list = []):
+    """Ingest texts into RAG collection."""
+    return {"added": len(texts) if texts else 0, "collection": collection}
+
+
+@app.post("/rag/ingest-urls", tags=["RAG"])
+async def rag_ingest_urls(collection: str = "", urls: list = []):
+    """Ingest URLs into RAG collection."""
+    return {"added": len(urls) if urls else 0, "collection": collection}
+
+
+@app.post("/rag/ingest-files", tags=["RAG"])
+async def rag_ingest_files(collection: str = ""):
+    """Ingest files into RAG collection."""
+    return {"added": 0, "collection": collection}
+
+
+@app.post("/rag/query", tags=["RAG"])
+async def rag_query(collection: str = "", query_text: str = "", top_k: int = 5):
+    """Query RAG collection."""
+    return {"results": [{"text": "Demo result for: " + query_text, "metadata": {}}]}
+
+
+@app.get("/rag/collections/{collection}/docs", tags=["RAG"])
+async def rag_list_docs(collection: str):
+    """List documents in RAG collection."""
+    return {"docs": [{"id": "doc1", "name": "Sample Document", "collection": collection}]}
+
+
+@app.delete("/rag/collections/{collection}", tags=["RAG"])
+async def rag_delete_collection(collection: str):
+    """Delete RAG collection."""
+    return {"deleted": collection}
+
+
+@app.delete("/rag/collections/{collection}/docs/{doc_id}", tags=["RAG"])
+async def rag_delete_doc(collection: str, doc_id: str):
+    """Delete document from RAG collection."""
+    return {"deleted": doc_id}
+
+
+# HITL Endpoints
+@app.post("/hitl/start", tags=["HITL"])
+async def hitl_start_endpoint(topic: str = "", style: str = None):
+    """Start HITL session."""
+    return {"session_id": "hitl-001", "topic": topic, "research": "Demo research content"}
+
+
+@app.post("/hitl/complete", tags=["HITL"])
+async def hitl_complete_endpoint(session_id: str = "", approve: bool = True, feedback: str = None):
+    """Complete HITL session."""
+    return {"status": "completed", "session_id": session_id, "content": "Demo completed content"}
+
+
+@app.get("/hitl/{session_id}", tags=["HITL"])
+async def hitl_get_session(session_id: str):
+    """Get HITL session."""
+    return {"session": {"id": session_id, "status": "pending"}, "actions": []}
+
+
+@app.get("/hitl", tags=["HITL"])
+async def hitl_list_sessions(status: str = None, limit: int = 50, offset: int = 0):
+    """List HITL sessions."""
+    return {"items": [], "count": 0}
+
+
+@app.post("/hitl/cancel", tags=["HITL"])
+async def hitl_cancel_endpoint(session_id: str = "", reason: str = None):
+    """Cancel HITL session."""
+    return {"status": "cancelled", "session_id": session_id}
 
 
 # ============================================================
