@@ -478,6 +478,114 @@ async def list_rag_collections():
     ]
 
 
+# ============================================================
+# Chat & Agent Execution Endpoints
+# ============================================================
+
+class ChatMessage(BaseModel):
+    message: str
+    model: str = "gpt-4"
+    agent_id: str = "Assistant"
+
+
+class AgentRunRequest(BaseModel):
+    message: str
+    model: str = "gpt-4"
+    stream: bool = False
+
+
+@app.post("/agents/{agent_name}/run", tags=["Agents"])
+async def run_agent(agent_name: str, request: AgentRunRequest):
+    """Execute an agent with a message."""
+    return {
+        "id": f"run-{agent_name}-001",
+        "agent": agent_name,
+        "message": request.message,
+        "response": f"[{agent_name}] Esta é uma resposta de demonstração. O agente '{agent_name}' processou sua mensagem: '{request.message[:50]}...' Configure uma API key de LLM para respostas reais.",
+        "model": request.model,
+        "status": "completed",
+        "tokens": {"input": len(request.message.split()), "output": 50}
+    }
+
+
+@app.get("/agents/{agent_name}", tags=["Agents"])
+async def get_agent(agent_name: str):
+    """Get agent details by name."""
+    agents_db = {
+        "Assistant": {"id": "1", "name": "Assistant", "model": "gpt-4", "status": "active", "description": "General purpose assistant"},
+        "Researcher": {"id": "2", "name": "Researcher", "model": "claude-3", "status": "active", "description": "Research specialist"},
+        "Coder": {"id": "3", "name": "Coder", "model": "gpt-4", "status": "active", "description": "Code generation expert"},
+    }
+    if agent_name in agents_db:
+        return agents_db[agent_name]
+    return {"id": "0", "name": agent_name, "model": "gpt-4", "status": "active", "description": "Dynamic agent"}
+
+
+@app.post("/chat", tags=["Chat"])
+async def chat_endpoint(request: ChatMessage):
+    """Simple chat endpoint."""
+    return {
+        "id": "chat-001",
+        "message": request.message,
+        "response": f"Resposta de demonstração para: '{request.message[:100]}'. Configure uma API key de LLM para respostas reais.",
+        "agent": request.agent_id,
+        "model": request.model,
+        "status": "completed"
+    }
+
+
+@app.post("/chat/stream", tags=["Chat"])
+async def chat_stream(request: ChatMessage):
+    """Streaming chat endpoint (returns full response for now)."""
+    return {
+        "id": "chat-stream-001",
+        "message": request.message,
+        "response": f"[Streaming] Resposta de demonstração. Configure LLM para streaming real.",
+        "agent": request.agent_id,
+        "done": True
+    }
+
+
+@app.get("/chat/history", tags=["Chat"])
+async def chat_history():
+    """Get chat history."""
+    return []
+
+
+@app.get("/logs", tags=["Logs"])
+async def get_logs():
+    """Get system logs."""
+    return {
+        "logs": [
+            {"timestamp": "2025-01-01T00:00:00Z", "level": "INFO", "message": "System started"},
+            {"timestamp": "2025-01-01T00:00:01Z", "level": "INFO", "message": "API ready"},
+        ],
+        "total": 2
+    }
+
+
+@app.get("/domains", tags=["Domains"])
+async def list_domains():
+    """List available domains."""
+    return [
+        {"id": "legal", "name": "Legal", "description": "Legal domain expertise"},
+        {"id": "finance", "name": "Finance", "description": "Financial analysis"},
+        {"id": "devops", "name": "DevOps", "description": "DevOps automation"},
+        {"id": "data-science", "name": "Data Science", "description": "Data analysis and ML"},
+    ]
+
+
+@app.get("/models", tags=["Models"])
+async def list_models():
+    """List available LLM models."""
+    return [
+        {"id": "gpt-4", "name": "GPT-4", "provider": "OpenAI", "available": True},
+        {"id": "gpt-3.5-turbo", "name": "GPT-3.5 Turbo", "provider": "OpenAI", "available": True},
+        {"id": "claude-3", "name": "Claude 3", "provider": "Anthropic", "available": True},
+        {"id": "llama-3.3-70b", "name": "Llama 3.3 70B", "provider": "Groq", "available": True},
+    ]
+
+
 @app.get("/metrics", response_class=PlainTextResponse)
 async def metrics():
     """
