@@ -695,6 +695,18 @@ function ChatContent() {
     toast.success("Mensagem copiada!");
   }, []);
 
+  const copyAllMessages = useCallback(() => {
+    if (messages.length === 0) {
+      toast.error("Nenhuma mensagem para copiar");
+      return;
+    }
+    const content = messages.map(m => 
+      `[${m.role.toUpperCase()}]: ${m.content}`
+    ).join("\n\n");
+    navigator.clipboard.writeText(content);
+    toast.success(`${messages.length} mensagens copiadas!`);
+  }, [messages]);
+
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -805,20 +817,27 @@ function ChatContent() {
                   <span className="text-xs hidden sm:inline">Export</span>
                 </button>
                 {/* Dropdown for format */}
-                <div className="absolute right-0 mt-1 w-32 bg-slate-800 border border-slate-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-20">
+                <div className="absolute right-0 mt-1 w-36 bg-slate-800 border border-slate-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-20">
                   <button
-                    onClick={() => exportChat("txt")}
+                    onClick={copyAllMessages}
                     disabled={messages.length === 0}
                     className="w-full px-3 py-2 text-left text-xs text-slate-300 hover:bg-slate-700 rounded-t-lg disabled:opacity-50"
                   >
-                    📄 Texto (.txt)
+                    📋 Copiar tudo
+                  </button>
+                  <button
+                    onClick={() => exportChat("txt")}
+                    disabled={messages.length === 0}
+                    className="w-full px-3 py-2 text-left text-xs text-slate-300 hover:bg-slate-700 disabled:opacity-50"
+                  >
+                    📄 Salvar (.txt)
                   </button>
                   <button
                     onClick={() => exportChat("json")}
                     disabled={messages.length === 0}
                     className="w-full px-3 py-2 text-left text-xs text-slate-300 hover:bg-slate-700 rounded-b-lg disabled:opacity-50"
                   >
-                    📋 JSON (.json)
+                    🔧 Salvar (.json)
                   </button>
                 </div>
               </div>
