@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Gera saída standalone (server.js em .next/standalone) compatível com o Dockerfile
-  output: "standalone",
+  // Standalone output only for Docker builds (disabled for local dev on Windows)
+  // output: "standalone",
   reactStrictMode: true,
   typescript: {
     // Ignorar erros de tipo durante build (útil para deploy)
