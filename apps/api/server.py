@@ -883,13 +883,72 @@ async def list_domains():
 
 @app.get("/models", tags=["Models"])
 async def list_models():
-    """List available LLM models."""
-    return [
-        {"id": "gpt-4", "name": "GPT-4", "provider": "OpenAI", "available": True},
-        {"id": "gpt-3.5-turbo", "name": "GPT-3.5 Turbo", "provider": "OpenAI", "available": True},
-        {"id": "claude-3", "name": "Claude 3", "provider": "Anthropic", "available": True},
-        {"id": "llama-3.3-70b", "name": "Llama 3.3 70B", "provider": "Groq", "available": True},
-    ]
+    """List available LLM models with current pricing and capabilities."""
+    try:
+        from src.config.llm_models import list_models_for_frontend, get_recommended_model
+        models = list_models_for_frontend()
+        return {
+            "models": models,
+            "recommended": get_recommended_model("default"),
+            "last_updated": "2024-12-17",
+            "total": len(models)
+        }
+    except Exception as e:
+        logger.warning(f"Error loading models config: {e}")
+        # Fallback to basic list
+        return {
+            "models": [
+                {"id": "llama-3.3-70b-versatile", "name": "Llama 3.3 70B", "provider": "groq", "tier": "free"},
+                {"id": "gpt-4o-mini", "name": "GPT-4o Mini", "provider": "openai", "tier": "budget"},
+                {"id": "claude-3-5-sonnet-20241022", "name": "Claude 3.5 Sonnet", "provider": "anthropic", "tier": "balanced"},
+                {"id": "mistral-small-latest", "name": "Mistral Small", "provider": "mistral", "tier": "budget"},
+            ],
+            "recommended": "llama-3.3-70b-versatile",
+            "last_updated": "2024-12-17",
+            "total": 4
+        }
+
+
+@app.get("/models/recommended", tags=["Models"])
+async def get_recommended_models():
+    """Get recommended models by use case."""
+    try:
+        from src.config.llm_models import RECOMMENDED_MODELS
+        return RECOMMENDED_MODELS
+    except:
+        return {
+            "default": "llama-3.3-70b-versatile",
+            "chat": "llama-3.3-70b-versatile",
+            "coding": "claude-3-5-sonnet-20241022",
+            "fast": "llama-3.1-8b-instant",
+            "cheap": "gpt-4o-mini",
+        }
+
+
+@app.get("/models/{provider}", tags=["Models"])
+async def list_models_by_provider(provider: str):
+    """List models for a specific provider."""
+    try:
+        from src.config.llm_models import get_models_by_provider
+        models = get_models_by_provider(provider)
+        return {
+            "provider": provider,
+            "models": [
+                {
+                    "id": m.id,
+                    "name": m.name,
+                    "tier": m.tier.value,
+                    "context_window": m.context_window,
+                    "cost_input": m.input_cost_per_1m,
+                    "cost_output": m.output_cost_per_1m,
+                    "notes": m.notes,
+                }
+                for m in models.values()
+            ],
+            "total": len(models)
+        }
+    except Exception as e:
+        return {"provider": provider, "models": [], "error": str(e)}
 
 
 @app.get("/metrics", response_class=PlainTextResponse)
