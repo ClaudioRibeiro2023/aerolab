@@ -242,13 +242,21 @@
 - [x] Métricas: itens/dia, P0/dia, taxa de erro
 - [x] FlowObserver para callbacks
 
-### 8.3 UI (Studio)
+### 8.3 UI (Studio) ✅
 
-- [ ] Criar página `/licitacoes` com:
-  - [ ] Último digest
-  - [ ] Busca por palavra-chave
-  - [ ] Botão "Analisar edital"
-- [ ] Criar página `/licitacoes/item/[id]` com detalhes
+- [x] Criar página `/licitacoes` com:
+  - [x] Último digest
+  - [x] Busca por palavra-chave
+  - [x] Botão "Analisar edital"
+  - [x] Filtro por UF
+  - [x] Cards de estatísticas
+- [x] Criar página `/licitacoes/[id]` com detalhes
+  - [x] Informações básicas
+  - [x] Resumo executivo
+  - [x] Riscos identificados
+  - [x] Checklists
+  - [x] Recomendação
+- [x] Adicionar link no menu lateral (Sidebar)
 
 ---
 
