@@ -236,6 +236,8 @@ export default function PersonaSelector({
                   <button
                     onClick={() => setIsOpen(false)}
                     className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg"
+                    title="Fechar"
+                    aria-label="Fechar seletor de persona"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

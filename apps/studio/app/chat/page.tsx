@@ -345,6 +345,12 @@ function ChatContent() {
       timestamp: new Date(m.timestamp),
     })) as Message[];
   }, [conversationId, conversations, getStoreMessages]);
+
+  // Estimated tokens calculation
+  const estimatedTokens = useMemo(() => {
+    const totalChars = messages.reduce((acc, m) => acc + (m.content?.length || 0), 0);
+    return Math.ceil(totalChars / 4); // ~4 chars per token
+  }, [messages]);
   
   // Refs
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -674,6 +680,27 @@ function ChatContent() {
                 onSelectPersona={(persona) => setSelectedPersonaId(persona?.id || null)}
                 compact
               />
+
+              {/* Streaming Toggle */}
+              <button
+                onClick={() => setUseStreaming(!useStreaming)}
+                className={`flex items-center gap-2 px-3 py-2 rounded-xl border transition-colors ${
+                  useStreaming
+                    ? "bg-emerald-600/20 border-emerald-500/50 text-emerald-400"
+                    : "bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700"
+                }`}
+                title={useStreaming ? "Streaming ativo - clique para desativar" : "Streaming inativo - clique para ativar"}
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {useStreaming ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  )}
+                </svg>
+                <span className="text-xs hidden sm:inline">{useStreaming ? "Stream" : "Sync"}</span>
+              </button>
+
               {/* Model Selector */}
               <div className="relative">
               <button
@@ -1019,6 +1046,8 @@ function ChatContent() {
                       <button
                         onClick={() => removeAttachment(att.id)}
                         className="text-slate-500 hover:text-red-400 transition-colors"
+                        title="Remover anexo"
+                        aria-label={`Remover ${att.name}`}
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -1042,6 +1071,8 @@ function ChatContent() {
                 accept="image/*,.pdf,.doc,.docx,.txt,.csv,.json"
                 onChange={handleFileSelect}
                 className="hidden"
+                title="Selecionar arquivos"
+                aria-label="Selecionar arquivos para anexar"
               />
               <button
                 onClick={() => fileInputRef.current?.click()}
@@ -1093,9 +1124,22 @@ function ChatContent() {
                 )}
               </motion.button>
             </div>
-            <p className="text-xs text-slate-500 mt-2 text-center">
-              Enter para enviar • Shift+Enter para nova linha • Arraste arquivos para anexar
-            </p>
+            <div className="flex items-center justify-between mt-2 text-xs text-slate-500">
+              <p>Enter para enviar • Shift+Enter para nova linha</p>
+              <div className="flex items-center gap-3">
+                {estimatedTokens > 0 && (
+                  <span className="flex items-center gap-1" title="Tokens estimados na conversa">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                    <span className={estimatedTokens > 3000 ? "text-amber-400" : estimatedTokens > 6000 ? "text-red-400" : ""}>
+                      {estimatedTokens.toLocaleString()} tokens
+                    </span>
+                  </span>
+                )}
+                <span>{messages.length} msgs</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
