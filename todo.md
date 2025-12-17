@@ -63,9 +63,9 @@ Consolidar o AeroLab como plataforma corporativa de multi-agentes AI, integrando
 | AL-005 | Criar venv e instalar deps do apps/api | P0 | M | ✅ Done |
 | AL-006 | Validar /health endpoint do backend | P0 | S | ✅ Done |
 | AL-007 | Validar /api/docs (Swagger) acessível | P0 | S | ✅ Done |
-| AL-008 | Criar script `pnpm dev:all` funcional | P0 | M | ⏳ Todo |
-| AL-009 | Consolidar .env.example na raiz | P1 | M | ⏳ Todo |
-| AL-010 | Atualizar .gitignore com padrões faltantes | P1 | S | ⏳ Todo |
+| AL-008 | Criar script `pnpm dev:all` funcional | P0 | M | ✅ Done |
+| AL-009 | Consolidar .env.example na raiz | P1 | M | ✅ Done |
+| AL-010 | Atualizar .gitignore com padrões faltantes | P1 | S | ✅ Done |
 | AL-011 | Remover package-lock.json do Studio (usar pnpm) | P1 | S | ✅ Done |
 | AL-012 | Atualizar ESLint para v9 (flat config) | P1 | L | ⏳ Todo |
 | AL-013 | Configurar proxy /api no Next.js → backend | P1 | M | ✅ Done |
@@ -79,15 +79,15 @@ Consolidar o AeroLab como plataforma corporativa de multi-agentes AI, integrando
 | AL-016 | Criar test_health.py (smoke test API) | P1 | S | ✅ Done |
 | AL-017 | Criar vitest para packages/shared | P1 | M | ✅ Done |
 | AL-018 | Configurar Playwright para Studio | P1 | L | ✅ Done |
-| AL-019 | Criar smoke test E2E (abrir /, criar agente) | P1 | L | ⏳ Todo |
+| AL-019 | Criar smoke test E2E (abrir /, criar agente) | P1 | L | ✅ Done |
 | AL-020 | Configurar GitHub Actions CI básico | P1 | M | ✅ Done |
-| AL-021 | Adicionar npm audit / pip audit no CI | P1 | S | ⏳ Todo |
+| AL-021 | Adicionar npm audit / pip audit no CI | P1 | S | ✅ Done |
 | AL-022 | Configurar pre-commit hooks (lint + format) | P1 | M | ✅ Done |
-| AL-023 | Implementar logging estruturado (JSON) | P2 | M | ⏳ Todo |
+| AL-023 | Implementar logging estruturado (JSON) | P2 | M | ✅ Done |
 | AL-024 | Adicionar tracing com OpenTelemetry | P2 | L | ⏳ Todo |
 | AL-025 | Configurar métricas Prometheus | P2 | L | ⏳ Todo |
 | AL-026 | Criar dashboard Grafana básico | P2 | L | ⏳ Todo |
-| AL-027 | Documentar cobertura de testes atual | P2 | S | ⏳ Todo |
+| AL-027 | Documentar cobertura de testes atual | P2 | S | ✅ Done |
 
 ### FASE 3 — Produto / UX / Performance / Escala (P2)
 
