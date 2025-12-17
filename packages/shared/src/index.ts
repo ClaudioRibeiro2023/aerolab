@@ -18,3 +18,6 @@ export * from './features'
 
 // Export utilities (CSV, Excel, PDF)
 export * from './export'
+
+// Tenant Branding
+export * from './branding'

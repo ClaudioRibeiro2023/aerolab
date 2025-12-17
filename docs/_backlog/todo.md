@@ -872,10 +872,14 @@ Este arquivo acompanha o plano de melhorias faseado descrito em `docs/PROPOSTA_A
   - ✅ Context management com ContextVar
   - ✅ SQL templates para PostgreSQL RLS
 
-- [ ] [P3] Implementar Branding por Tenant:
-  - Logo, cores e nome customizáveis
-  - Domínio/subdomínio por tenant
-  - Temas dinâmicos
+- [x] [P3] Implementar Branding por Tenant:
+  - ✅ `packages/shared/src/branding/` - Sistema completo
+  - ✅ `types.ts` - TenantBranding, BrandingColors, BrandingLogo, etc.
+  - ✅ `brandingContext.ts` - Context + CSS variables generation
+  - ✅ `brandingProvider.ts` - Provider com fetch, storage, auto-apply
+  - ✅ `useBranding.ts` - Hooks: useBranding, useBrandingColors, etc.
+  - ✅ Suporte a dark mode com darkColors
+  - ✅ Detecção de tenant via subdomain ou query param
 
 ### Real-time Features
 
