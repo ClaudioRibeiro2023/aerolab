@@ -619,33 +619,155 @@ async def hitl_cancel_endpoint(session_id: str = "", reason: str = None):
 
 class ChatMessage(BaseModel):
     message: str
-    model: str = "gpt-4"
+    model: str = "llama-3.3-70b-versatile"
     agent_id: str = "Assistant"
 
 
 class AgentRunRequest(BaseModel):
     message: str = None
     prompt: str = None
-    model: str = "gpt-4"
+    model: str = "llama-3.3-70b-versatile"
     stream: bool = False
+
+
+async def call_llm(prompt: str, model: str = "llama-3.3-70b-versatile", agent_name: str = "Assistant") -> dict:
+    """Call LLM API (Groq, OpenAI, or Anthropic) based on available keys."""
+    import os
+    
+    groq_key = os.getenv("GROQ_API_KEY", "")
+    openai_key = os.getenv("OPENAI_API_KEY", "")
+    anthropic_key = os.getenv("ANTHROPIC_API_KEY", "")
+    
+    system_prompt = f"Você é {agent_name}, um assistente de IA útil e profissional. Responda de forma clara, concisa e em português brasileiro."
+    
+    # Try Groq first (fastest and free tier)
+    if groq_key and len(groq_key) > 10:
+        try:
+            from groq import Groq
+            client = Groq(api_key=groq_key)
+            
+            # Map model names
+            groq_model = model
+            if "gpt" in model.lower() or "claude" in model.lower():
+                groq_model = "llama-3.3-70b-versatile"
+            
+            completion = client.chat.completions.create(
+                model=groq_model,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.7,
+                max_tokens=2048,
+            )
+            
+            response_text = completion.choices[0].message.content
+            return {
+                "success": True,
+                "response": response_text,
+                "model": groq_model,
+                "provider": "groq",
+                "tokens": {
+                    "input": completion.usage.prompt_tokens if completion.usage else 0,
+                    "output": completion.usage.completion_tokens if completion.usage else 0
+                }
+            }
+        except Exception as e:
+            logger.error(f"Groq API error: {e}")
+    
+    # Try OpenAI
+    if openai_key and len(openai_key) > 10:
+        try:
+            import openai
+            client = openai.OpenAI(api_key=openai_key)
+            
+            completion = client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.7,
+                max_tokens=2048,
+            )
+            
+            response_text = completion.choices[0].message.content
+            return {
+                "success": True,
+                "response": response_text,
+                "model": "gpt-4o-mini",
+                "provider": "openai",
+                "tokens": {
+                    "input": completion.usage.prompt_tokens if completion.usage else 0,
+                    "output": completion.usage.completion_tokens if completion.usage else 0
+                }
+            }
+        except Exception as e:
+            logger.error(f"OpenAI API error: {e}")
+    
+    # Try Anthropic
+    if anthropic_key and len(anthropic_key) > 10:
+        try:
+            import anthropic
+            client = anthropic.Anthropic(api_key=anthropic_key)
+            
+            message = client.messages.create(
+                model="claude-3-haiku-20240307",
+                max_tokens=2048,
+                system=system_prompt,
+                messages=[{"role": "user", "content": prompt}]
+            )
+            
+            response_text = message.content[0].text
+            return {
+                "success": True,
+                "response": response_text,
+                "model": "claude-3-haiku",
+                "provider": "anthropic",
+                "tokens": {
+                    "input": message.usage.input_tokens if message.usage else 0,
+                    "output": message.usage.output_tokens if message.usage else 0
+                }
+            }
+        except Exception as e:
+            logger.error(f"Anthropic API error: {e}")
+    
+    # Fallback demo response
+    return {
+        "success": False,
+        "response": f"[Demo] Nenhuma API key de LLM válida configurada. Configure GROQ_API_KEY, OPENAI_API_KEY ou ANTHROPIC_API_KEY no arquivo .env",
+        "model": "demo",
+        "provider": "fallback",
+        "tokens": {"input": 0, "output": 0}
+    }
 
 
 @app.post("/agents/{agent_name}/run", tags=["Agents"])
 async def run_agent(agent_name: str, request: AgentRunRequest):
-    """Execute an agent with a message."""
-    # Accept both 'message' and 'prompt' fields
+    """Execute an agent with a message using real LLM APIs."""
     user_input = request.prompt or request.message or ""
-    truncated = user_input[:50] if len(user_input) > 50 else user_input
+    
+    if not user_input.strip():
+        return {"error": "Mensagem vazia", "status": "error"}
+    
+    # Call real LLM
+    llm_result = await call_llm(
+        prompt=user_input,
+        model=request.model,
+        agent_name=agent_name
+    )
     
     return {
-        "id": f"run-{agent_name}-001",
+        "id": f"run-{agent_name}-{int(__import__('time').time())}",
         "agent": agent_name,
         "message": user_input,
-        "result": f"[{agent_name}] Esta é uma resposta de demonstração. O agente '{agent_name}' processou sua mensagem: '{truncated}'. Configure uma API key de LLM (OpenAI, Anthropic, Groq) para respostas reais.",
-        "response": f"[{agent_name}] Resposta de demonstração para: '{truncated}'. Configure uma API key de LLM para respostas reais.",
-        "model": request.model,
-        "status": "completed",
-        "tokens": {"input": len(user_input.split()), "output": 50}
+        "result": llm_result["response"],
+        "response": llm_result["response"],
+        "output": llm_result["response"],
+        "model": llm_result["model"],
+        "provider": llm_result["provider"],
+        "status": "completed" if llm_result["success"] else "demo",
+        "tokens": llm_result["tokens"]
     }
 
 
@@ -660,14 +782,22 @@ async def get_agent(agent_name: str):
 
 @app.post("/chat", tags=["Chat"])
 async def chat_endpoint(request: ChatMessage):
-    """Simple chat endpoint."""
+    """Chat endpoint using real LLM APIs."""
+    llm_result = await call_llm(
+        prompt=request.message,
+        model=request.model,
+        agent_name=request.agent_id
+    )
+    
     return {
-        "id": "chat-001",
+        "id": f"chat-{int(__import__('time').time())}",
         "message": request.message,
-        "response": f"Resposta de demonstração para: '{request.message[:100]}'. Configure uma API key de LLM para respostas reais.",
+        "response": llm_result["response"],
         "agent": request.agent_id,
-        "model": request.model,
-        "status": "completed"
+        "model": llm_result["model"],
+        "provider": llm_result["provider"],
+        "status": "completed" if llm_result["success"] else "demo",
+        "tokens": llm_result["tokens"]
     }
 
 
