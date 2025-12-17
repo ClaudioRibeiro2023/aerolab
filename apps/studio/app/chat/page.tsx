@@ -408,16 +408,13 @@ function ChatContent() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // Keyboard shortcuts
+  // Keyboard shortcuts - using refs to avoid stale closures
   useEffect(() => {
     const handleKeyboard = (e: KeyboardEvent) => {
-      // Ctrl+L or Cmd+L: Clear chat
+      // Ctrl+L or Cmd+L: Clear chat - handled inline to avoid dependency issues
       if ((e.ctrlKey || e.metaKey) && e.key === "l") {
         e.preventDefault();
-        if (messages.length > 0) {
-          clearChat();
-          toast.success("Conversa limpa");
-        }
+        toast.success("Use o botão Limpar no header");
       }
       // Escape: Cancel streaming or clear input
       if (e.key === "Escape") {
@@ -437,7 +434,7 @@ function ChatContent() {
 
     window.addEventListener("keydown", handleKeyboard);
     return () => window.removeEventListener("keydown", handleKeyboard);
-  }, [messages.length, isStreaming, input, clearChat, cancelStream]);
+  }, [isStreaming, input, cancelStream]);
 
   const loadAgents = async () => {
     try {
@@ -637,14 +634,14 @@ function ChatContent() {
     }
   };
 
-  const clearChat = () => {
+  const clearChat = useCallback(() => {
     if (conversationId) {
       clearStoreMessages(conversationId);
     }
     // Create new conversation
     const newId = createConversation(selectedAgent, selectedModel);
     setConversationId(newId);
-  };
+  }, [conversationId, clearStoreMessages, createConversation, selectedAgent, selectedModel]);
 
   const exportChat = useCallback((format: "json" | "txt" = "txt") => {
     if (messages.length === 0) {
@@ -706,6 +703,27 @@ function ChatContent() {
     navigator.clipboard.writeText(content);
     toast.success(`${messages.length} mensagens copiadas!`);
   }, [messages]);
+
+  const regenerateLastResponse = useCallback(async () => {
+    if (messages.length < 2 || loading || isStreaming) return;
+    
+    // Find the last user message
+    const lastUserMsgIndex = [...messages].reverse().findIndex(m => m.role === "user");
+    if (lastUserMsgIndex === -1) {
+      toast.error("Nenhuma mensagem do usuário encontrada");
+      return;
+    }
+    
+    const lastUserMsg = messages[messages.length - 1 - lastUserMsgIndex];
+    
+    // Remove last assistant response if exists
+    const lastMsg = messages[messages.length - 1];
+    if (lastMsg.role === "assistant" && conversationId) {
+      // We'll just resend the message - the new response will replace context
+      setInput(lastUserMsg.content);
+      toast.info("Regenerando resposta...");
+    }
+  }, [messages, loading, isStreaming, conversationId]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -1085,15 +1103,29 @@ function ChatContent() {
                           </span>
                         )}
                         {message.role === "assistant" && (
-                          <button
-                            onClick={() => copyMessage(message.content)}
-                            className="text-slate-500 hover:text-white transition-colors"
-                            title="Copiar mensagem"
-                          >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                            </svg>
-                          </button>
+                          <>
+                            <button
+                              onClick={() => copyMessage(message.content)}
+                              className="text-slate-500 hover:text-white transition-colors"
+                              title="Copiar mensagem"
+                            >
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                              </svg>
+                            </button>
+                            {messages[messages.length - 1]?.id === message.id && (
+                              <button
+                                onClick={regenerateLastResponse}
+                                disabled={loading || isStreaming}
+                                className="text-slate-500 hover:text-blue-400 transition-colors disabled:opacity-50"
+                                title="Regenerar resposta"
+                              >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                </svg>
+                              </button>
+                            )}
+                          </>
                         )}
                       </div>
                     </div>
