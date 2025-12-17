@@ -435,14 +435,66 @@ async def health_readiness():
 # Fallback CRUD Endpoints (when AgentOS routers fail to load)
 # ============================================================
 
+# In-memory agents store (fallback when DB not available)
+_agents_store = {
+    "Assistant": {"id": "1", "name": "Assistant", "model": "gpt-4", "status": "active", "role": "Agente genérico", "model_provider": "openai", "model_id": "gpt-4"},
+    "Coder": {"id": "2", "name": "Coder", "model": "gpt-4", "status": "active", "role": "Agente genérico", "model_provider": "openai", "model_id": "gpt-4"},
+    "Researcher": {"id": "3", "name": "Researcher", "model": "claude-3", "status": "active", "role": "Agente genérico", "model_provider": "anthropic", "model_id": "claude-3"},
+}
+
+
+class CreateAgentRequest(BaseModel):
+    name: str
+    role: str = None
+    model_provider: str = "openai"
+    model_id: str = "gpt-4"
+    instructions: list = None
+    use_database: bool = False
+    add_history_to_context: bool = True
+    markdown: bool = True
+    debug_mode: bool = False
+
+
 @app.get("/agents", tags=["Agents"])
 async def list_agents():
     """List all agents (fallback)."""
-    return [
-        {"id": "1", "name": "Assistant", "model": "gpt-4", "status": "active"},
-        {"id": "2", "name": "Researcher", "model": "claude-3", "status": "active"},
-        {"id": "3", "name": "Coder", "model": "gpt-4", "status": "active"},
-    ]
+    return list(_agents_store.values())
+
+
+@app.post("/agents", tags=["Agents"])
+async def create_agent(request: CreateAgentRequest):
+    """Create a new agent."""
+    if request.name in _agents_store:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=409, detail="Agent already exists")
+    
+    new_id = str(len(_agents_store) + 1)
+    agent = {
+        "id": new_id,
+        "name": request.name,
+        "role": request.role or "Agente personalizado",
+        "model": request.model_id,
+        "model_provider": request.model_provider,
+        "model_id": request.model_id,
+        "status": "active",
+        "instructions": request.instructions or [],
+        "use_database": request.use_database,
+        "add_history_to_context": request.add_history_to_context,
+        "markdown": request.markdown,
+        "debug_mode": request.debug_mode,
+    }
+    _agents_store[request.name] = agent
+    return agent
+
+
+@app.delete("/agents/{agent_name}", tags=["Agents"])
+async def delete_agent(agent_name: str):
+    """Delete an agent."""
+    if agent_name in _agents_store:
+        del _agents_store[agent_name]
+        return {"deleted": agent_name}
+    from fastapi import HTTPException
+    raise HTTPException(status_code=404, detail="Agent not found")
 
 
 @app.get("/teams", tags=["Teams"])
@@ -593,14 +645,10 @@ async def run_agent(agent_name: str, request: AgentRunRequest):
 @app.get("/agents/{agent_name}", tags=["Agents"])
 async def get_agent(agent_name: str):
     """Get agent details by name."""
-    agents_db = {
-        "Assistant": {"id": "1", "name": "Assistant", "model": "gpt-4", "status": "active", "description": "General purpose assistant"},
-        "Researcher": {"id": "2", "name": "Researcher", "model": "claude-3", "status": "active", "description": "Research specialist"},
-        "Coder": {"id": "3", "name": "Coder", "model": "gpt-4", "status": "active", "description": "Code generation expert"},
-    }
-    if agent_name in agents_db:
-        return agents_db[agent_name]
-    return {"id": "0", "name": agent_name, "model": "gpt-4", "status": "active", "description": "Dynamic agent"}
+    if agent_name in _agents_store:
+        return _agents_store[agent_name]
+    # Return dynamic agent if not found
+    return {"id": "0", "name": agent_name, "model": "gpt-4", "status": "active", "role": "Dynamic agent"}
 
 
 @app.post("/chat", tags=["Chat"])
