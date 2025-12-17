@@ -16,8 +16,11 @@ except ImportError:
     build_agents = None
     get_app = None
 
-# Exportar também o builder modular
-from .builder_new import get_app as get_app_modular  # noqa: F401
+# Exportar também o builder modular (import condicional para evitar erros)
+try:
+    from .builder_new import get_app as get_app_modular  # noqa: F401
+except ImportError:
+    get_app_modular = None
 
 __all__ = [
     "build_agent_os",

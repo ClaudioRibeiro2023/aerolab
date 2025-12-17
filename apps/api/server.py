@@ -148,9 +148,11 @@ cors_origins = [
     "http://localhost:3000",
     "http://localhost:3001",
     "http://localhost:4001",  # Docker frontend
+    "http://localhost:9000",  # Studio production
     "http://127.0.0.1:3000",
     "http://127.0.0.1:3001",
     "http://127.0.0.1:4001",  # Docker frontend
+    "http://127.0.0.1:9000",  # Studio production
     "https://agno-multi-agent.netlify.app",
 ]
 # Add custom origins from environment
@@ -321,6 +323,54 @@ except Exception as e:
     except:
         pass
 
+
+# ============================================================
+# Auth Endpoints (fallback if AgentOS routers fail)
+# ============================================================
+
+from pydantic import BaseModel
+
+class LoginRequest(BaseModel):
+    username: str
+
+@app.post("/auth/login", tags=["Auth"])
+async def auth_login(req: LoginRequest):
+    """Login endpoint - returns JWT token."""
+    from src.config import get_settings
+    from src.auth.jwt import create_access_token
+    
+    settings = get_settings()
+    
+    # Se JWT não configurado, retornar token mock para desenvolvimento
+    if not settings.JWT_SECRET:
+        return {
+            "access_token": "dev-token-no-auth",
+            "token_type": "bearer",
+            "role": "admin",
+            "message": "Auth disabled - development mode"
+        }
+    
+    admins = {u.strip() for u in (settings.ADMIN_USERS or "admin").split(",") if u.strip()}
+    role = "admin" if req.username in admins else "user"
+    
+    token = create_access_token(
+        subject=req.username,
+        role=role,
+        secret=settings.JWT_SECRET,
+        expires_minutes=settings.JWT_EXPIRES_MIN or 60,
+    )
+    
+    return {"access_token": token, "token_type": "bearer", "role": role}
+
+@app.get("/auth/me", tags=["Auth"])
+async def auth_me(request: Request):
+    """Get current user info."""
+    from src.auth.deps import get_current_user
+    try:
+        user = get_current_user(request)
+        return user
+    except Exception:
+        return {"sub": "anonymous", "role": "guest"}
 
 # ============================================================
 # Root Endpoints
