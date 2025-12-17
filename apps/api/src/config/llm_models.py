@@ -4,7 +4,7 @@ AeroLab Platform - LLM Models Configuration
 Central configuration for all LLM providers and models.
 Update this file when new models are released.
 
-Last Updated: 2024-12-17
+Last Updated: 2025-01-17
 """
 
 from dataclasses import dataclass
@@ -106,11 +106,24 @@ GROQ_MODELS = {
 
 
 # =============================================================================
-# OPENAI MODELS (Updated: Dec 2024)
+# OPENAI MODELS (Updated: Jan 2025)
 # https://platform.openai.com/docs/models
 # =============================================================================
 OPENAI_MODELS = {
-    # GPT-4o series (Latest)
+    # GPT-5 series (Latest - Jan 2025)
+    "gpt-5-mini": LLMModel(
+        id="gpt-5-mini",
+        name="GPT-5 Mini",
+        provider="openai",
+        tier=ModelTier.BUDGET,
+        context_window=128000,
+        input_cost_per_1m=0.25,
+        output_cost_per_1m=2.00,
+        supports_vision=True,
+        release_date="2025-01",
+        notes="Latest GPT-5 series. Best value for 2025."
+    ),
+    # GPT-4o series
     "gpt-4o": LLMModel(
         id="gpt-4o",
         name="GPT-4o",
@@ -121,7 +134,7 @@ OPENAI_MODELS = {
         output_cost_per_1m=10.00,
         supports_vision=True,
         release_date="2024-05",
-        notes="Best overall. Vision + reasoning."
+        notes="Previous flagship. Vision + reasoning."
     ),
     "gpt-4o-mini": LLMModel(
         id="gpt-4o-mini",
@@ -133,7 +146,7 @@ OPENAI_MODELS = {
         output_cost_per_1m=0.60,
         supports_vision=True,
         release_date="2024-07",
-        notes="Best value. Recommended for most use cases."
+        notes="Legacy budget option."
     ),
     # O1 series (Reasoning)
     "o1": LLMModel(
@@ -175,11 +188,24 @@ OPENAI_MODELS = {
 
 
 # =============================================================================
-# ANTHROPIC MODELS (Updated: Dec 2024)
+# ANTHROPIC MODELS (Updated: Jan 2025)
 # https://docs.anthropic.com/claude/docs/models-overview
 # =============================================================================
 ANTHROPIC_MODELS = {
-    # Claude 3.5 series (Latest)
+    # Claude 4.5 series (Latest - Jan 2025)
+    "claude-haiku-4-5": LLMModel(
+        id="claude-haiku-4-5",
+        name="Claude Haiku 4.5",
+        provider="anthropic",
+        tier=ModelTier.BUDGET,
+        context_window=200000,
+        input_cost_per_1m=1.00,
+        output_cost_per_1m=5.00,
+        supports_vision=True,
+        release_date="2025-01",
+        notes="Latest Claude 4.5 series. Best value for 2025."
+    ),
+    # Claude 3.5 series
     "claude-3-5-sonnet-20241022": LLMModel(
         id="claude-3-5-sonnet-20241022",
         name="Claude 3.5 Sonnet",
@@ -190,7 +216,7 @@ ANTHROPIC_MODELS = {
         output_cost_per_1m=15.00,
         supports_vision=True,
         release_date="2024-10",
-        notes="Best Claude model. Excellent for coding."
+        notes="Previous best. Excellent for coding."
     ),
     "claude-3-5-haiku-20241022": LLMModel(
         id="claude-3-5-haiku-20241022",
@@ -202,7 +228,7 @@ ANTHROPIC_MODELS = {
         output_cost_per_1m=4.00,
         supports_vision=True,
         release_date="2024-10",
-        notes="Fast and affordable. Great for simple tasks."
+        notes="Fast and affordable. Legacy option."
     ),
     # Claude 3 series
     "claude-3-opus-20240229": LLMModel(
@@ -216,18 +242,6 @@ ANTHROPIC_MODELS = {
         supports_vision=True,
         release_date="2024-02",
         notes="Most capable Claude 3. Complex reasoning."
-    ),
-    "claude-3-haiku-20240307": LLMModel(
-        id="claude-3-haiku-20240307",
-        name="Claude 3 Haiku",
-        provider="anthropic",
-        tier=ModelTier.BUDGET,
-        context_window=200000,
-        input_cost_per_1m=0.25,
-        output_cost_per_1m=1.25,
-        supports_vision=True,
-        release_date="2024-03",
-        notes="Cheapest Claude. Good for high volume."
     ),
 }
 
@@ -287,10 +301,23 @@ MISTRAL_MODELS = {
 
 
 # =============================================================================
-# GOOGLE MODELS (Updated: Dec 2024)
+# GOOGLE MODELS (Updated: Jan 2025)
 # https://ai.google.dev/gemini-api/docs/models/gemini
 # =============================================================================
 GOOGLE_MODELS = {
+    # Gemini 2.5 series (Latest - Jan 2025)
+    "gemini-2.5-flash-lite": LLMModel(
+        id="gemini-2.5-flash-lite",
+        name="Gemini 2.5 Flash Lite",
+        provider="google",
+        tier=ModelTier.BUDGET,
+        context_window=1000000,
+        input_cost_per_1m=0.05,
+        output_cost_per_1m=0.20,
+        supports_vision=True,
+        release_date="2025-01",
+        notes="Latest Gemini 2.5. Best value for 2025."
+    ),
     "gemini-2.0-flash-exp": LLMModel(
         id="gemini-2.0-flash-exp",
         name="Gemini 2.0 Flash",
@@ -301,7 +328,7 @@ GOOGLE_MODELS = {
         output_cost_per_1m=0.30,
         supports_vision=True,
         release_date="2024-12",
-        notes="Latest Gemini. 1M context window."
+        notes="Previous version. 1M context window."
     ),
     "gemini-1.5-pro": LLMModel(
         id="gemini-1.5-pro",
@@ -315,43 +342,74 @@ GOOGLE_MODELS = {
         release_date="2024-02",
         notes="2M context. Best for long documents."
     ),
-    "gemini-1.5-flash": LLMModel(
-        id="gemini-1.5-flash",
-        name="Gemini 1.5 Flash",
-        provider="google",
+}
+
+
+# =============================================================================
+# COHERE MODELS (Updated: Jan 2025)
+# https://docs.cohere.com/docs/models
+# =============================================================================
+COHERE_MODELS = {
+    "command-r-08-2024": LLMModel(
+        id="command-r-08-2024",
+        name="Command R (Aug 2024)",
+        provider="cohere",
+        tier=ModelTier.BALANCED,
+        context_window=128000,
+        input_cost_per_1m=0.15,
+        output_cost_per_1m=0.60,
+        release_date="2024-08",
+        notes="128k context, 4k output. Production ready."
+    ),
+    "command-r-plus": LLMModel(
+        id="command-r-plus",
+        name="Command R+",
+        provider="cohere",
+        tier=ModelTier.PREMIUM,
+        context_window=128000,
+        input_cost_per_1m=2.50,
+        output_cost_per_1m=10.00,
+        release_date="2024-04",
+        notes="Most capable Cohere model."
+    ),
+    "command-light": LLMModel(
+        id="command-light",
+        name="Command Light",
+        provider="cohere",
         tier=ModelTier.BUDGET,
-        context_window=1000000,
-        input_cost_per_1m=0.075,
-        output_cost_per_1m=0.30,
-        supports_vision=True,
-        release_date="2024-05",
-        notes="Fast and cheap. 1M context."
+        context_window=4096,
+        input_cost_per_1m=0.30,
+        output_cost_per_1m=0.60,
+        release_date="2024-01",
+        notes="Lightweight and fast."
     ),
 }
 
 
 # =============================================================================
-# RECOMMENDED MODELS BY USE CASE
+# RECOMMENDED MODELS BY USE CASE (Updated: Jan 2025)
 # =============================================================================
 RECOMMENDED_MODELS = {
     # Default model for general use (best value)
-    "default": "llama-3.3-70b-versatile",
+    "default": "llama-3.1-8b-instant",
     
     # By use case
-    "chat": "llama-3.3-70b-versatile",      # General chat
-    "coding": "claude-3-5-sonnet-20241022",  # Code generation
-    "reasoning": "o1-mini",                   # Complex reasoning
-    "vision": "gpt-4o",                       # Image analysis
-    "fast": "llama-3.1-8b-instant",          # Quick responses
-    "cheap": "gpt-4o-mini",                   # Budget-friendly
-    "long_context": "gemini-1.5-pro",         # Very long documents
+    "chat": "llama-3.1-8b-instant",           # General chat (fastest free)
+    "coding": "claude-haiku-4-5",              # Code generation
+    "reasoning": "o1-mini",                    # Complex reasoning
+    "vision": "gpt-4o",                        # Image analysis
+    "fast": "llama-3.1-8b-instant",           # Quick responses
+    "cheap": "gpt-5-mini",                     # Budget-friendly 2025
+    "long_context": "gemini-1.5-pro",          # Very long documents
+    "rag": "command-r-08-2024",                # RAG applications
     
-    # By provider (best model from each)
-    "best_groq": "llama-3.3-70b-versatile",
-    "best_openai": "gpt-4o-mini",
-    "best_anthropic": "claude-3-5-sonnet-20241022",
+    # By provider (best model from each - Jan 2025)
+    "best_groq": "llama-3.1-8b-instant",
+    "best_openai": "gpt-5-mini",
+    "best_anthropic": "claude-haiku-4-5",
     "best_mistral": "mistral-small-latest",
-    "best_google": "gemini-2.0-flash-exp",
+    "best_google": "gemini-2.5-flash-lite",
+    "best_cohere": "command-r-08-2024",
 }
 
 
@@ -367,6 +425,7 @@ def get_all_models() -> dict:
         **ANTHROPIC_MODELS,
         **MISTRAL_MODELS,
         **GOOGLE_MODELS,
+        **COHERE_MODELS,
     }
 
 
@@ -378,6 +437,7 @@ def get_models_by_provider(provider: str) -> dict:
         "anthropic": ANTHROPIC_MODELS,
         "mistral": MISTRAL_MODELS,
         "google": GOOGLE_MODELS,
+        "cohere": COHERE_MODELS,
     }
     return providers.get(provider.lower(), {})
 
