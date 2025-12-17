@@ -646,6 +646,50 @@ function ChatContent() {
     setConversationId(newId);
   };
 
+  const exportChat = useCallback((format: "json" | "txt" = "txt") => {
+    if (messages.length === 0) {
+      toast.error("Nenhuma mensagem para exportar");
+      return;
+    }
+
+    let content: string;
+    let filename: string;
+    let mimeType: string;
+
+    if (format === "json") {
+      content = JSON.stringify({
+        conversationId,
+        agent: selectedAgent,
+        model: selectedModel,
+        exportedAt: new Date().toISOString(),
+        messages: messages.map(m => ({
+          role: m.role,
+          content: m.content,
+          timestamp: m.timestamp.toISOString(),
+          agent: m.agent,
+          model: m.model,
+        })),
+      }, null, 2);
+      filename = `chat-${conversationId?.slice(0, 8) || "export"}-${Date.now()}.json`;
+      mimeType = "application/json";
+    } else {
+      content = messages.map(m => 
+        `[${m.timestamp.toLocaleString("pt-BR")}] ${m.role.toUpperCase()}:\n${m.content}\n`
+      ).join("\n---\n\n");
+      filename = `chat-${conversationId?.slice(0, 8) || "export"}-${Date.now()}.txt`;
+      mimeType = "text/plain";
+    }
+
+    const blob = new Blob([content], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success(`Conversa exportada como ${format.toUpperCase()}`);
+  }, [messages, conversationId, selectedAgent, selectedModel]);
+
   const copyMessage = useCallback((content: string) => {
     navigator.clipboard.writeText(content);
     toast.success("Mensagem copiada!");
@@ -746,6 +790,38 @@ function ChatContent() {
                 </svg>
                 <span className="text-xs hidden sm:inline">Limpar</span>
               </button>
+
+              {/* Export Chat */}
+              <div className="relative group">
+                <button
+                  disabled={messages.length === 0}
+                  className="flex items-center gap-2 px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-slate-400"
+                  title="Exportar conversa"
+                  onClick={() => exportChat("txt")}
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                  <span className="text-xs hidden sm:inline">Export</span>
+                </button>
+                {/* Dropdown for format */}
+                <div className="absolute right-0 mt-1 w-32 bg-slate-800 border border-slate-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-20">
+                  <button
+                    onClick={() => exportChat("txt")}
+                    disabled={messages.length === 0}
+                    className="w-full px-3 py-2 text-left text-xs text-slate-300 hover:bg-slate-700 rounded-t-lg disabled:opacity-50"
+                  >
+                    📄 Texto (.txt)
+                  </button>
+                  <button
+                    onClick={() => exportChat("json")}
+                    disabled={messages.length === 0}
+                    className="w-full px-3 py-2 text-left text-xs text-slate-300 hover:bg-slate-700 rounded-b-lg disabled:opacity-50"
+                  >
+                    📋 JSON (.json)
+                  </button>
+                </div>
+              </div>
 
               {/* Model Selector */}
               <div className="relative">
@@ -1144,9 +1220,14 @@ function ChatContent() {
                   onKeyDown={handleKeyDown}
                   placeholder={selectedAgent ? `Mensagem para ${selectedAgent}...` : "Selecione um agente primeiro"}
                   disabled={!selectedAgent || loading}
-                  className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-slate-500 disabled:opacity-50 min-h-[48px] max-h-[150px]"
+                  className="w-full px-4 py-3 pr-16 bg-slate-800 border border-slate-700 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-slate-500 disabled:opacity-50 min-h-[48px] max-h-[150px]"
                   rows={1}
                 />
+                {input.length > 0 && (
+                  <span className={`absolute right-3 bottom-3 text-xs ${input.length > 4000 ? "text-red-400" : input.length > 2000 ? "text-amber-400" : "text-slate-500"}`}>
+                    {input.length.toLocaleString()}
+                  </span>
+                )}
               </div>
 
               {/* Send Button */}
