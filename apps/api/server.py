@@ -234,6 +234,14 @@ try:
 except Exception as e:
     logger.warning(f"[WARN] Conversations API not loaded: {e}")
 
+# Chat Personas API
+try:
+    from src.chat.api.personas import router as personas_router
+    app.include_router(personas_router, prefix="/api/v2", tags=["Personas"])
+    logger.info("[OK] Personas API loaded")
+except Exception as e:
+    logger.warning(f"[WARN] Personas API not loaded: {e}")
+
 
 # ============================================================
 # AgentOS Modular Routers
