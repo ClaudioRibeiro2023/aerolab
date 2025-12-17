@@ -116,9 +116,9 @@ async def lifespan(app: FastAPI):
 
 # Create FastAPI app
 app = FastAPI(
-    title="Agno Multi-Agent Platform",
+    title="AeroLab Platform",
     description="""
-    🤖 **Agno Multi-Agent Platform API**
+    🤖 **AeroLab - AI Platform API**
 
     Complete AI agent orchestration and workflow automation platform.
 
@@ -153,7 +153,7 @@ cors_origins = [
     "http://127.0.0.1:3001",
     "http://127.0.0.1:4001",  # Docker frontend
     "http://127.0.0.1:9000",  # Studio production
-    "https://agno-multi-agent.netlify.app",
+    "https://aerolab.netlify.app",
 ]
 # Add custom origins from environment
 custom_origins = os.getenv("CORS_ALLOW_ORIGINS", "")
@@ -387,7 +387,7 @@ async def health():
     """Health check endpoint (simple)."""
     return {
         "status": "healthy",
-        "service": "agno-multi-agent-platform",
+        "service": "aerolab-platform",
         "version": "3.0.0",
         "modules": {
             "flow_studio": "active",

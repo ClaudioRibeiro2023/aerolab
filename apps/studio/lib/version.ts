@@ -1,5 +1,5 @@
 /**
- * AGNO Platform - Version Management System
+ * AeroLab Platform - Version Management System
  * 
  * Tracks all module versions and changelog
  */

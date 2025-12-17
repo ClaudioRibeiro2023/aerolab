@@ -12,16 +12,16 @@ import { Toaster } from "sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://agno-multi-agent.netlify.app"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://aerolab.netlify.app"),
   title: {
-    default: "Agno Platform",
-    template: "%s | Agno",
+    default: "AeroLab Platform",
+    template: "%s | AeroLab",
   },
-  description: "Plataforma Multi-Agente de IA - Orquestre agentes inteligentes, automatize workflows e potencialize sua equipe com IA.",
-  keywords: ["IA", "Agentes", "Multi-Agente", "Automação", "Workflow", "RAG", "LLM", "ChatGPT", "Claude"],
-  authors: [{ name: "Agno Team" }],
-  creator: "Agno",
-  publisher: "Agno",
+  description: "AeroLab - Plataforma Multi-Agente de IA para orquestração de agentes inteligentes, automação de workflows e potencialização de equipes.",
+  keywords: ["IA", "Agentes", "Multi-Agente", "Automação", "Workflow", "RAG", "LLM", "AeroLab", "AI Platform"],
+  authors: [{ name: "AeroLab Team" }],
+  creator: "AeroLab",
+  publisher: "AeroLab",
   robots: "index, follow",
   icons: {
     icon: [
@@ -34,16 +34,16 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "pt_BR",
-    url: "https://agno-multi-agent.netlify.app",
-    siteName: "Agno Platform",
-    title: "Agno Platform - Plataforma Multi-Agente de IA",
+    url: "https://aerolab.netlify.app",
+    siteName: "AeroLab Platform",
+    title: "AeroLab - Plataforma Multi-Agente de IA",
     description: "Orquestre agentes inteligentes, automatize workflows e potencialize sua equipe com IA.",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Agno Platform" }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "AeroLab Platform" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Agno Platform",
-    description: "Plataforma Multi-Agente de IA",
+    title: "AeroLab Platform",
+    description: "AeroLab - Plataforma Multi-Agente de IA",
     images: ["/og-image.png"],
   },
 };

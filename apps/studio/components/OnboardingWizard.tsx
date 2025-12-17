@@ -24,7 +24,7 @@ const Icons = {
 const steps: Step[] = [
   {
     id: "welcome",
-    title: "Bem-vindo ao Agno! 👋",
+    title: "Bem-vindo ao AeroLab! 👋",
     description: "A plataforma multi-agente de IA que vai transformar a forma como você trabalha. Vamos configurar tudo em poucos passos.",
     icon: Icons.wave,
   },
@@ -70,7 +70,7 @@ export default function OnboardingWizard() {
   const router = useRouter();
 
   useEffect(() => {
-    const hasSeenOnboarding = localStorage.getItem("agno_onboarding_completed");
+    const hasSeenOnboarding = localStorage.getItem("aerolab_onboarding_completed");
     if (!hasSeenOnboarding) {
       const timer = setTimeout(() => setIsOpen(true), 500);
       return () => clearTimeout(timer);

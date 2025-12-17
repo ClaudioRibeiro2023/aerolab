@@ -1,7 +1,7 @@
 {
-  "name": "AGNO Platform",
-  "short_name": "AGNO",
-  "description": "Plataforma Multi-Agente de IA v5.0 ULTIMATE",
+  "name": "AeroLab Platform",
+  "short_name": "AeroLab",
+  "description": "AeroLab - Plataforma Multi-Agente de IA",
   "start_url": "/dashboard",
   "display": "standalone",
   "background_color": "#0f172a",

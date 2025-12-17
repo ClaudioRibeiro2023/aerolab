@@ -25,7 +25,7 @@ export function VersionFooter() {
       >
         <div className="flex items-center gap-2">
           <Package className="w-3 h-3" />
-          <span>AGNO Platform v{PLATFORM_VERSION}</span>
+          <span>AeroLab v{PLATFORM_VERSION}</span>
           <span className="text-gray-600">|</span>
           <Clock className="w-3 h-3" />
           <span>{getLatestUpdate()}</span>
@@ -67,7 +67,7 @@ export function VersionFooter() {
           {/* Build Info */}
           <div className="mt-4 pt-3 border-t border-gray-800 flex items-center justify-between text-xs text-gray-500">
             <span>Build: {PLATFORM_BUILD}</span>
-            <span>© 2024 AGNO Platform</span>
+            <span>© 2025 AeroLab</span>
           </div>
         </div>
       )}

@@ -53,11 +53,11 @@ export default function HomePage() {
         <div>
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur-sm">
-              <span className="text-white font-bold text-2xl">A</span>
+              <span className="text-white font-bold text-xl">AL</span>
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-white">Agno</h1>
-              <p className="text-blue-200 text-sm">Multi-Agent Platform</p>
+              <h1 className="text-2xl font-bold text-white">AeroLab</h1>
+              <p className="text-blue-200 text-sm">AI Platform</p>
             </div>
           </div>
         </div>
@@ -91,7 +91,7 @@ export default function HomePage() {
         </div>
         
         <div className="text-blue-200 text-sm">
-          © 2025 Agno Platform. Todos os direitos reservados.
+          © 2025 AeroLab. Todos os direitos reservados.
         </div>
       </div>
 
@@ -101,11 +101,11 @@ export default function HomePage() {
           {/* Mobile Logo */}
           <div className="lg:hidden flex items-center justify-center gap-3 mb-8">
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/25">
-              <span className="text-white font-bold text-2xl">A</span>
+              <span className="text-white font-bold text-xl">AL</span>
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Agno</h1>
-              <p className="text-gray-500 text-sm">Multi-Agent Platform</p>
+              <h1 className="text-2xl font-bold text-gray-900">AeroLab</h1>
+              <p className="text-gray-500 text-sm">AI Platform</p>
             </div>
           </div>
 

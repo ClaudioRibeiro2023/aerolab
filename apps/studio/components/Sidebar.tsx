@@ -122,11 +122,11 @@ export default function Sidebar() {
       <div className="h-16 flex items-center px-6 border-b border-gray-100 dark:border-slate-700">
         <Link href="/dashboard" className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/25">
-            <span className="text-white font-bold text-lg">A</span>
+            <span className="text-white font-bold text-lg">AL</span>
           </div>
           <div>
-            <h1 className="text-lg font-bold text-gray-900 dark:text-white">Agno</h1>
-            <p className="text-xs text-gray-500 dark:text-gray-400 -mt-0.5">Multi-Agent Platform</p>
+            <h1 className="text-lg font-bold text-gray-900 dark:text-white">AeroLab</h1>
+            <p className="text-xs text-gray-500 dark:text-gray-400 -mt-0.5">AI Platform</p>
           </div>
         </Link>
       </div>
