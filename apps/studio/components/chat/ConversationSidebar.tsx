@@ -330,7 +330,7 @@ export default function ConversationSidebar({
                   </div>
                   <p className="text-slate-400 text-sm">Nenhuma conversa ainda</p>
                   <p className="text-slate-500 text-xs mt-1">
-                    Clique em "Nova Conversa" para começar
+                    Clique em &quot;Nova Conversa&quot; para começar
                   </p>
                 </div>
               ) : (

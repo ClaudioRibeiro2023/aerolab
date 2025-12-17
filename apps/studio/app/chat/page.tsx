@@ -408,6 +408,37 @@ function ChatContent() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyboard = (e: KeyboardEvent) => {
+      // Ctrl+L or Cmd+L: Clear chat
+      if ((e.ctrlKey || e.metaKey) && e.key === "l") {
+        e.preventDefault();
+        if (messages.length > 0) {
+          clearChat();
+          toast.success("Conversa limpa");
+        }
+      }
+      // Escape: Cancel streaming or clear input
+      if (e.key === "Escape") {
+        if (isStreaming) {
+          cancelStream();
+          toast.info("Streaming cancelado");
+        } else if (input.trim()) {
+          setInput("");
+        }
+      }
+      // Ctrl+/ or Cmd+/: Focus input
+      if ((e.ctrlKey || e.metaKey) && e.key === "/") {
+        e.preventDefault();
+        inputRef.current?.focus();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyboard);
+    return () => window.removeEventListener("keydown", handleKeyboard);
+  }, [messages.length, isStreaming, input, clearChat, cancelStream]);
+
   const loadAgents = async () => {
     try {
       const { data } = await api.get("/agents");
