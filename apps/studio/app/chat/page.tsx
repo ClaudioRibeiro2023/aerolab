@@ -329,6 +329,8 @@ function ChatContent() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [selectedPersonaId, setSelectedPersonaId] = useState<string | null>(null);
   const [useStreaming, setUseStreaming] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showSearch, setShowSearch] = useState(false);
 
   // Streaming hook
   const {
@@ -372,6 +374,13 @@ function ChatContent() {
     const totalChars = messages.reduce((acc, m) => acc + (m.content?.length || 0), 0);
     return Math.ceil(totalChars / 4); // ~4 chars per token
   }, [messages]);
+
+  // Filtered messages based on search
+  const filteredMessages = useMemo(() => {
+    if (!searchQuery.trim()) return messages;
+    const query = searchQuery.toLowerCase();
+    return messages.filter(m => m.content.toLowerCase().includes(query));
+  }, [messages, searchQuery]);
   
   // Refs
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -810,6 +819,39 @@ function ChatContent() {
           subtitle="Converse com seus agentes de IA"
           rightActions={
             <div className="flex items-center gap-3">
+              {/* Search Toggle */}
+              {showSearch ? (
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Buscar mensagens..."
+                    className="w-40 px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    autoFocus
+                  />
+                  <button
+                    onClick={() => { setShowSearch(false); setSearchQuery(""); }}
+                    className="p-2 text-slate-400 hover:text-white"
+                    title="Fechar busca"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setShowSearch(true)}
+                  className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition-colors"
+                  title="Buscar mensagens (Ctrl+F)"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </button>
+              )}
+
               {/* Sidebar Toggle */}
               <button
                 onClick={() => setShowSidebar(true)}
@@ -1089,7 +1131,7 @@ function ChatContent() {
               </div>
             ) : (
               <>
-                {messages.map(message => (
+                {filteredMessages.map(message => (
                   <motion.div
                     key={message.id}
                     initial={{ opacity: 0, y: 20 }}
