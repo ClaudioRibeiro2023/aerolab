@@ -59,30 +59,30 @@ Consolidar o AeroLab como plataforma corporativa de multi-agentes AI, integrando
 | AL-001 | Configurar Studio na porta 9000 | P0 | S | ✅ Done |
 | AL-002 | Remover .eslintrc.json duplicado do Studio | P0 | S | ✅ Done |
 | AL-003 | Desabilitar standalone output no Next.js (Windows) | P0 | S | ✅ Done |
-| AL-004 | Validar build do Studio sem erros | P0 | M | 🔄 Pending |
-| AL-005 | Criar venv e instalar deps do apps/api | P0 | M | ⏳ Todo |
-| AL-006 | Validar /health endpoint do backend | P0 | S | ⏳ Todo |
-| AL-007 | Validar /api/docs (Swagger) acessível | P0 | S | ⏳ Todo |
+| AL-004 | Validar build do Studio sem erros | P0 | M | ✅ Done |
+| AL-005 | Criar venv e instalar deps do apps/api | P0 | M | ✅ Done |
+| AL-006 | Validar /health endpoint do backend | P0 | S | ✅ Done |
+| AL-007 | Validar /api/docs (Swagger) acessível | P0 | S | ✅ Done |
 | AL-008 | Criar script `pnpm dev:all` funcional | P0 | M | ⏳ Todo |
 | AL-009 | Consolidar .env.example na raiz | P1 | M | ⏳ Todo |
 | AL-010 | Atualizar .gitignore com padrões faltantes | P1 | S | ⏳ Todo |
-| AL-011 | Remover package-lock.json do Studio (usar pnpm) | P1 | S | ⏳ Todo |
+| AL-011 | Remover package-lock.json do Studio (usar pnpm) | P1 | S | ✅ Done |
 | AL-012 | Atualizar ESLint para v9 (flat config) | P1 | L | ⏳ Todo |
-| AL-013 | Configurar proxy /api no Next.js → backend | P1 | M | ⏳ Todo |
-| AL-014 | Smoke test: curl localhost:9000 + localhost:8000/health | P0 | S | ⏳ Todo |
+| AL-013 | Configurar proxy /api no Next.js → backend | P1 | M | ✅ Done |
+| AL-014 | Smoke test: curl localhost:9000 + localhost:8000/health | P0 | S | ✅ Done |
 
 ### FASE 2 — Qualidade / Testes / Observabilidade / CI (P1)
 
 | ID | Título | Prioridade | Tamanho | Status |
 |----|--------|------------|---------|--------|
-| AL-015 | Criar pytest básico para apps/api | P1 | M | ⏳ Todo |
-| AL-016 | Criar test_health.py (smoke test API) | P1 | S | ⏳ Todo |
-| AL-017 | Criar vitest para packages/shared | P1 | M | ⏳ Todo |
-| AL-018 | Configurar Playwright para Studio | P1 | L | ⏳ Todo |
+| AL-015 | Criar pytest básico para apps/api | P1 | M | ✅ Done |
+| AL-016 | Criar test_health.py (smoke test API) | P1 | S | ✅ Done |
+| AL-017 | Criar vitest para packages/shared | P1 | M | ✅ Done |
+| AL-018 | Configurar Playwright para Studio | P1 | L | ✅ Done |
 | AL-019 | Criar smoke test E2E (abrir /, criar agente) | P1 | L | ⏳ Todo |
-| AL-020 | Configurar GitHub Actions CI básico | P1 | M | ⏳ Todo |
+| AL-020 | Configurar GitHub Actions CI básico | P1 | M | ✅ Done |
 | AL-021 | Adicionar npm audit / pip audit no CI | P1 | S | ⏳ Todo |
-| AL-022 | Configurar pre-commit hooks (lint + format) | P1 | M | ⏳ Todo |
+| AL-022 | Configurar pre-commit hooks (lint + format) | P1 | M | ✅ Done |
 | AL-023 | Implementar logging estruturado (JSON) | P2 | M | ⏳ Todo |
 | AL-024 | Adicionar tracing com OpenTelemetry | P2 | L | ⏳ Todo |
 | AL-025 | Configurar métricas Prometheus | P2 | L | ⏳ Todo |
