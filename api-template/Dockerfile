@@ -5,7 +5,7 @@
 # -----------------------------
 # Stage 1: Dependencies
 # -----------------------------
-FROM python:3.11-slim AS dependencies
+FROM python:3.14-slim AS dependencies
 
 WORKDIR /app
 
@@ -39,7 +39,7 @@ CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload
 # -----------------------------
 # Stage 3: Production
 # -----------------------------
-FROM python:3.11-slim AS production
+FROM python:3.14-slim AS production
 
 WORKDIR /app
 
