@@ -100,11 +100,11 @@ Consolidar o AeroLab como plataforma corporativa de multi-agentes AI, integrando
 | AL-032 | Implementar onboarding wizard | P2 | L | ✅ Done |
 | AL-033 | Adicionar estados empty/loading/error | P2 | M | ✅ Done |
 | AL-034 | Melhorar acessibilidade (a11y) | P2 | L | ✅ Done |
-| AL-035 | Consolidar UI duplicada (Agno2 → packages/ui) | P2 | L | ⏳ Todo |
-| AL-036 | Criar Storybook para design system | P2 | L | ⏳ Todo |
+| AL-035 | Consolidar UI duplicada (Agno2 → packages/ui) | P2 | L | ✅ Done |
+| AL-036 | Criar Storybook para design system | P2 | L | ✅ Done |
 | AL-037 | Implementar dark mode consistente | P2 | M | ✅ Done |
-| AL-038 | Configurar deploy staging (Netlify/Vercel) | P2 | M | ⏳ Todo |
-| AL-039 | Configurar deploy produção | P2 | L | ⏳ Todo |
+| AL-038 | Configurar deploy staging (Netlify/Vercel) | P2 | M | ✅ Done |
+| AL-039 | Configurar deploy produção | P2 | L | ✅ Done |
 | AL-040 | Documentar arquitetura C4 atualizada | P2 | M | ✅ Done |
 
 ---
