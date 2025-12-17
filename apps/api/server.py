@@ -565,7 +565,8 @@ class ChatMessage(BaseModel):
 
 
 class AgentRunRequest(BaseModel):
-    message: str
+    message: str = None
+    prompt: str = None
     model: str = "gpt-4"
     stream: bool = False
 
@@ -573,14 +574,19 @@ class AgentRunRequest(BaseModel):
 @app.post("/agents/{agent_name}/run", tags=["Agents"])
 async def run_agent(agent_name: str, request: AgentRunRequest):
     """Execute an agent with a message."""
+    # Accept both 'message' and 'prompt' fields
+    user_input = request.prompt or request.message or ""
+    truncated = user_input[:50] if len(user_input) > 50 else user_input
+    
     return {
         "id": f"run-{agent_name}-001",
         "agent": agent_name,
-        "message": request.message,
-        "response": f"[{agent_name}] Esta é uma resposta de demonstração. O agente '{agent_name}' processou sua mensagem: '{request.message[:50]}...' Configure uma API key de LLM para respostas reais.",
+        "message": user_input,
+        "result": f"[{agent_name}] Esta é uma resposta de demonstração. O agente '{agent_name}' processou sua mensagem: '{truncated}'. Configure uma API key de LLM (OpenAI, Anthropic, Groq) para respostas reais.",
+        "response": f"[{agent_name}] Resposta de demonstração para: '{truncated}'. Configure uma API key de LLM para respostas reais.",
         "model": request.model,
         "status": "completed",
-        "tokens": {"input": len(request.message.split()), "output": 50}
+        "tokens": {"input": len(user_input.split()), "output": 50}
     }
 
 
