@@ -250,6 +250,14 @@ try:
 except Exception as e:
     logger.warning(f"[WARN] Chat Streaming API not loaded: {e}")
 
+# Licitações (Techdengue) API
+try:
+    from src.domains.licitacoes.api import router as licitacoes_router
+    app.include_router(licitacoes_router, prefix="/api/v1", tags=["Licitações"])
+    logger.info("[OK] Licitações API loaded")
+except Exception as e:
+    logger.warning(f"[WARN] Licitações API not loaded: {e}")
+
 
 # ============================================================
 # AgentOS Modular Routers
