@@ -1,16 +1,16 @@
 # C4 Model - Nível 2: Container Diagram
 
-> Visão dos containers (unidades deployáveis) do Template Platform.
+> Visão dos containers (unidades deployáveis) do AeroLab.
 
 ## Diagrama de Containers
 
 ```mermaid
 C4Container
-    title Container Diagram - Template Platform
+    title Container Diagram - AeroLab
 
     Person(user, "Usuário", "Acessa via browser")
 
-    System_Boundary(platform, "Template Platform") {
+    System_Boundary(platform, "AeroLab") {
         Container(spa, "Frontend SPA", "React 18, TypeScript, Vite", "Interface web responsiva com Design System")
         Container(api, "API Backend", "FastAPI, Python 3.11+", "API REST com autenticação e RBAC")
         ContainerDb(db, "Database", "PostgreSQL 15", "Dados da aplicação")

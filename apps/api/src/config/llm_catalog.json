@@ -1,0 +1,373 @@
+{
+  "version": "2025-12-07",
+  "providers": {
+    "openai": {
+      "type": "closed",
+      "base_url": "https://api.openai.com/v1",
+      "auth": {
+        "mode": "header",
+        "header_name": "Authorization",
+        "value_template": "Bearer ${OPENAI_API_KEY}"
+      },
+      "default_endpoint": "/responses"
+    },
+    "anthropic": {
+      "type": "closed",
+      "base_url": "https://api.anthropic.com/v1",
+      "auth": {
+        "mode": "header",
+        "headers": {
+          "x-api-key": "${ANTHROPIC_API_KEY}",
+          "anthropic-version": "2023-06-01"
+        }
+      },
+      "default_endpoint": "/messages"
+    },
+    "google_gemini": {
+      "type": "closed",
+      "base_url": "https://generativelanguage.googleapis.com/v1beta/models",
+      "auth": {
+        "mode": "query",
+        "query_param": "key",
+        "value_template": "${GOOGLE_GEMINI_API_KEY}"
+      },
+      "default_endpoint_suffix": ":generateContent"
+    },
+    "mistral": {
+      "type": "closed_or_self_hosted",
+      "base_url": "https://api.mistral.ai/v1",
+      "auth": {
+        "mode": "header",
+        "header_name": "Authorization",
+        "value_template": "Bearer ${MISTRAL_API_KEY}"
+      },
+      "default_endpoint": "/chat/completions"
+    }
+  },
+
+  "models": {
+    "openai:gpt-5.1": {
+      "provider": "openai",
+      "model_id": "gpt-5.1",
+      "capabilities": [
+        "text",
+        "code",
+        "vision",
+        "tool_use",
+        "json_mode",
+        "long_context"
+      ],
+      "recommended": {
+        "role": "frontier_general",
+        "default_params": {
+          "max_output_tokens": 4096,
+          "temperature": 0.4,
+          "top_p": 0.9,
+          "reasoning_effort": "medium",
+          "response_format": { "type": "text" }
+        }
+      }
+    },
+
+    "openai:gpt-5.1-codex-max": {
+      "provider": "openai",
+      "model_id": "gpt-5.1-codex-max",
+      "capabilities": [
+        "text",
+        "code",
+        "long_context",
+        "tool_use",
+        "agentic_coding"
+      ],
+      "recommended": {
+        "role": "coding_frontier",
+        "default_params": {
+          "max_output_tokens": 4096,
+          "temperature": 0.2,
+          "top_p": 0.9,
+          "reasoning_effort": "high"
+        }
+      }
+    },
+
+    "openai:gpt-5.1-codex-mini": {
+      "provider": "openai",
+      "model_id": "gpt-5.1-codex-mini",
+      "capabilities": [
+        "text",
+        "code",
+        "long_context",
+        "tool_use"
+      ],
+      "recommended": {
+        "role": "coding_high_volume",
+        "default_params": {
+          "max_output_tokens": 2048,
+          "temperature": 0.3,
+          "top_p": 0.9,
+          "reasoning_effort": "low"
+        }
+      }
+    },
+
+    "openai:o3-pro": {
+      "provider": "openai",
+      "model_id": "o3-pro",
+      "capabilities": [
+        "text",
+        "code",
+        "reasoning_deep"
+      ],
+      "recommended": {
+        "role": "deep_reasoning",
+        "default_params": {
+          "max_output_tokens": 4096,
+          "temperature": 0.2,
+          "top_p": 0.9
+        }
+      }
+    },
+
+    "anthropic:claude-sonnet-4.5": {
+      "provider": "anthropic",
+      "model_id": "claude-sonnet-4.5",
+      "capabilities": [
+        "text",
+        "code",
+        "vision",
+        "tool_use",
+        "long_context"
+      ],
+      "recommended": {
+        "role": "frontier_general",
+        "default_params": {
+          "max_tokens": 4096,
+          "temperature": 0.4,
+          "top_p": 0.9
+        }
+      }
+    },
+
+    "anthropic:claude-opus-4.5": {
+      "provider": "anthropic",
+      "model_id": "claude-opus-4.5",
+      "capabilities": [
+        "text",
+        "code",
+        "vision",
+        "tool_use",
+        "deep_reasoning"
+      ],
+      "recommended": {
+        "role": "deep_reasoning",
+        "default_params": {
+          "max_tokens": 4096,
+          "temperature": 0.3,
+          "top_p": 0.9
+        }
+      }
+    },
+
+    "anthropic:claude-haiku-4.5": {
+      "provider": "anthropic",
+      "model_id": "claude-haiku-4.5",
+      "capabilities": [
+        "text",
+        "code",
+        "vision",
+        "tool_use"
+      ],
+      "recommended": {
+        "role": "fast_low_cost",
+        "default_params": {
+          "max_tokens": 2048,
+          "temperature": 0.5,
+          "top_p": 0.95
+        }
+      }
+    },
+
+    "gemini:gemini-2.5-pro": {
+      "provider": "google_gemini",
+      "model_id": "gemini-2.5-pro",
+      "capabilities": [
+        "text",
+        "code",
+        "vision",
+        "audio",
+        "video",
+        "tool_use",
+        "long_context"
+      ],
+      "recommended": {
+        "role": "frontier_multimodal",
+        "generationConfig": {
+          "temperature": 0.4,
+          "topP": 0.9,
+          "maxOutputTokens": 4096
+        }
+      }
+    },
+
+    "gemini:gemini-2.5-flash": {
+      "provider": "google_gemini",
+      "model_id": "gemini-2.5-flash",
+      "capabilities": [
+        "text",
+        "code",
+        "vision",
+        "tool_use",
+        "long_context",
+        "fast_low_cost"
+      ],
+      "recommended": {
+        "role": "fast_multimodal",
+        "generationConfig": {
+          "temperature": 0.5,
+          "topP": 0.9,
+          "maxOutputTokens": 2048
+        }
+      }
+    },
+
+    "gemini:gemini-2.5-flash-lite": {
+      "provider": "google_gemini",
+      "model_id": "gemini-2.5-flash-lite",
+      "capabilities": [
+        "text",
+        "code",
+        "fast_low_cost"
+      ],
+      "recommended": {
+        "role": "ultra_fast",
+        "generationConfig": {
+          "temperature": 0.6,
+          "topP": 0.9,
+          "maxOutputTokens": 1024
+        }
+      }
+    },
+
+    "gemini:gemini-3-pro": {
+      "provider": "google_gemini",
+      "model_id": "gemini-3-pro",
+      "capabilities": [
+        "text",
+        "code",
+        "vision",
+        "long_context",
+        "reasoning_deep"
+      ],
+      "recommended": {
+        "role": "research_reasoning",
+        "generationConfig": {
+          "temperature": 0.35,
+          "topP": 0.9,
+          "maxOutputTokens": 4096
+        }
+      }
+    },
+
+    "mistral:mistral-large-3": {
+      "provider": "mistral",
+      "model_id": "mistral-large-3",
+      "capabilities": [
+        "text",
+        "code",
+        "vision",
+        "tool_use",
+        "long_context"
+      ],
+      "recommended": {
+        "role": "open_weight_frontier",
+        "default_params": {
+          "max_tokens": 4096,
+          "temperature": 0.4,
+          "top_p": 0.9
+        }
+      }
+    },
+
+    "mistral:mistral-medium-3.1": {
+      "provider": "mistral",
+      "model_id": "mistral-medium-3.1",
+      "capabilities": [
+        "text",
+        "code",
+        "tool_use"
+      ],
+      "recommended": {
+        "role": "open_weight_general",
+        "default_params": {
+          "max_tokens": 3072,
+          "temperature": 0.4,
+          "top_p": 0.9
+        }
+      }
+    },
+
+    "mistral:mistral-small-3.1": {
+      "provider": "mistral",
+      "model_id": "mistral-small-3.1",
+      "capabilities": [
+        "text",
+        "code",
+        "fast_low_cost"
+      ],
+      "recommended": {
+        "role": "open_weight_fast",
+        "default_params": {
+          "max_tokens": 2048,
+          "temperature": 0.5,
+          "top_p": 0.9
+        }
+      }
+    }
+  },
+
+  "profiles": {
+    "agent_frontier": {
+      "description": "Agentes principais de raciocínio geral",
+      "priority_order": [
+        "openai:gpt-5.1",
+        "anthropic:claude-sonnet-4.5",
+        "gemini:gemini-2.5-pro",
+        "mistral:mistral-large-3"
+      ]
+    },
+    "agent_deep_reasoning": {
+      "description": "Tarefas de raciocínio pesado, análise complexa, planejamento multi-etapas",
+      "priority_order": [
+        "openai:o3-pro",
+        "anthropic:claude-opus-4.5",
+        "gemini:gemini-3-pro"
+      ]
+    },
+    "agent_coding_max": {
+      "description": "Agentes de código de alto desempenho",
+      "priority_order": [
+        "openai:gpt-5.1-codex-max",
+        "openai:gpt-5.1-codex-mini",
+        "anthropic:claude-sonnet-4.5",
+        "mistral:mistral-medium-3.1"
+      ]
+    },
+    "agent_fast_low_cost": {
+      "description": "Chatbots de alto volume e baixa latência",
+      "priority_order": [
+        "anthropic:claude-haiku-4.5",
+        "gemini:gemini-2.5-flash",
+        "gemini:gemini-2.5-flash-lite",
+        "mistral:mistral-small-3.1"
+      ]
+    },
+    "agent_open_weight": {
+      "description": "Cenários com restrição de dados que exigem modelos open-weight",
+      "priority_order": [
+        "mistral:mistral-large-3",
+        "mistral:mistral-medium-3.1",
+        "mistral:mistral-small-3.1"
+      ]
+    }
+  }
+}

@@ -21,7 +21,7 @@ superseded_by: null
 
 ## 1. Contexto e Problema
 
-O Template Platform requer um sistema de autenticação e autorização que atenda:
+O AeroLab requer um sistema de autenticação e autorização que atenda:
 
 - **Segurança** - Proteção robusta contra ataques comuns
 - **Escalabilidade** - Stateless para múltiplas instâncias

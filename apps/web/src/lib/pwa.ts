@@ -12,9 +12,9 @@
  * Configuração do manifest.json para PWA
  */
 export const pwaManifest = {
-  name: 'Template Platform',
-  short_name: 'Template',
-  description: 'Template Platform - Sistema de Gestão',
+  name: 'AeroLab',
+  short_name: 'AeroLab',
+  description: 'AeroLab - Plataforma Corporativa',
   theme_color: '#3b82f6',
   background_color: '#ffffff',
   display: 'standalone' as const,

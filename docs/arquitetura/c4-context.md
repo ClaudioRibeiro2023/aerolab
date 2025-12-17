@@ -1,18 +1,18 @@
 # C4 Model - Nível 1: Context Diagram
 
-> Visão de alto nível do sistema Template Platform e suas interações externas.
+> Visão de alto nível do sistema AeroLab e suas interações externas.
 
 ## Diagrama de Contexto
 
 ```mermaid
 C4Context
-    title System Context Diagram - Template Platform
+    title System Context Diagram - AeroLab
 
     Person(user, "Usuário", "Usuário final da aplicação")
     Person(admin, "Administrador", "Administrador do sistema")
     Person(integrador, "Sistema Integrador", "Aplicações externas que consomem a API")
 
-    System(templatePlatform, "Template Platform", "Plataforma web corporativa com autenticação, RBAC e módulos extensíveis")
+    System(aerolab, "AeroLab", "Plataforma web corporativa com autenticação, RBAC e módulos extensíveis")
 
     System_Ext(keycloak, "Keycloak", "Identity Provider - Autenticação OIDC/OAuth2")
     System_Ext(postgres, "PostgreSQL", "Banco de dados relacional")
@@ -43,7 +43,7 @@ C4Context
 
 | Sistema               | Descrição                                                                              | Tecnologia         |
 | --------------------- | -------------------------------------------------------------------------------------- | ------------------ |
-| **Template Platform** | Plataforma web corporativa com autenticação OIDC, RBAC, módulos extensíveis e API REST | React 18 + FastAPI |
+| **AeroLab** | Plataforma web corporativa com autenticação OIDC, RBAC, módulos extensíveis e API REST | React 18 + FastAPI |
 
 ### Sistemas Externos
 
@@ -97,7 +97,7 @@ sequenceDiagram
 
 ## Limites do Sistema
 
-### Dentro do Escopo (Template Platform)
+### Dentro do Escopo (AeroLab)
 
 - Frontend React SPA
 - API REST FastAPI

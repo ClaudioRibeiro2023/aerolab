@@ -33,8 +33,8 @@ corepack prepare pnpm@9.15.9 --activate
 ### 1. Clonar o Repositório
 
 ```bash
-git clone https://github.com/ClaudioRibeiro2023/Modelo.git template-platform
-cd template-platform
+git clone https://github.com/ClaudioRibeiro2023/aerolab.git aerolab
+cd aerolab
 ```
 
 ### 2. Instalar Dependências (Frontend)

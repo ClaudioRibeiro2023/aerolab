@@ -1,0 +1,125 @@
+# Agno Multi-Agent Platform v3.0
+# Includes: Flow Studio, Dashboard, Agents, Chat, RAG
+
+services:
+  # ==================== BACKEND ====================
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: agno-backend
+    ports:
+      - "4000:8000"
+    environment:
+      - AGENTOS_HOST=0.0.0.0
+      - AGENTOS_PORT=8000
+      - DEFAULT_MODEL_PROVIDER=${DEFAULT_MODEL_PROVIDER:-groq}
+      - DEFAULT_MODEL_ID=${DEFAULT_MODEL_ID:-llama-3.3-70b-versatile}
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - TAVILY_API_KEY=${TAVILY_API_KEY}
+      - JWT_SECRET=${JWT_SECRET}
+      - ADMIN_USERS=${ADMIN_USERS:-admin}
+      - RATE_LIMIT_ENABLED=${RATE_LIMIT_ENABLED:-false}
+      - DEBUG=${DEBUG:-false}
+      - CHROMA_HOST=${CHROMA_HOST:-http://chromadb:8000}
+      - CHROMA_DB_PATH=${CHROMA_DB_PATH:-data/vectorstore}
+      - EMBEDDING_PROVIDER=${EMBEDDING_PROVIDER:-openai}
+      - OPENAI_EMBED_MODEL=${OPENAI_EMBED_MODEL:-text-embedding-3-large}
+      # Flow Studio
+      - FLOW_STUDIO_ENABLED=${FLOW_STUDIO_ENABLED:-true}
+      # Redis for caching (optional)
+      - REDIS_URL=${REDIS_URL:-}
+    volumes:
+      - ./data:/app/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - agno-network
+
+  # ==================== FRONTEND ====================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:4000}
+        - NEXT_PUBLIC_APP_NAME=Agno Multi-Agent Platform
+    container_name: agno-frontend
+    ports:
+      - "4001:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:4000}
+      - NEXT_PUBLIC_APP_NAME=Agno Multi-Agent Platform
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - agno-network
+
+  # ==================== OPTIONAL: CHROMADB ====================
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: agno-chromadb
+    ports:
+      - "4002:8000"
+    volumes:
+      - chroma-data:/chroma/chroma
+    environment:
+      - ANONYMIZED_TELEMETRY=false
+    restart: unless-stopped
+    networks:
+      - agno-network
+    profiles:
+      - rag
+
+  # ==================== OPTIONAL: OLLAMA ====================
+  ollama:
+    image: ollama/ollama:latest
+    container_name: agno-ollama
+    ports:
+      - "4003:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    restart: unless-stopped
+    networks:
+      - agno-network
+    profiles:
+      - local-llm
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  # ==================== OPTIONAL: REDIS ====================
+  redis:
+    image: redis:7-alpine
+    container_name: agno-redis
+    ports:
+      - "4004:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+    restart: unless-stopped
+    networks:
+      - agno-network
+    profiles:
+      - cache
+
+networks:
+  agno-network:
+    driver: bridge
+
+volumes:
+  chroma-data:
+  ollama-data:
+  redis-data:

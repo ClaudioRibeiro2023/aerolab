@@ -306,7 +306,7 @@ export const DEFAULT_MODULES: ModuleConfig[] = [
 
 export const DEFAULT_NAVIGATION_CONFIG: NavigationConfig = {
   version: '1.0.0',
-  appName: 'Template Platform',
+  appName: 'AeroLab',
   appVersion: '0.1.0',
   modules: DEFAULT_MODULES,
   filters: DEFAULT_FILTERS,

@@ -1,6 +1,6 @@
 # Contrato de Integração: API REST
 
-> Padrões, convenções e contratos da API REST do Template Platform.
+> Padrões, convenções e contratos da API REST do AeroLab.
 
 **Fonte:** `api-template/app/main.py`
 

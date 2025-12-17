@@ -1,6 +1,6 @@
 # Guia de Deploy
 
-Este documento descreve como fazer deploy da Template Platform em diferentes ambientes.
+Este documento descreve como fazer deploy do AeroLab em diferentes ambientes.
 
 ## Índice
 

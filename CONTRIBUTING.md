@@ -1,6 +1,6 @@
 # Guia de Contribuição
 
-Bem-vindo ao Template Platform! Este guia ajudará você a configurar o ambiente e contribuir com o projeto.
+Bem-vindo ao AeroLab! Este guia ajudará você a configurar o ambiente e contribuir com o projeto.
 
 ## Índice
 

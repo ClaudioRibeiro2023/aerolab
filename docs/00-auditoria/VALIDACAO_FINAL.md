@@ -1,24 +1,25 @@
 # Validação Final da Documentação
 
-> **Data:** 2024-12-16  
+> **Data:** 2024-12-17  
 > **Status:** ✅ APROVADO  
-> **Escopo:** Auditoria completa do repositório Template Platform
+> **Escopo:** Merge Agno2 → AeroLab + Validação Completa
 
 ---
 
 ## Resumo Executivo
 
-A documentação foi consolidada e validada. O portal canônico está em `docs/INDEX.md` com navegação completa para todos os documentos essenciais.
+A documentação do Agno2 foi absorvida na estrutura canônica do AeroLab. O portal `docs/INDEX.md` é a source of truth.
 
 ### Métricas de Consolidação
 
-| Métrica                 | Antes | Depois | Δ   |
-| ----------------------- | ----- | ------ | --- |
-| Total .md no repo       | 62    | 62     | 0   |
-| Docs canônicos (docs/)  | 20    | 20     | -   |
-| Arquivados (\_archive/) | 17    | 17     | -   |
-| Backlog (\_backlog/)    | 3     | 3      | -   |
-| Stubs de compatib.      | 0     | 6      | +6  |
+| Métrica                        | Antes | Depois | Δ    |
+| ------------------------------ | ----- | ------ | ---- |
+| Total .md em docs/             | 54    | 73+    | +19  |
+| Subpastas agno2/ criadas       | 0     | 4      | +4   |
+| Arquivados (\_archive/)        | 17    | 30+    | +13  |
+| Backlog (\_backlog/)           | 3     | 8      | +5   |
+| Resources (PDFs)               | 0     | 2      | +2   |
+| Resíduos removidos             | -     | 3      | -    |
 
 ---
 
@@ -26,13 +27,18 @@ A documentação foi consolidada e validada. O portal canônico está em `docs/I
 
 ### 1. Estrutura ✅
 
-| Item                          | Status | Observação                                |
-| ----------------------------- | ------ | ----------------------------------------- |
-| INDEX.md como portal canônico | ✅ OK  | Índice mestre atualizado                  |
-| Pastas organizadas            | ✅ OK  | arquitetura/, contratos/, operacao/, etc. |
-| \_archive/ com MOTIVO.md      | ✅ OK  | Rastreabilidade mantida                   |
-| \_backlog/ para ideias        | ✅ OK  | todo.md, UI_UX_IMPROVEMENTS.md            |
-| Stubs de compatibilidade      | ✅ OK  | 6 stubs apontando para canônicos          |
+| Item                          | Status | Observação                                  |
+| ----------------------------- | ------ | ------------------------------------------- |
+| INDEX.md como portal canônico | ✅ OK  | Atualizado com subpastas Agno2              |
+| Pastas organizadas            | ✅ OK  | arquitetura/, contratos/, operacao/, etc.   |
+| Subpastas agno2/              | ✅ OK  | Docs do Agno2 em subpastas dedicadas        |
+| dados-e-rag/                  | ✅ OK  | Modelo de dados e RAG do Agno2              |
+| contribuicao/                 | ✅ OK  | Padrões de código e testes do Agno2         |
+| resources/                    | ✅ OK  | PDFs e recursos externos                    |
+| \_archive/                    | ✅ OK  | ADR v1 + archive legado do Agno2            |
+| \_backlog/                    | ✅ OK  | Backlog unificado AeroLab + Agno2           |
+| Sem docs/archive/             | ✅ OK  | Pasta proibida não existe                   |
+| Sem lixo                      | ✅ OK  | .DS_Store, tmp/, chromadb/ removidos        |
 
 ### 2. Navegação ✅
 
@@ -117,11 +123,11 @@ Para um novo desenvolvedor:
 
 ## Gaps Remanescentes
 
-| Item                             | Prioridade | Ação Recomendada             |
-| -------------------------------- | ---------- | ---------------------------- |
-| [TODO: confirmar] em alguns ADRs | P2         | Validar com equipe           |
-| Exemplos em contratos/           | P2         | Criar pasta exemplos/ futura |
-| Markdown lint warnings           | P3         | Cosmético, não bloqueia      |
+| Item                                  | Prioridade | Ação Recomendada                   |
+| ------------------------------------- | ---------- | ---------------------------------- |
+| Mesclar conteúdos duplicados          | P2         | Unificar docs similares            |
+| .windsurf/rules/ precisa update       | P2         | Atualizar manualmente (protegido)  |
+| Markdown lint warnings                | P3         | Cosmético, não bloqueia            |
 
 ---
 
@@ -131,12 +137,14 @@ Para um novo desenvolvedor:
 
 A documentação está:
 
-- ✅ Consolidada em estrutura canônica
+- ✅ Agno2 absorvido na estrutura canônica
 - ✅ Navegável a partir de INDEX.md
-- ✅ Consistente com o código
-- ✅ Sem segredos expostos
-- ✅ Com rastreabilidade (\_archive/ + MOTIVO.md)
+- ✅ Sem .md soltos fora de docs/ (exceto stubs oficiais)
+- ✅ Sem docs/archive/ (pasta proibida)
+- ✅ Sem lixo (.DS_Store, tmp/, chromadb/)
+- ✅ ADR v1 arquivado em \_archive/2024-12-17/
+- ✅ __incoming/ removido
 
 ---
 
-_Gerado em 2024-12-16 por auditoria automatizada_
+_Atualizado em 2024-12-17 — Merge Agno2 + AeroLab_

@@ -1,7 +1,7 @@
 /**
  * Design System - Main Exports
  * 
- * Template Platform Design System
+ * AeroLab Design System
  */
 
 // Tokens

@@ -1,4 +1,4 @@
-# Portal de Documentação - Template Platform
+# Portal de Documentação — AeroLab
 
 > **Versão:** 1.0.0 | **Última atualização:** Dezembro 2024
 
@@ -22,7 +22,7 @@
 
 ### 📐 Arquitetura (`arquitetura/`)
 
-Diagramas C4 Model da arquitetura do sistema.
+Diagramas C4 Model e documentação arquitetural do sistema.
 
 | Documento                                        | Nível | Descrição                             |
 | ------------------------------------------------ | ----- | ------------------------------------- |
@@ -30,15 +30,22 @@ Diagramas C4 Model da arquitetura do sistema.
 | [c4-container.md](./arquitetura/c4-container.md) | L2    | Containers - serviços deployáveis     |
 | [c4-component.md](./arquitetura/c4-component.md) | L3    | Componentes internos                  |
 
+**Subpastas:**
+- `agno2/` — Docs de arquitetura do Agno2 (visão, stack, módulos, fluxos, domínios)
+- `dados-e-rag/` — Modelo de dados, armazenamento e RAG/indexação
+
 ### 🔗 Contratos de Integração (`contratos-integracao/`)
 
-Documentação para sistemas que integram com o Template Platform.
+Documentação para sistemas que integram com o AeroLab.
 
 | Documento                                       | Descrição                             |
 | ----------------------------------------------- | ------------------------------------- |
 | [auth.md](./contratos-integracao/auth.md)       | OIDC, JWT, JWKS, roles, exemplos      |
 | [api.md](./contratos-integracao/api.md)         | REST, rate limiting, erros, paginação |
 | [openapi.md](./contratos-integracao/openapi.md) | Swagger, geração de clientes          |
+
+**Subpastas:**
+- `agno2/` — Contratos adicionais do Agno2 (eventos, webhooks, SDKs)
 
 ### 🔧 Operação (`operacao/`)
 
@@ -51,6 +58,10 @@ Guias de setup, deploy e operação.
 | [variaveis-ambiente.md](./operacao/variaveis-ambiente.md) | Referência de env vars                      |
 | [convencoes.md](./operacao/convencoes.md)                 | Convenções de código e scripts              |
 
+**Subpastas:**
+- `agno2/` — Docs operacionais do Agno2 (observabilidade, runbooks, rollback)
+- `contribuicao/` — Padrões de código, testes, convenções de branch/PR
+
 ### 🔐 Segurança (`seguranca/`)
 
 Documentação de segurança e controle de acesso.
@@ -59,6 +70,9 @@ Documentação de segurança e controle de acesso.
 | -------------------------------------------------------- | -------------------------------------------------- |
 | [rbac.md](./seguranca/rbac.md)                           | Sistema de roles (ADMIN, GESTOR, OPERADOR, VIEWER) |
 | [headers-seguranca.md](./seguranca/headers-seguranca.md) | CSP, CORS, CSRF, headers HTTP                      |
+
+**Subpastas:**
+- `agno2/` — Docs de segurança do Agno2 (ameaças, mitigações, segredos)
 
 ### 📋 ADRs (`adr_v2/`)
 
@@ -120,6 +134,7 @@ docs/
 │   ├── 002-arquitetura-modular.md
 │   └── 003-autenticacao-jwt-rbac.md
 │
+├── resources/                  # PDFs e recursos externos
 ├── _archive/                   # Docs arquivados (histórico)
 ├── _backlog/                   # Ideias e backlog
 └── 00-auditoria/               # Relatórios de auditoria
@@ -137,7 +152,7 @@ docs/
 | Keycloak           | <http://localhost:8080>      |
 | Storybook          | <http://localhost:6006>      |
 
-**GitHub:** [ClaudioRibeiro2023/Modelo](https://github.com/ClaudioRibeiro2023/Modelo)
+**GitHub:** [ClaudioRibeiro2023/aerolab](https://github.com/ClaudioRibeiro2023/aerolab)
 
 ---
 
@@ -157,4 +172,4 @@ docs/
 
 ---
 
-_Documentação consolidada em 2024-12-16_
+_Documentação consolidada em 2024-12-17 — Merge Agno2 + AeroLab_

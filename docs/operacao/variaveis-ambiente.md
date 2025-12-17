@@ -1,6 +1,6 @@
 # Variáveis de Ambiente
 
-> Referência completa de todas as variáveis de ambiente do Template Platform.
+> Referência completa de todas as variáveis de ambiente do AeroLab.
 
 **Fonte:** `infra/.env.example`, `infra/.env.production.example`
 

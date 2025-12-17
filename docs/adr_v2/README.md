@@ -1,6 +1,6 @@
 # 📋 Architecture Decision Records v2
 
-> Registro formal das decisões arquiteturais do Template Platform.
+> Registro formal das decisões arquiteturais do AeroLab.
 
 ---
 

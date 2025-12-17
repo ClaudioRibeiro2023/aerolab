@@ -1,0 +1,56 @@
+[build]
+command = "npm run build"
+publish = ".next"
+
+[build.environment]
+NODE_VERSION = "20"
+
+# ==================== PLUGINS ====================
+[[plugins]]
+package = "@netlify/plugin-nextjs"
+
+# ==================== REDIRECTS ====================
+[[redirects]]
+from = "/api/*"
+to = ":NEXT_PUBLIC_API_URL/api/:splat"
+status = 200
+force = true
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
+
+# ==================== HEADERS ====================
+[[headers]]
+for = "/*"
+[headers.values]
+X-Frame-Options = "DENY"
+X-Content-Type-Options = "nosniff"
+Referrer-Policy = "strict-origin-when-cross-origin"
+
+# ==================== DEPLOY CONTEXTS ====================
+
+# Production (branch: main)
+[context.production]
+command = "npm run build"
+[context.production.environment]
+NEXT_PUBLIC_APP_NAME = "Agno Multi-Agent Platform"
+
+# Staging (branch: staging)
+[context.staging]
+command = "npm run build"
+[context.staging.environment]
+NEXT_PUBLIC_APP_NAME = "Agno (Staging)"
+
+# Deploy Previews (Pull Requests)
+[context.deploy-preview]
+command = "npm run build"
+[context.deploy-preview.environment]
+NEXT_PUBLIC_APP_NAME = "Agno (Preview)"
+
+# Branch deploys
+[context.branch-deploy]
+command = "npm run build"
+[context.branch-deploy.environment]
+NEXT_PUBLIC_APP_NAME = "Agno (Branch)"

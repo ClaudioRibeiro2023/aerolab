@@ -1,6 +1,6 @@
 # RBAC - Role-Based Access Control
 
-> Sistema de controle de acesso baseado em roles do Template Platform.
+> Sistema de controle de acesso baseado em roles do AeroLab.
 
 **Fonte:** `packages/shared/src/auth/types.ts`, `docs/ROLES_E_ACESSO.md`
 
@@ -8,7 +8,7 @@
 
 ## Visão Geral
 
-O Template Platform implementa RBAC (Role-Based Access Control) com integração ao Keycloak. As roles são definidas no Keycloak e propagadas via JWT.
+O AeroLab implementa RBAC (Role-Based Access Control) com integração ao Keycloak. As roles são definidas no Keycloak e propagadas via JWT.
 
 ### Roles Disponíveis
 

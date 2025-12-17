@@ -1,0 +1,13 @@
+.venv
+.env
+.env.*
+*.env
+!.env.example
+.DS_Store
+*.py[oc]
+build
+dist
+wheels
+*.egg-info
+.webui_secret_key
+agent-ui/

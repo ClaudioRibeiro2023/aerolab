@@ -1,8 +1,8 @@
-# 🚀 Template Platform
+# 🚀 AeroLab
 
 > **Versão:** 1.0.0 | **Última atualização:** Dezembro 2024
 
-Um template moderno e robusto para criar aplicações web corporativas com React, TypeScript, TailwindCSS e autenticação via Keycloak.
+Plataforma corporativa moderna para aplicações web com React, TypeScript, TailwindCSS e autenticação via Keycloak.
 
 ## ✨ Características
 

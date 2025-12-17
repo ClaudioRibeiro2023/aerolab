@@ -1,22 +1,51 @@
 # Log de Limpeza - Documentação
 
-> **Data:** 2024-12-16  
-> **Operação:** Consolidação e limpeza de documentação
+> **Data:** 2024-12-17  
+> **Operação:** Merge Agno2 → AeroLab + Limpeza
 
 ---
 
 ## Resumo da Operação
 
-| Ação                        | Quantidade |
-| --------------------------- | ---------- |
-| Arquivos movidos p/ archive | 17         |
-| Stubs criados               | 6          |
-| Arquivos deletados          | 3          |
-| Pastas eliminadas           | 1          |
+| Ação                             | Quantidade |
+| -------------------------------- | ---------- |
+| Arquivos migrados de Agno2       | 35+        |
+| Subpastas criadas                | 8          |
+| Resíduos removidos (.DS_Store)   | 3          |
+| ADR v1 arquivado                 | 5          |
+| Archive legado do Agno2 movido   | 6+         |
 
 ---
 
-## Arquivos Movidos para \_archive/2024-12-16/
+## Migração Agno2 → AeroLab (2024-12-17)
+
+### Arquivos Migrados
+
+| Origem (Agno2)                    | Destino (AeroLab)                  |
+| --------------------------------- | ---------------------------------- |
+| `00-introducao/*`                 | `docs/arquitetura/agno2/`          |
+| `10-arquitetura/*`                | `docs/arquitetura/agno2/`          |
+| `20-contratos-para-integracao/*`  | `docs/contratos-integracao/agno2/` |
+| `30-dados-e-rag/*`                | `docs/arquitetura/dados-e-rag/`    |
+| `40-seguranca/*`                  | `docs/seguranca/agno2/`            |
+| `50-operacao/*`                   | `docs/operacao/agno2/`             |
+| `60-contribuicao/*`               | `docs/operacao/contribuicao/`      |
+| `91-backlog/*`                    | `docs/_backlog/`                   |
+| `adr/` (v1)                       | `docs/_archive/2024-12-17/adr_v1/` |
+| `archive/*`                       | `docs/_archive/2024-12-17/agno2_archive/` |
+| `99-anexos/*`                     | `docs/_archive/2024-12-17/agno2_archive/` |
+| `resources/*`                     | `docs/resources/`                  |
+
+### Resíduos Removidos
+
+| Arquivo/Pasta                    | Motivo            |
+| -------------------------------- | ----------------- |
+| `.DS_Store` (3 arquivos)         | Lixo de sistema   |
+| `tmp/` e `chromadb/`             | Dados temporários |
+
+---
+
+## Arquivos Movidos para \_archive/2024-12-16/ (Operação anterior)
 
 ### Documentos Legados
 
@@ -127,4 +156,4 @@ docs/
 
 ---
 
-_Gerado em 2024-12-16 por auditoria automatizada_
+_Atualizado em 2024-12-17 — Merge Agno2 + AeroLab_
