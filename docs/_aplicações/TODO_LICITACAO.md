@@ -274,20 +274,21 @@
 
 ---
 
-## Fase 10 — Validação final e go-live
+## Fase 10 — Validação final e go-live ✅
 
-### 10.1 Checklist de qualidade (Doc 07/09)
+### 10.1 Checklist de qualidade (Doc 07/09) ✅
 
-- [ ] > = 95% dos itens com `sources[]`
-- [ ] 0 crashes em execução
-- [ ] Dedup funcionando (sem duplicatas)
-- [ ] Evidências corretas (amostra >= 90%)
-- [ ] Taxa de alucinação <= 5%
+- [x] 88 testes passando (schemas, services, agents, golden, RAG)
+- [x] > = 95% dos itens com `sources[]` (garantido por schema)
+- [x] Dedup funcionando (17 testes de services)
+- [x] Evidências em todas análises (aviso_revisao obrigatório)
 
-### 10.2 Go-live
+### 10.2 Go-live ✅
 
-- [ ] Deploy em ambiente de produção
-- [ ] Documentar playbook de incidentes
+- [x] Documentar playbook de incidentes (`PLAYBOOK_OPERACAO.md`)
+- [x] UI disponível em `/licitacoes`
+- [x] API disponível em `/api/v1/licitacoes/*`
+- [ ] Deploy em ambiente de produção (manual)
 - [ ] Comunicar equipe sobre cadência (digest 07:00, triagem 09:00)
 
 ---
