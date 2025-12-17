@@ -8,6 +8,7 @@ import AppLayout from "../components/AppLayout";
 import CommandPalette from "../components/CommandPalette";
 import OnboardingWizard from "../components/OnboardingWizard";
 import PerformanceMonitor from "../components/PerformanceMonitor";
+import ErrorBoundary from "../components/ErrorBoundary";
 import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -63,13 +64,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="pt-br" className={inter.className} suppressHydrationWarning>
       <body className="min-h-screen bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100 antialiased transition-colors" suppressHydrationWarning>
         <ThemeProvider>
-          <QueryProvider>
-            <Toaster richColors position="top-right" />
-            <CommandPalette />
-            <OnboardingWizard />
-            <AppLayout>{children}</AppLayout>
-            <PerformanceMonitor enabled={process.env.NODE_ENV === "development"} />
-          </QueryProvider>
+          <ErrorBoundary>
+            <QueryProvider>
+              <Toaster richColors position="top-right" />
+              <CommandPalette />
+              <OnboardingWizard />
+              <AppLayout>{children}</AppLayout>
+              <PerformanceMonitor enabled={process.env.NODE_ENV === "development"} />
+            </QueryProvider>
+          </ErrorBoundary>
         </ThemeProvider>
       </body>
     </html>
