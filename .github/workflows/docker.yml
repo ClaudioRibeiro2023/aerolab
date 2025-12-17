@@ -48,7 +48,7 @@ jobs:
             type=sha
 
       - name: Build and push Web
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           file: ./apps/web/Dockerfile
@@ -98,7 +98,7 @@ jobs:
             type=sha
 
       - name: Build and push API
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: ./api-template
           file: ./api-template/Dockerfile
