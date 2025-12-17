@@ -1,6 +1,6 @@
-# Design System - Template Platform
+# Design System - AeroLab
 
-> Documentação completa do sistema de design para a Template Platform.
+> Documentação completa do sistema de design para o AeroLab.
 
 **Última atualização:** 10 de Dezembro de 2025
 
@@ -8,7 +8,7 @@
 
 ## 1. Visão Geral
 
-O Design System da Template Platform fornece uma biblioteca coesa de tokens, componentes e utilitários CSS para construir interfaces consistentes e acessíveis.
+O Design System do AeroLab fornece uma biblioteca coesa de tokens, componentes e utilitários CSS para construir interfaces consistentes e acessíveis.
 
 ### Estrutura
 

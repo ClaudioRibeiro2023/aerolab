@@ -1,6 +1,6 @@
 # Contrato de Integração: Autenticação
 
-> Guia completo para integração de autenticação OIDC/JWT com o Template Platform.
+> Guia completo para integração de autenticação OIDC/JWT com o AeroLab.
 
 **Fonte:** `packages/shared/src/auth/oidcConfig.ts`
 
@@ -8,7 +8,7 @@
 
 ## Visão Geral
 
-O Template Platform utiliza **OpenID Connect (OIDC)** com **Keycloak** como Identity Provider. O fluxo recomendado é **Authorization Code + PKCE** para aplicações SPA.
+O AeroLab utiliza **OpenID Connect (OIDC)** com **Keycloak** como Identity Provider. O fluxo recomendado é **Authorization Code + PKCE** para aplicações SPA.
 
 ### Especificações
 

@@ -19,7 +19,7 @@ superseded_by: null
 
 ## 1. Contexto e Problema
 
-O projeto Template Platform necessita de uma stack tecnológica moderna que atenda aos seguintes requisitos:
+O projeto AeroLab necessita de uma stack tecnológica moderna que atenda aos seguintes requisitos:
 
 - **Produtividade** - Desenvolvimento rápido com boa DX (Developer Experience)
 - **Manutenibilidade** - Código tipado e fácil de manter a longo prazo

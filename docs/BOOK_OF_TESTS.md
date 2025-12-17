@@ -1,4 +1,4 @@
-# Book de Testes - Template Platform
+# Book de Testes - AeroLab
 
 Este documento define a cobertura de testes mínima recomendada para a plataforma.
 

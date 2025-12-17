@@ -129,7 +129,7 @@ async function prompt(question) {
 }
 
 async function main() {
-  console.log('🚀 Criador de Módulos - Template Platform\n')
+  console.log('🚀 Criador de Módulos - AeroLab\n')
 
   // Obter nome do módulo
   let moduleName = process.argv[2]

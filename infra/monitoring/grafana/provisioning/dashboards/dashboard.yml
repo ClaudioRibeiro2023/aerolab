@@ -2,10 +2,10 @@
 apiVersion: 1
 
 providers:
-  - name: 'Template Platform Dashboards'
+  - name: 'AeroLab Dashboards'
     orgId: 1
-    folder: 'Template Platform'
-    folderUid: 'template-platform'
+    folder: 'AeroLab'
+    folderUid: 'aerolab'
     type: file
     disableDeletion: false
     updateIntervalSeconds: 30

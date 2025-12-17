@@ -19,7 +19,7 @@ superseded_by: null
 
 ## 1. Contexto e Problema
 
-O projeto Template Platform precisa de uma estrutura que permita:
+O projeto AeroLab precisa de uma estrutura que permita:
 
 - **Reutilização** - Componentes e lógica compartilhados entre aplicações
 - **Escalabilidade** - Adicionar novos módulos sem refatoração massiva

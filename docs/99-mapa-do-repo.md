@@ -2,14 +2,14 @@
 
 > Documento gerado automaticamente. Última atualização: Dezembro 2024
 
-Este documento mapeia a estrutura completa do repositório **Template Platform**, identificando arquivos centrais, dependências reais e pontos de integração.
+Este documento mapeia a estrutura completa do repositório **AeroLab**, identificando arquivos centrais, dependências reais e pontos de integração.
 
 ---
 
 ## Estrutura de Diretórios
 
 ```
-template-platform/
+aerolab/
 │
 ├── 📁 apps/                           # Aplicações deployáveis
 │   └── web/                           # Frontend React SPA

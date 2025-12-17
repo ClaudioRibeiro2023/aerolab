@@ -1,6 +1,6 @@
 # Troubleshooting
 
-Guia de resolução de problemas comuns no Template Platform.
+Guia de resolução de problemas comuns no AeroLab.
 
 ## Índice
 
@@ -319,7 +319,7 @@ NODE_OPTIONS="--max-old-space-size=4096" pnpm build
 
 ## Ainda com problemas?
 
-1. Pesquise nas [issues do repositório](https://github.com/ClaudioRibeiro2023/Modelo/issues)
+1. Pesquise nas [issues do repositório](https://github.com/ClaudioRibeiro2023/aerolab/issues)
 2. Consulte o [portal de documentação](./INDEX.md)
 3. Abra uma nova issue com:
    - Descrição do problema

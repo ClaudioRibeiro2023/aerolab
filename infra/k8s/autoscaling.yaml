@@ -1,4 +1,4 @@
-# Advanced Auto-scaling Configuration for Template Platform
+# Advanced Auto-scaling Configuration for AeroLab
 # Includes: HPA with custom metrics, KEDA ScaledObjects, PrometheusRules for alerts
 #
 # Prerequisites:

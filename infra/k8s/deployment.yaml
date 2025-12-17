@@ -1,4 +1,4 @@
-# Kubernetes Deployment Manifests for Template Platform
+# Kubernetes Deployment Manifests for AeroLab
 # Apply with: kubectl apply -f deployment.yaml
 
 ---
@@ -6,9 +6,9 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: template-platform
+  name: aerolab
   labels:
-    app.kubernetes.io/name: template-platform
+    app.kubernetes.io/name: aerolab
 
 ---
 # ConfigMap for environment variables

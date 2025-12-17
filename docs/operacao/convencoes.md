@@ -1,6 +1,6 @@
 # Convenções de Código
 
-> Padrões e convenções para desenvolvimento no Template Platform.
+> Padrões e convenções para desenvolvimento no AeroLab.
 
 **Fonte:** Extraído de `ARCHITECTURE.md`
 

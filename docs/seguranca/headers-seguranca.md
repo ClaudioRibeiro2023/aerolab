@@ -1,6 +1,6 @@
 # Headers de Segurança
 
-> Configuração de headers HTTP de segurança do Template Platform.
+> Configuração de headers HTTP de segurança do AeroLab.
 
 **Fonte:** `api-template/app/security.py`, `api-template/app/middleware.py`
 
@@ -8,7 +8,7 @@
 
 ## Visão Geral
 
-O Template Platform implementa headers de segurança recomendados pela OWASP para proteção contra ataques comuns.
+O AeroLab implementa headers de segurança recomendados pela OWASP para proteção contra ataques comuns.
 
 ---
 

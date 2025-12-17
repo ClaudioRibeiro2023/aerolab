@@ -1,7 +1,7 @@
 {
   "realm": "template",
   "enabled": true,
-  "displayName": "Template Platform",
+  "displayName": "AeroLab",
   "sslRequired": "none",
   "registrationAllowed": false,
   "loginWithEmailAllowed": true,

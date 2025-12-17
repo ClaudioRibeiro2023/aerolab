@@ -165,13 +165,13 @@ export const DEFAULT_BRANDING: TenantBranding = {
   logo: {
     full: '/logo.svg',
     icon: '/icon.svg',
-    alt: 'Template Platform',
+    alt: 'AeroLab',
   },
   metadata: {
-    name: 'Template Platform',
-    shortName: 'Template',
-    description: 'Enterprise-ready template platform',
-    copyright: '© 2024 Template Platform. All rights reserved.',
+    name: 'AeroLab',
+    shortName: 'AeroLab',
+    description: 'Plataforma corporativa moderna',
+    copyright: '© 2024 AeroLab. Todos os direitos reservados.',
   },
   features: {
     showPoweredBy: true,

@@ -68,7 +68,7 @@ function ConfigGeral() {
           <input
             id="app-name"
             type="text"
-            defaultValue="Template Platform"
+            defaultValue="AeroLab"
             className="form-input"
           />
         </div>

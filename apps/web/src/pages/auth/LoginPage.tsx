@@ -24,9 +24,9 @@ export function LoginPage() {
           {/* Logo */}
           <div className="text-center mb-8">
             <div className="w-16 h-16 rounded-2xl bg-brand-primary mx-auto flex items-center justify-center mb-4">
-              <span className="text-white font-bold text-2xl">T</span>
+              <span className="text-white font-bold text-2xl">A</span>
             </div>
-            <h1 className="text-2xl font-bold text-text-primary">Template Platform</h1>
+            <h1 className="text-2xl font-bold text-text-primary">AeroLab</h1>
             <p className="text-text-secondary mt-2">Faça login para continuar</p>
           </div>
 

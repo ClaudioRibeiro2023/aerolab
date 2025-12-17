@@ -40,7 +40,7 @@ const RELEASES: Release[] = [
     date: '2024-02-15',
     type: 'major',
     changes: [
-      { type: 'feature', description: 'Release inicial do Template Platform' },
+      { type: 'feature', description: 'Release inicial do AeroLab' },
       { type: 'feature', description: 'Autenticação com Keycloak OIDC' },
       { type: 'feature', description: 'Sistema de roles (ADMIN, GESTOR, OPERADOR, VIEWER)' },
       { type: 'feature', description: 'Módulo de exemplo com estrutura padrão' },
