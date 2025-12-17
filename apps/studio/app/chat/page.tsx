@@ -453,7 +453,7 @@ function ChatContent() {
   }, []);
 
   const sendMessage = async () => {
-    if ((!input.trim() && attachments.length === 0) || !selectedAgent || loading) return;
+    if ((!input.trim() && attachments.length === 0) || !selectedAgent || loading || isStreaming) return;
 
     // Ensure we have a conversation
     let currentConvId = conversationId;
@@ -478,92 +478,117 @@ function ChatContent() {
     };
 
     const userMessage = addStoreMessage(currentConvId, userMessageData);
-    const userMessageUI: Message = {
-      ...userMessage,
-      timestamp: new Date(userMessage.timestamp),
-    };
+    const messageContent = input.trim();
     setInput("");
     setAttachments([]);
-    setLoading(true);
 
     const startTime = Date.now();
 
-    try {
-      // Build prompt with attachment info
-      let fullPrompt = userMessage.content;
-      if (userMessage.attachments && userMessage.attachments.length > 0) {
-        const attachmentInfo = userMessage.attachments.map(a => `[Anexo: ${a.name} (${a.type})]`).join("\n");
-        fullPrompt = `${attachmentInfo}\n\n${fullPrompt}`;
-      }
+    // Build prompt with attachment info
+    let fullPrompt = messageContent;
+    if (userMessage.attachments && userMessage.attachments.length > 0) {
+      const attachmentInfo = userMessage.attachments.map(a => `[Anexo: ${a.name} (${a.type})]`).join("\n");
+      fullPrompt = `${attachmentInfo}\n\n${fullPrompt}`;
+    }
 
+    // Use streaming
+    if (useStreaming) {
+      const result = await sendStreamMessage({
+        message: fullPrompt,
+        model: selectedModel,
+        conversationId: currentConvId,
+        personaId: selectedPersonaId || undefined,
+      });
+
+      if (result) {
+        const duration = (Date.now() - startTime) / 1000;
+        
+        // Save to history
+        addToHistory({
+          type: "agent",
+          name: currentAgent?.name || selectedAgent,
+          prompt: messageContent,
+          result: result.content.substring(0, 500),
+          timestamp: new Date().toISOString(),
+          duration,
+          status: "success",
+        });
+
+        // Track execution
+        const tokens = result.usage?.total_tokens || Math.ceil((messageContent.length + result.content.length) / 4);
+        trackExecution({
+          agentName: currentAgent?.name || selectedAgent,
+          duration,
+          tokens,
+          cost: estimateExecutionCost(tokens, result.provider || "groq", selectedModel),
+          success: true,
+        });
+      }
+      return;
+    }
+
+    // Fallback: non-streaming mode
+    setLoading(true);
+    try {
       const { data } = await api.post(`/agents/${encodeURIComponent(selectedAgent)}/run`, {
         prompt: fullPrompt,
         model: selectedModel,
       });
 
-      // Parse the response properly
       const rawResult = data.result || data.response || data;
       const result = parseApiResponse(rawResult);
       const duration = (Date.now() - startTime) / 1000;
 
-      const assistantMessageData = {
-        role: "assistant" as const,
+      addStoreMessage(currentConvId!, {
+        role: "assistant",
         content: result,
         agent: currentAgent?.name || selectedAgent,
         model: selectedModel,
         provider: data.provider,
-        tokens: data.tokens,
-      };
+      });
 
-      addStoreMessage(currentConvId!, assistantMessageData);
-
-      // Save to history
       addToHistory({
         type: "agent",
         name: currentAgent?.name || selectedAgent,
-        prompt: userMessage.content,
+        prompt: messageContent,
         result: result.substring(0, 500),
         timestamp: new Date().toISOString(),
         duration,
         status: "success",
       });
 
-      // Track execution for analytics
-      const tokens = Math.ceil((userMessage.content.length + result.length) / 4);
-      const model = selectedModel || currentAgent?.model || "llama-3.3-70b-versatile";
+      const tokens = Math.ceil((messageContent.length + result.length) / 4);
       trackExecution({
         agentName: currentAgent?.name || selectedAgent,
         duration,
         tokens,
-        cost: estimateExecutionCost(tokens, "groq", model),
+        cost: estimateExecutionCost(tokens, "groq", selectedModel),
         success: true,
       });
     } catch (e) {
       const duration = (Date.now() - startTime) / 1000;
-
       const err = e as { response?: { data?: { detail?: string } } };
       toast.error(err.response?.data?.detail || "Erro ao enviar mensagem");
-      const errorMessageData = {
-        role: "system" as const,
+      
+      addStoreMessage(currentConvId!, {
+        role: "system",
         content: "Erro ao processar sua mensagem. Tente novamente.",
-      };
-      addStoreMessage(currentConvId!, errorMessageData);
+      });
 
       addToHistory({
         type: "agent",
         name: selectedAgent,
-        prompt: userMessage.content,
+        prompt: messageContent,
         result: err.response?.data?.detail || "Erro ao processar mensagem",
         timestamp: new Date().toISOString(),
         duration,
         status: "error",
       });
 
-      const tokens = Math.ceil(userMessage.content.length / 4);
       trackExecution({
         agentName: selectedAgent,
         duration,
-        tokens,
+        tokens: Math.ceil(messageContent.length / 4),
         cost: 0,
         success: false,
       });
@@ -907,8 +932,42 @@ function ChatContent() {
                   </motion.div>
                 ))}
                 
-                {/* Loading indicator */}
-                {loading && (
+                {/* Streaming message */}
+                {isStreaming && streamingMessage && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex gap-4"
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                      <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <div className="flex-1 max-w-[80%]">
+                      <div className="inline-block px-4 py-3 bg-slate-800 text-slate-100 rounded-2xl rounded-bl-md">
+                        {parseMarkdown(streamingMessage.content)}
+                        <span className="inline-block w-2 h-4 ml-1 bg-blue-400 animate-pulse rounded-sm" />
+                      </div>
+                      <div className="flex items-center gap-3 mt-2">
+                        <button
+                          onClick={cancelStream}
+                          className="flex items-center gap-1 px-2 py-1 text-xs text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 rounded-lg transition-colors"
+                          title="Cancelar streaming"
+                        >
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                          Cancelar
+                        </button>
+                        <span className="text-xs text-slate-500">Gerando resposta...</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* Loading indicator (non-streaming) */}
+                {loading && !isStreaming && (
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
