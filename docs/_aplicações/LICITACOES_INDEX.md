@@ -9,3 +9,4 @@
 - Doc 07 — `docs/_aplicações/TESTES_E_VALIDACAO_LICITACOES.md`
 - Doc 08 — `docs/_aplicações/DEPLOY_E_OPERACAO_LICITACOES.md`
 - Doc 09 — `docs/_aplicações/METODOLOGIA_IMPLEMENTACAO_AGENTES_E_WORKFLOWS_LICITACOES.md`
+- **TODO** — `docs/_aplicações/TODO_LICITACAO.md` (guia de implementação)

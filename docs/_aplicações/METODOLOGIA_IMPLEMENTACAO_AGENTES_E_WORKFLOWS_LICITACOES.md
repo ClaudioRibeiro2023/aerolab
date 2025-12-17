@@ -338,7 +338,127 @@ Para começar a implementar “de verdade” no cotidiano:
 
 ---
 
-## 10) Referências (benchmarks)
+## 10) Complementos técnicos (extraídos dos Docs 01–08)
+
+### 10.1 Modelo de score de prioridade (Doc 01)
+
+```
+score = (
+    aderencia_portfolio * 0.35 +
+    regiao_estrategica * 0.20 +
+    valor_estimado_norm * 0.15 +
+    prazo_inverso * 0.20 +
+    barreiras_inverso * 0.10
+)
+
+priority = P0 se score >= 0.75
+           P1 se score >= 0.50
+           P2 se score >= 0.25
+           P3 caso contrário
+```
+
+### 10.2 RAG jurídico (Doc 01)
+
+Base normativa inicial:
+
+- Lei 14.133/2021 (Nova Lei de Licitações)
+- Regras e orientações internas (checklists, padrões de proposta)
+- (Opcional) Acórdãos TCU selecionados
+
+Uso: alimentar o agente Analyst para validar requisitos e identificar cláusulas restritivas.
+
+### 10.3 Estrutura de pastas do domínio (Doc 03)
+
+```
+src/domains/licitacoes/
+├── __init__.py
+├── models/
+│   └── schemas.py          # LicitacaoItem, TriageScore, AnalysisPack
+├── services/
+│   ├── dedup.py
+│   ├── diff.py
+│   ├── parser_pdf.py
+│   └── parser_html.py
+├── tools/
+│   ├── pncp_client.py
+│   └── fetcher.py
+├── agents/
+│   ├── watcher.py
+│   ├── triage.py
+│   ├── analyst.py
+│   └── compliance.py
+├── flows/
+│   └── templates/
+│       ├── daily_monitor.template.json
+│       └── on_demand_analyze.template.json
+├── api/
+│   └── routes.py           # /licitacoes/health, /monitor, /analyze
+└── tests/
+    ├── fixtures/
+    └── golden/
+```
+
+### 10.4 Estratégia de parsing (Doc 04)
+
+| Tipo         | Lib recomendada                 | Fallback              |
+| ------------ | ------------------------------- | --------------------- |
+| PDF (texto)  | `pymupdf` (fitz)                | `pdfplumber`          |
+| PDF (imagem) | OCR: `pytesseract`              | Marcar "não extraído" |
+| HTML         | `readability` + `BeautifulSoup` | —                     |
+
+Limite OCR: desativado por padrão (custo + tempo). Ativar via flag.
+
+### 10.5 Dedup: forte vs fraco (Doc 04)
+
+- **Forte (exato)**: `source + external_id` — garante unicidade
+- **Fraco (fuzzy)**: `simhash(objeto_normalizado)` + `orgao + uf + data` — sugere duplicado
+
+Regra: dedup fraco nunca descarta automaticamente; apenas sinaliza para revisão.
+
+### 10.6 Variáveis padrão do fluxo (Doc 06)
+
+**Inputs**
+
+- `mode`: `"monitor"` | `"analyze"`
+- `input_as_text`: texto/URL colado (só no analyze)
+- `cfg`: `{ janela_dias, limite_risco, prazo_min_dias, acao_permitida }`
+
+**State**
+
+- `items`: `LicitacaoItem[]`
+- `changes`: `ChangeEvent[]`
+- `scores`: `TriageScore[]`
+- `analysis_pack`: `AnalysisPack`
+- `result`: `{ status, payload_json, errors }`
+
+### 10.7 Critérios quantitativos de qualidade (Doc 07)
+
+| Métrica                                      | Target |
+| -------------------------------------------- | ------ |
+| Itens com `sources[]` preenchido             | >= 95% |
+| Crashes em execução                          | 0      |
+| Dedup funcionando (sem duplicatas no digest) | 100%   |
+| Evidências corretas (amostra humana)         | >= 90% |
+| Taxa de alucinação (amostra humana)          | <= 5%  |
+
+### 10.8 Regras anti-flaky tests (Doc 07)
+
+- Nunca chamar internet em testes (mock sempre)
+- Fixar timezone (`UTC`)
+- Fixar "data de hoje" (`freezegun`)
+- Fixar seeds de aleatoriedade
+
+### 10.9 Versionamento de prompts e templates (Doc 08)
+
+- `domains/licitacoes/VERSION` (semver)
+- `flows/templates/*.template.json` com campo `template_version`
+- Prompts versionados via hash (`sha256(prompt_text)[:8]`)
+
+Regra: nunca alterar prompt em produção sem bump de versão e golden test.
+
+---
+
+## 11) Referências (benchmarks)
 
 - OWASP Top 10 for Large Language Model Applications (v1.1)
 - NIST AI Risk Management Framework (AI RMF 1.0) — https://doi.org/10.6028/NIST.AI.100-1
