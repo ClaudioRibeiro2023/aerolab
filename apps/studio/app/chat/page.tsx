@@ -331,6 +331,22 @@ function ChatContent() {
   const [useStreaming, setUseStreaming] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [showSearch, setShowSearch] = useState(false);
+  const [backendStatus, setBackendStatus] = useState<"online" | "offline" | "checking">("checking");
+
+  // Check backend status
+  useEffect(() => {
+    const checkBackend = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/health", { method: "GET" });
+        setBackendStatus(response.ok ? "online" : "offline");
+      } catch {
+        setBackendStatus("offline");
+      }
+    };
+    checkBackend();
+    const interval = setInterval(checkBackend, 30000); // Check every 30s
+    return () => clearInterval(interval);
+  }, []);
 
   // Streaming hook
   const {
@@ -851,6 +867,23 @@ function ChatContent() {
                   </svg>
                 </button>
               )}
+
+              {/* Backend Status Indicator */}
+              <div 
+                className={`flex items-center gap-1.5 px-2 py-1 rounded-lg text-xs ${
+                  backendStatus === "online" 
+                    ? "bg-emerald-500/10 text-emerald-400" 
+                    : backendStatus === "offline"
+                    ? "bg-red-500/10 text-red-400"
+                    : "bg-amber-500/10 text-amber-400"
+                }`}
+                title={`Backend: ${backendStatus}`}
+              >
+                <span className={`w-2 h-2 rounded-full ${
+                  backendStatus === "online" ? "bg-emerald-400" : backendStatus === "offline" ? "bg-red-400" : "bg-amber-400 animate-pulse"
+                }`} />
+                <span className="hidden sm:inline">{backendStatus === "online" ? "API" : backendStatus === "offline" ? "Offline" : "..."}</span>
+              </div>
 
               {/* Sidebar Toggle */}
               <button
