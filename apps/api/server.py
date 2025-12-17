@@ -242,6 +242,14 @@ try:
 except Exception as e:
     logger.warning(f"[WARN] Personas API not loaded: {e}")
 
+# Chat Streaming API
+try:
+    from src.chat.api.streaming import router as streaming_router
+    app.include_router(streaming_router, prefix="/api/v2", tags=["Chat Streaming"])
+    logger.info("[OK] Chat Streaming API loaded")
+except Exception as e:
+    logger.warning(f"[WARN] Chat Streaming API not loaded: {e}")
+
 
 # ============================================================
 # AgentOS Modular Routers
