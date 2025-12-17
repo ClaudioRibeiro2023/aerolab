@@ -10,7 +10,7 @@ import { trackExecution, estimateExecutionCost } from "../../lib/analytics";
 import { motion, AnimatePresence } from "framer-motion";
 import { PageHeader } from "../../components/PageHeader";
 import EmptyState from "../../components/EmptyState";
-import { useChatStore, type Message as StoreMessage, type Attachment as StoreAttachment } from "../../store/chat";
+import { useChatStore } from "../../store/chat";
 import { useStreamChat } from "../../hooks/useStreamChat";
 import ConversationSidebar from "../../components/chat/ConversationSidebar";
 import PersonaSelector from "../../components/chat/PersonaSelector";
@@ -336,7 +336,7 @@ function ChatContent() {
     },
   });
 
-  // Get messages from store
+  // Get messages from store - conversations dependency triggers re-render when messages change
   const messages = useMemo(() => {
     if (!conversationId) return [];
     const storeMessages = getStoreMessages(conversationId);
@@ -344,7 +344,8 @@ function ChatContent() {
       ...m,
       timestamp: new Date(m.timestamp),
     })) as Message[];
-  }, [conversationId, conversations, getStoreMessages]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [conversationId, conversations]);
 
   // Estimated tokens calculation
   const estimatedTokens = useMemo(() => {
@@ -379,6 +380,7 @@ function ChatContent() {
         setConversationId(newId);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isHydrated, activeConversationId, selectedAgent]);
 
   // Set agent from URL param after agents load
@@ -699,6 +701,19 @@ function ChatContent() {
                   )}
                 </svg>
                 <span className="text-xs hidden sm:inline">{useStreaming ? "Stream" : "Sync"}</span>
+              </button>
+
+              {/* Clear Chat */}
+              <button
+                onClick={clearChat}
+                disabled={messages.length === 0}
+                className="flex items-center gap-2 px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl hover:bg-red-600/20 hover:border-red-500/50 hover:text-red-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-slate-400"
+                title="Limpar conversa"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+                <span className="text-xs hidden sm:inline">Limpar</span>
               </button>
 
               {/* Model Selector */}
