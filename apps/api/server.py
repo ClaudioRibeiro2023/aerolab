@@ -341,17 +341,24 @@ async def auth_login(req: LoginRequest):
     
     settings = get_settings()
     
+    # Default admin usernames (always admins)
+    default_admins = {"admin", "administrator", "root"}
+    
+    # Additional admins from settings
+    extra_admins = {u.strip() for u in (settings.ADMIN_USERS or "").split(",") if u.strip()}
+    all_admins = default_admins | extra_admins
+    
+    # Determine role
+    role = "admin" if req.username.lower() in {a.lower() for a in all_admins} else "user"
+    
     # Se JWT não configurado, retornar token mock para desenvolvimento
     if not settings.JWT_SECRET:
         return {
             "access_token": "dev-token-no-auth",
             "token_type": "bearer",
-            "role": "admin",
+            "role": role,
             "message": "Auth disabled - development mode"
         }
-    
-    admins = {u.strip() for u in (settings.ADMIN_USERS or "admin").split(",") if u.strip()}
-    role = "admin" if req.username in admins else "user"
     
     token = create_access_token(
         subject=req.username,
