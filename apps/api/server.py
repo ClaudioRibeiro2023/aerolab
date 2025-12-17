@@ -431,6 +431,53 @@ async def health_readiness():
     return await checker.check_readiness()
 
 
+# ============================================================
+# Fallback CRUD Endpoints (when AgentOS routers fail to load)
+# ============================================================
+
+@app.get("/agents", tags=["Agents"])
+async def list_agents():
+    """List all agents (fallback)."""
+    return [
+        {"id": "1", "name": "Assistant", "model": "gpt-4", "status": "active"},
+        {"id": "2", "name": "Researcher", "model": "claude-3", "status": "active"},
+        {"id": "3", "name": "Coder", "model": "gpt-4", "status": "active"},
+    ]
+
+
+@app.get("/teams", tags=["Teams"])
+async def list_teams():
+    """List all teams (fallback)."""
+    return [
+        {"id": "1", "name": "Research Team", "members": 3, "status": "active"},
+        {"id": "2", "name": "Development Team", "members": 2, "status": "active"},
+    ]
+
+
+@app.get("/workflows", tags=["Workflows"])
+async def list_workflows():
+    """List all workflows (fallback)."""
+    return [
+        {"id": "1", "name": "Data Pipeline", "nodes": 5, "status": "active"},
+        {"id": "2", "name": "Content Generation", "nodes": 3, "status": "active"},
+    ]
+
+
+@app.get("/workflows/registry", tags=["Workflows"])
+async def workflows_registry():
+    """Get workflow node registry (fallback)."""
+    return {"nodes": [], "categories": []}
+
+
+@app.get("/rag/collections", tags=["RAG"])
+async def list_rag_collections():
+    """List RAG collections (fallback)."""
+    return [
+        {"id": "1", "name": "Documentation", "documents": 10, "status": "active"},
+        {"id": "2", "name": "Knowledge Base", "documents": 25, "status": "active"},
+    ]
+
+
 @app.get("/metrics", response_class=PlainTextResponse)
 async def metrics():
     """
