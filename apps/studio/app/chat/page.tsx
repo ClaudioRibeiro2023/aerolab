@@ -52,6 +52,21 @@ interface Message {
 }
 
 // ============================================================
+// HIGHLIGHT SEARCH HELPER
+// ============================================================
+
+function highlightText(text: string, query: string): React.ReactNode {
+  if (!query.trim()) return text;
+  const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+  const parts = text.split(regex);
+  return parts.map((part, i) => 
+    regex.test(part) ? (
+      <mark key={i} className="bg-yellow-400/40 text-yellow-200 rounded px-0.5">{part}</mark>
+    ) : part
+  );
+}
+
+// ============================================================
 // RELATIVE TIME FORMATTER
 // ============================================================
 
@@ -1223,7 +1238,9 @@ function ChatContent() {
                         {message.role === "assistant" ? (
                           parseMarkdown(message.content)
                         ) : (
-                          <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                          <p className="text-sm whitespace-pre-wrap">
+                            {searchQuery ? highlightText(message.content, searchQuery) : message.content}
+                          </p>
                         )}
                       </div>
 
