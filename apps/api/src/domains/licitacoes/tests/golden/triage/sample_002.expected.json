@@ -1,0 +1,12 @@
+{
+  "licitacao_id": "98765432000188-2025-000042",
+  "expected_priority": "P2",
+  "expected_score_min": 0.20,
+  "expected_score_max": 0.50,
+  "expected_aderencia_min": 0.00,
+  "expected_aderencia_max": 0.30,
+  "expected_motivos_contains": [
+    "Baixa"
+  ],
+  "description": "Material de escritório - baixa prioridade esperada"
+}

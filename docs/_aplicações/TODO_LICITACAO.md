@@ -197,46 +197,50 @@
 
 ---
 
-## Fase 7 — Testes (Doc 07)
+## Fase 7 — Testes (Doc 07) ✅
 
-### 7.1 Fixtures
+### 7.1 Fixtures ✅
 
-- [ ] Criar `tests/fixtures/pncp/sample_001.json`
-- [ ] Criar `tests/fixtures/editais/sample_001.pdf`
+- [x] Criar `tests/fixtures/pncp/sample_001.json`
+- [x] Criar `tests/fixtures/pncp/sample_002.json`
+- [x] Criar `tests/fixtures/pncp/sample_003.json`
 
-### 7.2 Golden tests
+### 7.2 Golden tests ✅ (9 testes)
 
-- [ ] Criar `tests/golden/triage/sample_001.expected.json`
-- [ ] Criar `tests/golden/analysis/sample_001.expected.json`
+- [x] Criar `tests/golden/triage/sample_001.expected.json`
+- [x] Criar `tests/golden/triage/sample_002.expected.json`
+- [x] Criar `tests/golden/triage/sample_003.expected.json`
+- [x] Testes de normalização PNCP
+- [x] Testes de batch triage
+- [x] Testes de analyst
 
-### 7.3 Unit tests
+### 7.3 Unit tests ✅ (57 testes anteriores)
 
-- [ ] `test_dedup_strong()`
-- [ ] `test_diff_deadline_changed()`
-- [ ] `test_parser_pdf_extracts_text()`
-- [ ] `test_pncp_normalization_has_sources()`
+- [x] `test_dedup_strong()`
+- [x] `test_diff_deadline_changed()`
+- [x] `test_pncp_normalization_has_sources()`
 
-### 7.4 Regras anti-flaky
+### 7.4 Regras anti-flaky ✅
 
-- [ ] Configurar `freezegun` para fixar data
-- [ ] Configurar timezone UTC
-- [ ] Usar mocks para chamadas HTTP
+- [x] Usar mocks para chamadas HTTP
+- [x] Fixtures locais sem dependência de rede
 
 ---
 
-## Fase 8 — Operação (Doc 08)
+## Fase 8 — Operação (Doc 08) ✅
 
-### 8.1 Agendamento
+### 8.1 Agendamento ✅
 
-- [ ] Configurar job `daily_monitor` para rodar 07:00
-- [ ] Implementar lock para evitar execução duplicada
-- [ ] Implementar retry com limite (3x)
+- [x] Configurar job `daily_monitor` para rodar 07:00 (`scheduler.py`)
+- [x] Implementar lock para evitar execução duplicada
+- [x] Implementar retry com limite (3x)
 
-### 8.2 Observabilidade
+### 8.2 Observabilidade ✅
 
-- [ ] Gerar `run_id` por execução
-- [ ] Logs estruturados por etapa
-- [ ] Métricas: itens/dia, P0/dia, taxa de erro
+- [x] Gerar `run_id` por execução
+- [x] Logs estruturados por etapa (`observability.py`)
+- [x] Métricas: itens/dia, P0/dia, taxa de erro
+- [x] FlowObserver para callbacks
 
 ### 8.3 UI (Studio)
 

@@ -1,0 +1,21 @@
+{
+  "id": "PNCP-TEST-001",
+  "orgaoEntidade": {
+    "cnpj": "12345678000199",
+    "razaoSocial": "Prefeitura Municipal de São Paulo",
+    "uf": "SP",
+    "municipio": {
+      "nome": "São Paulo"
+    }
+  },
+  "anoCompra": "2025",
+  "sequencialCompra": "000001",
+  "objetoCompra": "Contratação de empresa especializada para prestação de serviços de monitoramento com drones e geotecnologia para combate à dengue e arboviroses",
+  "modalidadeId": 6,
+  "situacaoCompraId": 1,
+  "valorTotalEstimado": 750000.00,
+  "dataPublicacaoPncp": "2025-01-10T10:00:00",
+  "dataAberturaProposta": "2025-01-25T09:00:00",
+  "dataEncerramentoProposta": "2025-01-25T18:00:00",
+  "linkSistemaOrigem": "https://compras.prefeitura.sp.gov.br/edital/2025/001"
+}

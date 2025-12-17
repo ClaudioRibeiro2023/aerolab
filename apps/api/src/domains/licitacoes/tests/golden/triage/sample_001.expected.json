@@ -1,0 +1,12 @@
+{
+  "licitacao_id": "12345678000199-2025-000001",
+  "expected_priority": "P0",
+  "expected_score_min": 0.70,
+  "expected_score_max": 1.00,
+  "expected_aderencia_min": 0.60,
+  "expected_motivos_contains": [
+    "100%"
+  ],
+  "expected_riscos_tipos": [],
+  "description": "Licitação de drones para dengue em SP - alta prioridade esperada"
+}
