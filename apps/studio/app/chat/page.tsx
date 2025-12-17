@@ -511,6 +511,11 @@ function ChatContent() {
         e.preventDefault();
         inputRef.current?.focus();
       }
+      // Ctrl+F or Cmd+F: Toggle search
+      if ((e.ctrlKey || e.metaKey) && e.key === "f") {
+        e.preventDefault();
+        setShowSearch(prev => !prev);
+      }
     };
 
     window.addEventListener("keydown", handleKeyboard);
