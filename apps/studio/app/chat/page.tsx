@@ -11,6 +11,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { PageHeader } from "../../components/PageHeader";
 import EmptyState from "../../components/EmptyState";
 import { useChatStore, type Message as StoreMessage, type Attachment as StoreAttachment } from "../../store/chat";
+import { useStreamChat } from "../../hooks/useStreamChat";
+import ConversationSidebar from "../../components/chat/ConversationSidebar";
+import PersonaSelector from "../../components/chat/PersonaSelector";
 
 interface Agent {
   id?: string;
@@ -303,6 +306,35 @@ function ChatContent() {
   const [initialAgentSet, setInitialAgentSet] = useState(false);
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [conversationId, setConversationId] = useState<string | null>(null);
+  const [showSidebar, setShowSidebar] = useState(false);
+  const [selectedPersonaId, setSelectedPersonaId] = useState<string | null>(null);
+  const [useStreaming, setUseStreaming] = useState(true);
+
+  // Streaming hook
+  const {
+    sendMessage: sendStreamMessage,
+    cancelStream,
+    isStreaming,
+    currentMessage: streamingMessage,
+  } = useStreamChat({
+    onToken: () => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    },
+    onComplete: (msg) => {
+      if (conversationId && msg.content) {
+        addStoreMessage(conversationId, {
+          role: "assistant",
+          content: msg.content,
+          agent: selectedAgent,
+          model: selectedModel,
+          provider: msg.provider,
+        });
+      }
+    },
+    onError: (err) => {
+      toast.error(err);
+    },
+  });
 
   // Get messages from store
   const messages = useMemo(() => {
@@ -565,14 +597,58 @@ function ChatContent() {
   const currentAgent = agents.find(a => a.name === selectedAgent);
   const currentModel = AVAILABLE_MODELS.find(m => m.id === selectedModel);
 
+  // Handle new conversation
+  const handleNewConversation = () => {
+    const newId = createConversation(selectedAgent, selectedModel);
+    setConversationId(newId);
+    setActiveConversation(newId);
+    setShowSidebar(false);
+  };
+
+  // Handle select conversation from sidebar
+  const handleSelectConversation = (id: string) => {
+    setConversationId(id);
+    setActiveConversation(id);
+    const conv = conversations[id];
+    if (conv?.agentName) setSelectedAgent(conv.agentName);
+    if (conv?.model) setSelectedModel(conv.model);
+    setShowSidebar(false);
+  };
+
   return (
     <Protected>
+      {/* Conversation Sidebar */}
+      <ConversationSidebar
+        isOpen={showSidebar}
+        onClose={() => setShowSidebar(false)}
+        onSelectConversation={handleSelectConversation}
+        onNewConversation={handleNewConversation}
+      />
+
       <div className="h-[calc(100vh-8rem)] flex flex-col">
         <PageHeader
           title="Chat com Agentes"
           subtitle="Converse com seus agentes de IA"
           rightActions={
             <div className="flex items-center gap-3">
+              {/* Sidebar Toggle */}
+              <button
+                onClick={() => setShowSidebar(true)}
+                className="flex items-center gap-2 px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl hover:bg-slate-700 transition-colors"
+                title="Histórico de Conversas"
+              >
+                <svg className="w-5 h-5 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
+                </svg>
+                <span className="text-sm text-slate-300 hidden sm:inline">Histórico</span>
+              </button>
+
+              {/* Persona Selector */}
+              <PersonaSelector
+                selectedPersonaId={selectedPersonaId}
+                onSelectPersona={(persona) => setSelectedPersonaId(persona?.id || null)}
+                compact
+              />
               {/* Model Selector */}
               <div className="relative">
               <button
