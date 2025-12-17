@@ -84,8 +84,8 @@ Consolidar o AeroLab como plataforma corporativa de multi-agentes AI, integrando
 | AL-021 | Adicionar npm audit / pip audit no CI | P1 | S | ✅ Done |
 | AL-022 | Configurar pre-commit hooks (lint + format) | P1 | M | ✅ Done |
 | AL-023 | Implementar logging estruturado (JSON) | P2 | M | ✅ Done |
-| AL-024 | Adicionar tracing com OpenTelemetry | P2 | L | ⏳ Todo |
-| AL-025 | Configurar métricas Prometheus | P2 | L | ⏳ Todo |
+| AL-024 | Adicionar tracing com OpenTelemetry | P2 | L | ✅ Done |
+| AL-025 | Configurar métricas Prometheus | P2 | L | ✅ Done |
 | AL-026 | Criar dashboard Grafana básico | P2 | L | ⏳ Todo |
 | AL-027 | Documentar cobertura de testes atual | P2 | S | ✅ Done |
 
@@ -93,7 +93,7 @@ Consolidar o AeroLab como plataforma corporativa de multi-agentes AI, integrando
 
 | ID | Título | Prioridade | Tamanho | Status |
 |----|--------|------------|---------|--------|
-| AL-028 | Medir bundle size do Studio | P2 | S | ⏳ Todo |
+| AL-028 | Medir bundle size do Studio | P2 | S | ✅ Done |
 | AL-029 | Otimizar cold start do backend | P2 | M | ⏳ Todo |
 | AL-030 | Implementar caching de RAG | P2 | L | ⏳ Todo |
 | AL-031 | Revisar UX do Agent Builder | P2 | L | ⏳ Todo |
