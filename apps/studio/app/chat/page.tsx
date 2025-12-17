@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef, Suspense, useCallback } from "react";
+import React, { useState, useEffect, useRef, Suspense, useCallback, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import Protected from "../../components/Protected";
 import api from "@/lib/api";
@@ -10,6 +10,7 @@ import { trackExecution, estimateExecutionCost } from "../../lib/analytics";
 import { motion, AnimatePresence } from "framer-motion";
 import { PageHeader } from "../../components/PageHeader";
 import EmptyState from "../../components/EmptyState";
+import { useChatStore, type Message as StoreMessage, type Attachment as StoreAttachment } from "../../store/chat";
 
 interface Agent {
   id?: string;
@@ -279,17 +280,39 @@ function ChatContent() {
   const searchParams = useSearchParams();
   const agentFromUrl = searchParams?.get("agent") || null;
   
-  // State
+  // Chat Store (persistent)
+  const {
+    conversations,
+    activeConversationId,
+    createConversation,
+    setActiveConversation,
+    addMessage: addStoreMessage,
+    clearMessages: clearStoreMessages,
+    getMessages: getStoreMessages,
+    isHydrated,
+  } = useChatStore();
+
+  // Local UI State
   const [agents, setAgents] = useState<Agent[]>([]);
   const [selectedAgent, setSelectedAgent] = useState<string>("");
   const [selectedModel, setSelectedModel] = useState(AVAILABLE_MODELS[0].id);
-  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [showAgentList, setShowAgentList] = useState(false);
   const [showModelList, setShowModelList] = useState(false);
   const [initialAgentSet, setInitialAgentSet] = useState(false);
   const [attachments, setAttachments] = useState<Attachment[]>([]);
+  const [conversationId, setConversationId] = useState<string | null>(null);
+
+  // Get messages from store
+  const messages = useMemo(() => {
+    if (!conversationId) return [];
+    const storeMessages = getStoreMessages(conversationId);
+    return storeMessages.map(m => ({
+      ...m,
+      timestamp: new Date(m.timestamp),
+    })) as Message[];
+  }, [conversationId, conversations, getStoreMessages]);
   
   // Refs
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -300,6 +323,25 @@ function ChatContent() {
   useEffect(() => {
     loadAgents();
   }, []);
+
+  // Initialize or restore conversation
+  useEffect(() => {
+    if (!isHydrated) return;
+    
+    // If there's an active conversation, use it
+    if (activeConversationId && conversations[activeConversationId]) {
+      setConversationId(activeConversationId);
+      const conv = conversations[activeConversationId];
+      if (conv.agentName) setSelectedAgent(conv.agentName);
+      if (conv.model) setSelectedModel(conv.model);
+    } else {
+      // Create new conversation when agent is selected
+      if (selectedAgent && !conversationId) {
+        const newId = createConversation(selectedAgent, selectedModel);
+        setConversationId(newId);
+      }
+    }
+  }, [isHydrated, activeConversationId, selectedAgent]);
 
   // Set agent from URL param after agents load
   useEffect(() => {
@@ -381,15 +423,33 @@ function ChatContent() {
   const sendMessage = async () => {
     if ((!input.trim() && attachments.length === 0) || !selectedAgent || loading) return;
 
-    const userMessage: Message = {
-      id: `user-${Date.now()}`,
-      role: "user",
+    // Ensure we have a conversation
+    let currentConvId = conversationId;
+    if (!currentConvId) {
+      currentConvId = createConversation(selectedAgent, selectedModel);
+      setConversationId(currentConvId);
+    }
+
+    const userMessageData = {
+      role: "user" as const,
       content: input.trim(),
-      timestamp: new Date(),
-      attachments: attachments.length > 0 ? [...attachments] : undefined,
+      agent: selectedAgent,
+      model: selectedModel,
+      attachments: attachments.length > 0 ? attachments.map(a => ({
+        id: a.id,
+        name: a.name,
+        type: a.type,
+        size: a.size,
+        url: a.url,
+        preview: a.preview,
+      })) : undefined,
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    const userMessage = addStoreMessage(currentConvId, userMessageData);
+    const userMessageUI: Message = {
+      ...userMessage,
+      timestamp: new Date(userMessage.timestamp),
+    };
     setInput("");
     setAttachments([]);
     setLoading(true);
@@ -414,16 +474,16 @@ function ChatContent() {
       const result = parseApiResponse(rawResult);
       const duration = (Date.now() - startTime) / 1000;
 
-      const assistantMessage: Message = {
-        id: `assistant-${Date.now()}`,
-        role: "assistant",
+      const assistantMessageData = {
+        role: "assistant" as const,
         content: result,
-        timestamp: new Date(),
         agent: currentAgent?.name || selectedAgent,
         model: selectedModel,
+        provider: data.provider,
+        tokens: data.tokens,
       };
 
-      setMessages(prev => [...prev, assistantMessage]);
+      addStoreMessage(currentConvId!, assistantMessageData);
 
       // Save to history
       addToHistory({
@@ -451,13 +511,11 @@ function ChatContent() {
 
       const err = e as { response?: { data?: { detail?: string } } };
       toast.error(err.response?.data?.detail || "Erro ao enviar mensagem");
-      const errorMessage: Message = {
-        id: `error-${Date.now()}`,
-        role: "system",
+      const errorMessageData = {
+        role: "system" as const,
         content: "Erro ao processar sua mensagem. Tente novamente.",
-        timestamp: new Date(),
       };
-      setMessages(prev => [...prev, errorMessage]);
+      addStoreMessage(currentConvId!, errorMessageData);
 
       addToHistory({
         type: "agent",
@@ -484,7 +542,12 @@ function ChatContent() {
   };
 
   const clearChat = () => {
-    setMessages([]);
+    if (conversationId) {
+      clearStoreMessages(conversationId);
+    }
+    // Create new conversation
+    const newId = createConversation(selectedAgent, selectedModel);
+    setConversationId(newId);
   };
 
   const copyMessage = useCallback((content: string) => {
