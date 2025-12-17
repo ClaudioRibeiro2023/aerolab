@@ -60,7 +60,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-br" className={inter.className} suppressHydrationWarning>
-      <body className="min-h-screen bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100 antialiased transition-colors">
+      <body className="min-h-screen bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100 antialiased transition-colors" suppressHydrationWarning>
         <ThemeProvider>
           <QueryProvider>
             <Toaster richColors position="top-right" />
