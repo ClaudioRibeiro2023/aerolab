@@ -226,6 +226,14 @@ try:
 except Exception as e:
     logger.warning(f"[WARN] Domain Studio API not loaded: {e}")
 
+# Chat Conversations API
+try:
+    from src.chat.api.conversations import router as conversations_router
+    app.include_router(conversations_router, prefix="/api/v2", tags=["Conversations"])
+    logger.info("[OK] Conversations API loaded")
+except Exception as e:
+    logger.warning(f"[WARN] Conversations API not loaded: {e}")
+
 
 # ============================================================
 # AgentOS Modular Routers
