@@ -9,6 +9,7 @@ import CommandPalette from "../components/CommandPalette";
 import OnboardingWizard from "../components/OnboardingWizard";
 import PerformanceMonitor from "../components/PerformanceMonitor";
 import ErrorBoundary from "../components/ErrorBoundary";
+import KeyboardShortcutsHelp from "../components/KeyboardShortcutsHelp";
 import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -71,6 +72,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <OnboardingWizard />
               <AppLayout>{children}</AppLayout>
               <PerformanceMonitor enabled={process.env.NODE_ENV === "development"} />
+              <KeyboardShortcutsHelp />
             </QueryProvider>
           </ErrorBoundary>
         </ThemeProvider>
