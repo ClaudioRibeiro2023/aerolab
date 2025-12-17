@@ -1392,6 +1392,9 @@ function ChatContent() {
                     </span>
                   </span>
                 )}
+                <span title="Total de palavras na conversa">
+                  {messages.reduce((acc, m) => acc + (m.content?.split(/\s+/).filter(Boolean).length || 0), 0).toLocaleString()} palavras
+                </span>
                 <span>{messages.length} msgs</span>
               </div>
             </div>
