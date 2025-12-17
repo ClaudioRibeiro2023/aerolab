@@ -960,10 +960,13 @@ Este arquivo acompanha o plano de melhorias faseado descrito em `docs/PROPOSTA_A
   - ✅ Gráfico de barras comparativo
   - ✅ Top pages e activity feed
 
-- [ ] [P3] Adicionar Export de Relatórios:
-  - Geração de PDF
-  - Export para Excel/CSV
-  - Agendamento de relatórios
+- [x] [P3] Adicionar Export de Relatórios:
+  - ✅ `packages/shared/src/export/` - Módulo de exportação
+  - ✅ `csv.ts` - Export para CSV com BOM UTF-8
+  - ✅ `excel.ts` - Export para Excel (xlsx opcional, fallback CSV)
+  - ✅ `pdf.ts` - Export para PDF (jspdf opcional, fallback print dialog)
+  - ✅ `useExport.ts` - React hook para uso fácil
+  - ⚠️ Agendamento: implementar quando backend de jobs existir
 
 ---
 
