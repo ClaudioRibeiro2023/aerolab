@@ -1,0 +1,66 @@
+Metadata-Version: 2.4
+Name: aerolab-api
+Version: 1.0.0
+Summary: AeroLab API - Multi-Agent AI Platform Backend
+Author-email: Your Name <your.email@example.com>
+Keywords: aerolab,agno,ai,agents,llm,multi-agent
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+Requires-Dist: agno>=2.0.0
+Requires-Dist: fastapi>=0.115.13
+Requires-Dist: groq>=0.28.0
+Requires-Dist: openai>=1.88.0
+Requires-Dist: anthropic>=0.40.0
+Requires-Dist: pypdf>=5.6.0
+Requires-Dist: python-dotenv>=1.1.0
+Requires-Dist: sqlalchemy>=2.0.41
+Requires-Dist: tavily-python>=0.7.7
+Requires-Dist: uvicorn[standard]>=0.34.3
+Requires-Dist: yfinance>=0.2.63
+Requires-Dist: pyjwt>=2.8.0
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.1.0; extra == "dev"
+Requires-Dist: black>=24.0.0; extra == "dev"
+Requires-Dist: ruff>=0.3.0; extra == "dev"
+Requires-Dist: mypy>=1.9.0; extra == "dev"
+Requires-Dist: mkdocs>=1.6.0; extra == "dev"
+Requires-Dist: mkdocs-material>=9.5.0; extra == "dev"
+Provides-Extra: rag
+Requires-Dist: chromadb>=1.0.13; extra == "rag"
+Requires-Dist: httpx>=0.28.0; extra == "rag"
+Requires-Dist: beautifulsoup4>=4.12.0; extra == "rag"
+Provides-Extra: geo
+Requires-Dist: requests>=2.31.0; extra == "geo"
+Requires-Dist: geopandas>=0.14.0; extra == "geo"
+Requires-Dist: shapely>=2.0.0; extra == "geo"
+Requires-Dist: pyproj>=3.6.0; extra == "geo"
+Requires-Dist: folium>=0.15.0; extra == "geo"
+Provides-Extra: database
+Requires-Dist: pandas>=2.0.0; extra == "database"
+Requires-Dist: duckdb>=0.10.0; extra == "database"
+Provides-Extra: devops
+Requires-Dist: PyGithub>=2.1.0; extra == "devops"
+Requires-Dist: requests>=2.31.0; extra == "devops"
+Provides-Extra: finance
+Requires-Dist: yfinance>=0.2.63; extra == "finance"
+Requires-Dist: pandas>=2.0.0; extra == "finance"
+Requires-Dist: numpy>=1.26.0; extra == "finance"
+Provides-Extra: legal
+Requires-Dist: spacy>=3.7.0; extra == "legal"
+Requires-Dist: pdfplumber>=0.10.0; extra == "legal"
+Provides-Extra: corporate
+Requires-Dist: pandas>=2.0.0; extra == "corporate"
+Provides-Extra: research
+Requires-Dist: tavily-python>=0.7.7; extra == "research"
+Requires-Dist: requests>=2.31.0; extra == "research"
+Provides-Extra: llm
+Requires-Dist: requests>=2.31.0; extra == "llm"
+Provides-Extra: all-domains
+Requires-Dist: aerolab-api[corporate,database,devops,finance,geo,legal,llm,rag,research]; extra == "all-domains"
+Provides-Extra: full
+Requires-Dist: aerolab-api[all-domains,dev]; extra == "full"

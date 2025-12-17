@@ -9,7 +9,7 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "pnpm --filter @aerolab/studio run dev -- -p 9000",
+    "dev": "pnpm --filter @aerolab/studio run dev:9000",
     "dev:web": "pnpm --filter @template/web run dev",
     "dev:studio": "pnpm --filter @aerolab/studio run dev -- -p 9000",
     "dev:api": "cd apps/api && uvicorn server:app --reload --port 8000",
