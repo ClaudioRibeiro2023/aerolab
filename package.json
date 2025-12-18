@@ -25,6 +25,7 @@
     "typecheck": "pnpm -r run typecheck",
     "test": "pnpm -r run test",
     "test:e2e": "pnpm --filter @template/web run test:e2e",
+    "factory:validate": "python scripts/factory_validate.py",
     "clean": "rimraf node_modules packages/*/node_modules apps/*/node_modules packages/*/dist apps/*/dist",
     "setup": "node scripts/setup.js",
     "prepare": "husky"
