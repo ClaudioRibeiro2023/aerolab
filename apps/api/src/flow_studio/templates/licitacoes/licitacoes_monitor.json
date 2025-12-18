@@ -1,0 +1,172 @@
+{
+  "id": "licitacoes_monitor",
+  "name": "Monitoramento & Análise de Licitações (Techdengue)",
+  "description": "Monitorar, coletar, classificar, analisar e validar juridicamente processos licitatórios relacionados ao Techdengue",
+  "version": "1.0.0",
+  "domain": "licitacoes",
+  "category": "monitoring",
+  "tags": ["licitacoes", "techdengue", "pncp", "monitoramento", "compliance"],
+  "state_defaults": {
+    "result": {
+      "status": "init",
+      "payload_json": "{}",
+      "errors": []
+    }
+  },
+  "inputs": {
+    "fonte": {
+      "type": "string",
+      "required": true,
+      "default": "pncp",
+      "enum": ["pncp", "diarios_oficiais", "portais"]
+    },
+    "termo_busca": {
+      "type": "string",
+      "required": true
+    },
+    "uf": {
+      "type": "string",
+      "required": false
+    },
+    "municipio": {
+      "type": "string",
+      "required": false
+    },
+    "periodo_inicio": {
+      "type": "string",
+      "required": false
+    },
+    "periodo_fim": {
+      "type": "string",
+      "required": false
+    },
+    "palavras_chave": {
+      "type": "array",
+      "required": false,
+      "default": []
+    },
+    "modo_execucao": {
+      "type": "string",
+      "required": true,
+      "default": "one_shot",
+      "enum": ["one_shot", "monitor"]
+    }
+  },
+  "nodes": [
+    {
+      "id": "input",
+      "type": "input",
+      "name": "Entrada",
+      "position": { "x": 100, "y": 200 },
+      "config": {
+        "schema": "licitacoes_monitor/input"
+      }
+    },
+    {
+      "id": "coleta",
+      "type": "agent",
+      "name": "Coleta (Watcher)",
+      "position": { "x": 300, "y": 200 },
+      "config": {
+        "agent_type": "watcher",
+        "domain": "licitacoes",
+        "timeout_ms": 30000,
+        "retry_count": 2
+      }
+    },
+    {
+      "id": "dedup",
+      "type": "transform",
+      "name": "Deduplicação",
+      "position": { "x": 500, "y": 200 },
+      "config": {
+        "operation": "dedup",
+        "key_fields": ["external_id", "fonte"]
+      }
+    },
+    {
+      "id": "triagem",
+      "type": "agent",
+      "name": "Triagem (Triage)",
+      "position": { "x": 700, "y": 200 },
+      "config": {
+        "agent_type": "triage",
+        "domain": "licitacoes",
+        "scoring_model": "keyword_region"
+      }
+    },
+    {
+      "id": "filter_priority",
+      "type": "filter",
+      "name": "Filtro P0/P1",
+      "position": { "x": 900, "y": 200 },
+      "config": {
+        "condition": "item.prioridade in ['P0', 'P1']"
+      }
+    },
+    {
+      "id": "analise",
+      "type": "agent",
+      "name": "Análise (Analyst)",
+      "position": { "x": 1100, "y": 200 },
+      "config": {
+        "agent_type": "analyst",
+        "domain": "licitacoes",
+        "use_rag": true,
+        "rag_collection": "licitacoes_lei_14133"
+      }
+    },
+    {
+      "id": "compliance",
+      "type": "agent",
+      "name": "Compliance",
+      "position": { "x": 1300, "y": 200 },
+      "config": {
+        "agent_type": "compliance",
+        "domain": "licitacoes",
+        "check_input": true,
+        "check_output": true
+      }
+    },
+    {
+      "id": "audit",
+      "type": "audit-log",
+      "name": "Audit Log",
+      "position": { "x": 700, "y": 400 },
+      "config": {
+        "log_level": "info",
+        "include_tokens": true,
+        "include_cost": true,
+        "include_timing": true
+      }
+    },
+    {
+      "id": "output",
+      "type": "output",
+      "name": "Saída",
+      "position": { "x": 1500, "y": 200 },
+      "config": {
+        "schema": "licitacoes_monitor/result",
+        "export_formats": ["json"]
+      }
+    }
+  ],
+  "edges": [
+    { "id": "e1", "source": "input", "target": "coleta" },
+    { "id": "e2", "source": "coleta", "target": "dedup" },
+    { "id": "e3", "source": "dedup", "target": "triagem" },
+    { "id": "e4", "source": "triagem", "target": "filter_priority" },
+    { "id": "e5", "source": "filter_priority", "target": "analise" },
+    { "id": "e6", "source": "analise", "target": "compliance" },
+    { "id": "e7", "source": "compliance", "target": "output" },
+    { "id": "e8", "source": "coleta", "target": "audit" },
+    { "id": "e9", "source": "triagem", "target": "audit" },
+    { "id": "e10", "source": "analise", "target": "audit" }
+  ],
+  "metadata": {
+    "created_at": "2025-12-17T00:00:00Z",
+    "updated_at": "2025-12-17T00:00:00Z",
+    "author": "AeroLab",
+    "license": "proprietary"
+  }
+}

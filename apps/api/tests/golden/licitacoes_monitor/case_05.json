@@ -1,0 +1,13 @@
+{
+  "name": "case_05_monitor_mode",
+  "description": "Execução em modo monitor",
+  "input": {
+    "fonte": "pncp",
+    "termo_busca": "drone dengue",
+    "modo_execucao": "monitor"
+  },
+  "expected": {
+    "status": "success",
+    "has_runs": true
+  }
+}

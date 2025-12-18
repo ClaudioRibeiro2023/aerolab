@@ -1,0 +1,15 @@
+{
+  "name": "case_01_basic_search",
+  "description": "Busca básica por termo 'drone dengue' no PNCP",
+  "input": {
+    "fonte": "pncp",
+    "termo_busca": "drone dengue",
+    "modo_execucao": "one_shot"
+  },
+  "expected": {
+    "status": "success",
+    "has_itens": true,
+    "has_triagem": true,
+    "min_itens": 1
+  }
+}

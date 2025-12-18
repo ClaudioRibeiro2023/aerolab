@@ -1,0 +1,134 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "licitacoes_monitor/result",
+  "title": "LicitacoesMonitorResult",
+  "description": "Schema de resultado para o workflow de monitoramento de licitações",
+  "type": "object",
+  "required": ["status", "payload_json", "errors"],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["init", "running", "success", "error", "partial"],
+      "default": "init"
+    },
+    "payload_json": {
+      "type": "string",
+      "default": "{}"
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "runs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "run_id": { "type": "string" },
+          "started_at": { "type": "string", "format": "date-time" },
+          "finished_at": { "type": "string", "format": "date-time" },
+          "status": { "type": "string" }
+        }
+      }
+    },
+    "itens_encontrados": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "external_id": { "type": "string" },
+          "fonte": { "type": "string" },
+          "objeto": { "type": "string" },
+          "orgao": { "type": "string" },
+          "uf": { "type": "string" },
+          "valor_estimado": { "type": ["number", "null"] },
+          "data_abertura": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "triagem": {
+      "type": "object",
+      "properties": {
+        "total": { "type": "integer" },
+        "p0_count": { "type": "integer" },
+        "p1_count": { "type": "integer" },
+        "p2_count": { "type": "integer" },
+        "p3_count": { "type": "integer" },
+        "scores": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "licitacao_id": { "type": "string" },
+              "score": { "type": "number" },
+              "prioridade": { "type": "string" },
+              "motivos": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+    "analise_juridica": {
+      "type": "object",
+      "properties": {
+        "artigos_relevantes": { "type": "array" },
+        "checklist_habilitacao": { "type": "array" },
+        "riscos": { "type": "array" },
+        "conformidade": { "type": "boolean" }
+      }
+    },
+    "evidencias": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tipo": { "type": "string" },
+          "url": { "type": "string" },
+          "descricao": { "type": "string" }
+        }
+      }
+    },
+    "recomendacoes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "licitacao_id": { "type": "string" },
+          "acao": { "type": "string", "enum": ["participar", "analisar_mais", "descartar"] },
+          "justificativa": { "type": "string" },
+          "confianca": { "type": "number" }
+        }
+      }
+    },
+    "alertas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "prioridade": { "type": "string", "enum": ["P0", "P1"] },
+          "licitacao_id": { "type": "string" },
+          "mensagem": { "type": "string" },
+          "criado_em": { "type": "string", "format": "date-time" }
+        }
+      }
+    },
+    "export_json": {
+      "type": "string",
+      "description": "JSON completo exportável"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "run_id": { "type": "string" },
+        "started_at": { "type": "string", "format": "date-time" },
+        "finished_at": { "type": "string", "format": "date-time" },
+        "duration_ms": { "type": "integer" },
+        "tokens_used": { "type": "integer" },
+        "cost_usd": { "type": "number" }
+      }
+    }
+  }
+}

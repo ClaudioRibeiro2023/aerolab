@@ -1,0 +1,15 @@
+{
+  "name": "case_03_periodo",
+  "description": "Busca com período específico",
+  "input": {
+    "fonte": "pncp",
+    "termo_busca": "geotecnologia",
+    "periodo_inicio": "2025-01-01",
+    "periodo_fim": "2025-01-31",
+    "modo_execucao": "one_shot"
+  },
+  "expected": {
+    "status": "success",
+    "has_triagem": true
+  }
+}

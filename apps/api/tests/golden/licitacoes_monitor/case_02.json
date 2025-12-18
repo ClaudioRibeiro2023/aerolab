@@ -1,0 +1,15 @@
+{
+  "name": "case_02_uf_filter",
+  "description": "Busca com filtro por UF (São Paulo)",
+  "input": {
+    "fonte": "pncp",
+    "termo_busca": "equipamentos saude",
+    "uf": "SP",
+    "modo_execucao": "one_shot"
+  },
+  "expected": {
+    "status": "success",
+    "has_itens": true,
+    "all_itens_uf": "SP"
+  }
+}

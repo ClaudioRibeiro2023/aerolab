@@ -345,4 +345,55 @@ def create_router(app: Any) -> APIRouter:
 
         return {"workflow": name, "outputs": outputs}
 
+    # === Workflow: Licitações Monitor ===
+
+    class LicitacoesMonitorRequest(BaseModel):
+        """Request para workflow licitacoes_monitor."""
+        fonte: str = "pncp"
+        termo_busca: str
+        uf: Optional[str] = None
+        municipio: Optional[str] = None
+        periodo_inicio: Optional[str] = None
+        periodo_fim: Optional[str] = None
+        palavras_chave: List[str] = []
+        modo_execucao: str = "one_shot"
+
+    @router.post("/licitacoes-monitor")
+    async def licitacoes_monitor(req: LicitacoesMonitorRequest):
+        """Workflow: Monitoramento & Análise de Licitações (Techdengue)."""
+        try:
+            from src.workflows.licitacoes import run_licitacoes_monitor
+            
+            result = await run_licitacoes_monitor(req.model_dump())
+            return result.model_dump()
+        except ImportError:
+            raise HTTPException(
+                status_code=501,
+                detail="Workflow licitacoes_monitor não disponível"
+            )
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
+
+    @router.get("/licitacoes-monitor/schema")
+    async def licitacoes_monitor_schema():
+        """Retorna schemas do workflow licitacoes_monitor."""
+        return {
+            "input": {
+                "fonte": {"type": "string", "enum": ["pncp", "diarios_oficiais", "portais"]},
+                "termo_busca": {"type": "string", "required": True},
+                "uf": {"type": "string"},
+                "municipio": {"type": "string"},
+                "periodo_inicio": {"type": "string", "format": "date"},
+                "periodo_fim": {"type": "string", "format": "date"},
+                "palavras_chave": {"type": "array"},
+                "modo_execucao": {"type": "string", "enum": ["one_shot", "monitor"]}
+            },
+            "output": {
+                "status": {"type": "string"},
+                "itens_encontrados": {"type": "array"},
+                "triagem": {"type": "object"},
+                "alertas": {"type": "array"}
+            }
+        }
+
     return router

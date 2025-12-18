@@ -1,0 +1,14 @@
+{
+  "name": "case_04_keywords",
+  "description": "Busca com palavras-chave adicionais",
+  "input": {
+    "fonte": "pncp",
+    "termo_busca": "drone",
+    "palavras_chave": ["mapeamento", "aereo", "vant"],
+    "modo_execucao": "one_shot"
+  },
+  "expected": {
+    "status": "success",
+    "has_itens": true
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "licitacoes_monitor/input",
+  "title": "LicitacoesMonitorInput",
+  "description": "Schema de entrada para o workflow de monitoramento de licitações",
+  "type": "object",
+  "required": ["fonte", "termo_busca", "modo_execucao"],
+  "properties": {
+    "fonte": {
+      "type": "string",
+      "enum": ["pncp", "diarios_oficiais", "portais"],
+      "description": "Fonte de dados para coleta",
+      "default": "pncp"
+    },
+    "termo_busca": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 200,
+      "description": "Termo principal de busca"
+    },
+    "uf": {
+      "type": "string",
+      "pattern": "^[A-Z]{2}$",
+      "description": "Estado (sigla UF)"
+    },
+    "municipio": {
+      "type": "string",
+      "maxLength": 100,
+      "description": "Município específico"
+    },
+    "periodo_inicio": {
+      "type": "string",
+      "format": "date",
+      "description": "Data início do período (default: últimos 30 dias)"
+    },
+    "periodo_fim": {
+      "type": "string",
+      "format": "date",
+      "description": "Data fim do período (default: hoje)"
+    },
+    "palavras_chave": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 2
+      },
+      "maxItems": 20,
+      "description": "Palavras-chave adicionais para filtro"
+    },
+    "modo_execucao": {
+      "type": "string",
+      "enum": ["one_shot", "monitor"],
+      "description": "Modo de execução do workflow",
+      "default": "one_shot"
+    }
+  },
+  "additionalProperties": false
+}
