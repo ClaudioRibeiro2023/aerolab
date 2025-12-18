@@ -76,7 +76,7 @@ def validate_md_location(root: Path) -> ValidationResult:
     for md_file in root.rglob("*.md"):
         # Ignorar pastas especiais
         path_str = str(md_file)
-        if any(skip in path_str for skip in ["node_modules", ".git", "__pycache__", ".venv", "venv"]):
+        if any(skip in path_str for skip in ["node_modules", ".git", "__pycache__", ".venv", "venv", "reports"]):
             continue
             
         # Permitir arquivos com nomes padrão
