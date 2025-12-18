@@ -40,6 +40,19 @@ class WorkflowRunRequest(BaseModel):
     inputs: Dict[str, str] = {}
 
 
+class LicitacoesMonitorRequest(BaseModel):
+    """Request para workflow licitacoes_monitor."""
+
+    fonte: str = "pncp"
+    termo_busca: str
+    uf: Optional[str] = None
+    municipio: Optional[str] = None
+    periodo_inicio: Optional[str] = None
+    periodo_fim: Optional[str] = None
+    palavras_chave: List[str] = []
+    modo_execucao: str = "one_shot"
+
+
 class ResearchWriteRequest(BaseModel):
     """Request para workflow research-write."""
 
@@ -346,17 +359,6 @@ def create_router(app: Any) -> APIRouter:
         return {"workflow": name, "outputs": outputs}
 
     # === Workflow: Licitações Monitor ===
-
-    class LicitacoesMonitorRequest(BaseModel):
-        """Request para workflow licitacoes_monitor."""
-        fonte: str = "pncp"
-        termo_busca: str
-        uf: Optional[str] = None
-        municipio: Optional[str] = None
-        periodo_inicio: Optional[str] = None
-        periodo_fim: Optional[str] = None
-        palavras_chave: List[str] = []
-        modo_execucao: str = "one_shot"
 
     @router.post("/licitacoes-monitor")
     async def licitacoes_monitor(req: LicitacoesMonitorRequest):
