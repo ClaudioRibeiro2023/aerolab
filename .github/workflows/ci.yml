@@ -94,9 +94,25 @@ jobs:
           path: apps/web/dist
           retention-days: 7
 
+  factory-validate:
+    name: Factory Validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run Factory Validate
+        run: python scripts/factory_validate.py
+
   python-api:
     name: Python API Tests
     runs-on: ubuntu-latest
+    needs: [factory-validate]
     defaults:
       run:
         working-directory: apps/api
