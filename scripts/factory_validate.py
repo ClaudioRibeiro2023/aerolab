@@ -14,6 +14,7 @@ Uso:
     python scripts/factory_validate.py
     pnpm factory:validate
 """
+from __future__ import annotations
 
 import json
 import sys
