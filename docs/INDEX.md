@@ -31,6 +31,7 @@ Diagramas C4 Model e documentação arquitetural do sistema.
 | [c4-component.md](./arquitetura/c4-component.md) | L3    | Componentes internos                  |
 
 **Subpastas:**
+
 - `agno2/` — Docs de arquitetura do Agno2 (visão, stack, módulos, fluxos, domínios)
 - `dados-e-rag/` — Modelo de dados, armazenamento e RAG/indexação
 
@@ -45,6 +46,7 @@ Documentação para sistemas que integram com o AeroLab.
 | [openapi.md](./contratos-integracao/openapi.md) | Swagger, geração de clientes          |
 
 **Subpastas:**
+
 - `agno2/` — Contratos adicionais do Agno2 (eventos, webhooks, SDKs)
 
 ### 🔧 Operação (`operacao/`)
@@ -59,6 +61,7 @@ Guias de setup, deploy e operação.
 | [convencoes.md](./operacao/convencoes.md)                 | Convenções de código e scripts              |
 
 **Subpastas:**
+
 - `agno2/` — Docs operacionais do Agno2 (observabilidade, runbooks, rollback)
 - `contribuicao/` — Padrões de código, testes, convenções de branch/PR
 
@@ -72,6 +75,7 @@ Documentação de segurança e controle de acesso.
 | [headers-seguranca.md](./seguranca/headers-seguranca.md) | CSP, CORS, CSRF, headers HTTP                      |
 
 **Subpastas:**
+
 - `agno2/` — Docs de segurança do Agno2 (ameaças, mitigações, segredos)
 
 ### 📋 ADRs (`adr_v2/`)
@@ -85,6 +89,33 @@ Architecture Decision Records - decisões arquiteturais documentadas.
 | [003](./adr_v2/003-autenticacao-jwt-rbac.md) | Autenticação JWT + RBAC        | Aceito |
 
 Ver [adr_v2/README.md](./adr_v2/README.md) para template e como contribuir.
+
+### 🏭 Factory (`operacao/factory/`)
+
+Padrão oficial para criação de workflows no AeroLab.
+
+| Documento                                                     | Descrição                     |
+| ------------------------------------------------------------- | ----------------------------- |
+| [CONTRATO_FACTORY.md](./operacao/factory/CONTRATO_FACTORY.md) | Contrato oficial Factory v1.1 |
+| [\_templates/workflow/](./_templates/workflow/)               | Templates de documentação     |
+
+**Prompts oficiais:** `windsurf/PROMPT_FACTORY_*.md`
+
+- [PROMPT_FACTORY_CREATE_WORKFLOW.md](../windsurf/PROMPT_FACTORY_CREATE_WORKFLOW.md)
+- [PROMPT_FACTORY_VALIDATE_REPO.md](../windsurf/PROMPT_FACTORY_VALIDATE_REPO.md)
+- [PROMPT_FACTORY_PUBLISH_WORKFLOW.md](../windsurf/PROMPT_FACTORY_PUBLISH_WORKFLOW.md)
+
+**Validação:** `pnpm factory:validate`
+
+### 🔄 Workflows (`workflows/`)
+
+Workflows implementados seguindo o padrão Factory v1.1.
+
+| Workflow                                                       | Domínio    | Descrição                                          |
+| -------------------------------------------------------------- | ---------- | -------------------------------------------------- |
+| [licitacoes_monitor](./workflows/licitacoes_monitor/README.md) | licitacoes | Monitoramento & Análise de Licitações (Techdengue) |
+
+**Padrão Factory:** [operacao/contribuicao/63-factory-workflows.md](./operacao/contribuicao/63-factory-workflows.md)
 
 ### 📚 Referência
 
