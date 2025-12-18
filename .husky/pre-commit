@@ -5,3 +5,14 @@ set -e
 export PATH="$(pwd)/node_modules/.bin:$PATH"
 
 pnpm -s lint-staged
+
+# Factory validate (opcional - define SKIP_FACTORY=1 para pular)
+if [ -z "$SKIP_FACTORY" ]; then
+  if command -v python >/dev/null 2>&1; then
+    echo "🏭 Running factory:validate..."
+    python scripts/factory_validate.py || {
+      echo "❌ factory:validate failed. Use SKIP_FACTORY=1 to bypass."
+      exit 1
+    }
+  fi
+fi
